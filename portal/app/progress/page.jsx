@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getSessionId } from '../lib/sessionId';
 
+export const dynamic = 'force-dynamic';
+
 export default function ProgressPage() {
   const [progress, setProgress] = useState({ lessons: [] });
   const [gaps, setGaps] = useState([]);
