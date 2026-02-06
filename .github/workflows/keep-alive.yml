@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Ping Site
         run: |
-          curl -I https://zeta-academy.onrender.com || echo "Site down or invalid URL"
+          curl -I https://zeta-tech.onrender.com || echo "Site down or invalid URL"
           # Replace the URL above with your actual Render URL if different.
