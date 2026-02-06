@@ -1,0 +1,265 @@
+{
+  "title": "Coding Quiz",
+  "questions": [
+    {
+      "question": "In Python, which term best describes a variable's role in the computer's memory?",
+      "answerOptions": [
+        {
+          "text": "A permanent hard drive file",
+          "isCorrect": false,
+          "rationale": "Variables are stored in volatile RAM during program execution, not as permanent files on a disk."
+        },
+        {
+          "text": "A labeled storage box",
+          "isCorrect": true,
+          "rationale": "This analogy correctly identifies the variable name as a label and the memory location as the container for a value."
+        },
+        {
+          "text": "A physical wire connection",
+          "isCorrect": false,
+          "rationale": "While hardware uses wires, software variables are abstract logical structures in memory."
+        },
+        {
+          "text": "A mathematical constant",
+          "isCorrect": false,
+          "rationale": "Variables can change their stored values, unlike constants which remain fixed."
+        }
+      ],
+      "hint": "Consider the analogy used in the source material to visualize how memory is organized."
+    },
+    {
+      "question": "Which data type should be used to store a price like $9.99$ in Python?",
+      "answerOptions": [
+        {
+          "text": "int",
+          "isCorrect": false,
+          "rationale": "Integers are for whole numbers and cannot represent values with decimal points."
+        },
+        {
+          "text": "string",
+          "isCorrect": false,
+          "rationale": "While text can contain numbers, it does not allow for mathematical calculations like addition or multiplication."
+        },
+        {
+          "text": "float",
+          "isCorrect": true,
+          "rationale": "Floats are designed specifically to store numbers with decimal components."
+        },
+        {
+          "text": "bool",
+          "isCorrect": false,
+          "rationale": "Booleans only store true or false values, not numerical data."
+        }
+      ],
+      "hint": "Think about the memory trick for types that have a decimal point that 'moves'."
+    },
+    {
+      "question": "What is the result of the Python operation $17 // 5$?",
+      "answerOptions": [
+        {
+          "text": "$3.4$",
+          "isCorrect": false,
+          "rationale": "This is the result of standard division, whereas the double slash indicates integer division."
+        },
+        {
+          "text": "$3$",
+          "isCorrect": true,
+          "rationale": "Integer division discards the remainder and returns only the whole number portion of the quotient."
+        },
+        {
+          "text": "$2$",
+          "isCorrect": false,
+          "rationale": "This would be the result of the modulo operator, which finds the remainder rather than the whole quotient."
+        },
+        {
+          "text": "$15$",
+          "isCorrect": false,
+          "rationale": "This is a product of multiplication, not a result of division."
+        }
+      ],
+      "hint": "Recall the difference between standard division and 'floor' or integer division."
+    },
+    {
+      "question": "Why does the expression `print(\"Total: \" + 10.5)` cause an error in Python?",
+      "answerOptions": [
+        {
+          "text": "Python does not allow decimal numbers in print statements.",
+          "isCorrect": false,
+          "rationale": "Print statements can display any data type; the issue lies specifically in how types are combined."
+        },
+        {
+          "text": "You cannot use the plus operator with strings.",
+          "isCorrect": false,
+          "rationale": "The plus operator is valid for string concatenation, but both sides must be of the same type."
+        },
+        {
+          "text": "You cannot concatenate a string and a float without conversion.",
+          "isCorrect": true,
+          "rationale": "Python requires numerical types to be converted to strings using the `str()` function before they can be joined with text."
+        },
+        {
+          "text": "The total must be stored in a variable first.",
+          "isCorrect": false,
+          "rationale": "Python can print literal values or expressions directly; saving to a variable is helpful but not a syntax requirement here."
+        }
+      ],
+      "hint": "Think about the 'glue' analogy and whether you can glue different materials together without preparation."
+    },
+    {
+      "question": "What is the default data type of the value returned by the `input()` function?",
+      "answerOptions": [
+        {
+          "text": "int",
+          "isCorrect": false,
+          "rationale": "Even if a user types a number, Python does not automatically treat it as a mathematical integer."
+        },
+        {
+          "text": "float",
+          "isCorrect": false,
+          "rationale": "Decimal inputs are still initially captured as a sequence of characters rather than a numeric float."
+        },
+        {
+          "text": "string",
+          "isCorrect": true,
+          "rationale": "Python captures all user input as text (a string) to ensure the program can read any characters entered."
+        },
+        {
+          "text": "It depends on what the user types.",
+          "isCorrect": false,
+          "rationale": "The `input()` function is consistent in its return type regardless of the content provided by the user."
+        }
+      ],
+      "hint": "Remember that you usually have to use conversion functions like `int()` immediately after getting a value from a user."
+    },
+    {
+      "question": "In the context of Generative AI, what is a 'hallucination'?",
+      "answerOptions": [
+        {
+          "text": "A technical glitch that causes the AI to shut down.",
+          "isCorrect": false,
+          "rationale": "A hallucination is a logical error in output, not a system crash or hardware failure."
+        },
+        {
+          "text": "Information that is confidently presented but is false or fabricated.",
+          "isCorrect": true,
+          "rationale": "Hallucinations occur when an AI predicts likely word patterns that do not correspond to real-world facts."
+        },
+        {
+          "text": "When an AI refuses to answer a controversial question.",
+          "isCorrect": false,
+          "rationale": "Refusal is often a programmed safety constraint, whereas hallucination is an unintended generation of fake info."
+        },
+        {
+          "text": "A intentional lie told by the AI to deceive the user.",
+          "isCorrect": false,
+          "rationale": "AI does not have intent or the capacity to lie; it simply follows statistical patterns of language."
+        }
+      ],
+      "hint": "Think about how an AI might sound very sure of itself even when its facts are made up."
+    },
+    {
+      "question": "Which condition is most likely to increase the frequency of AI hallucinations?",
+      "answerOptions": [
+        {
+          "text": "Asking for simple definitions of common words.",
+          "isCorrect": false,
+          "rationale": "Common knowledge is well-represented in training data, making hallucinations less likely."
+        },
+        {
+          "text": "Asking a question with a false premise, like 'Why did Lincoln use the internet?'",
+          "isCorrect": true,
+          "rationale": "When a prompt assumes a falsehood is true, the AI often follows the pattern of the question rather than correcting the error."
+        },
+        {
+          "text": "Using a search engine to verify the AI's answer.",
+          "isCorrect": false,
+          "rationale": "Verification is a human action that occurs after the AI has already generated its response."
+        },
+        {
+          "text": "Providing the AI with a list of facts to summarize.",
+          "isCorrect": false,
+          "rationale": "Providing 'grounding' data or context actually helps reduce the chance of the AI making things up."
+        }
+      ],
+      "hint": "Consider what happens when you 'trap' the AI into explaining something that never actually happened."
+    },
+    {
+      "question": "How does Retrieval-Augmented Generation (RAG) differ from a 'Static' AI model?",
+      "answerOptions": [
+        {
+          "text": "RAG models are much faster at generating text.",
+          "isCorrect": false,
+          "rationale": "Speed is not the primary difference; the core distinction lies in how the information is retrieved."
+        },
+        {
+          "text": "RAG looks up current sources before answering, while Static relies on memory.",
+          "isCorrect": true,
+          "rationale": "Static models are limited to their training data, whereas RAG acts like an 'open-book' test by checking external data."
+        },
+        {
+          "text": "Static models are better at writing code, while RAG is better for math.",
+          "isCorrect": false,
+          "rationale": "Both types can perform these tasks, but their accuracy depends on the source material available."
+        },
+        {
+          "text": "RAG models do not require a connection to the internet.",
+          "isCorrect": false,
+          "rationale": "RAG typically requires access to an external database or the internet to retrieve information."
+        }
+      ],
+      "hint": "Think about the difference between a student taking a closed-book test versus an open-book test."
+    },
+    {
+      "question": "In the 'Age Calculator' project, why is the modulo operator $\\%$ used?",
+      "answerOptions": [
+        {
+          "text": "To calculate the total number of decades.",
+          "isCorrect": false,
+          "rationale": "Calculating decades requires integer division ($//$) to find how many times $10$ fits into the age."
+        },
+        {
+          "text": "To find the leftover years after accounting for decades.",
+          "isCorrect": true,
+          "rationale": "The modulo operator returns the remainder of a division, which represents the years remaining after full decades are removed."
+        },
+        {
+          "text": "To multiply the user's age by ten.",
+          "isCorrect": false,
+          "rationale": "Multiplication is performed with the asterisk ($*$) symbol."
+        },
+        {
+          "text": "To convert the age from a string to an integer.",
+          "isCorrect": false,
+          "rationale": "Type conversion is handled by functions like `int()`, not by arithmetic operators."
+        }
+      ],
+      "hint": "The modulo operator is used whenever you need to find 'what remains' after a division."
+    },
+    {
+      "question": "Which tool is described as a 'Google Drive for programmers' where code is stored and collaborated on?",
+      "answerOptions": [
+        {
+          "text": "CodeSandbox",
+          "isCorrect": false,
+          "rationale": "CodeSandbox is an online environment used for running and testing code, rather than just storing repositories."
+        },
+        {
+          "text": "Perplexity",
+          "isCorrect": false,
+          "rationale": "Perplexity is an AI research tool that focuses on providing cited answers."
+        },
+        {
+          "text": "GitHub",
+          "isCorrect": true,
+          "rationale": "GitHub is the industry standard for version control and hosting code projects."
+        },
+        {
+          "text": "Python Shell",
+          "isCorrect": false,
+          "rationale": "The shell is an interface for executing code line-by-line, not for managing long-term storage or collaboration."
+        }
+      ],
+      "hint": "Look for the platform where developers 'clone' or 'fork' projects."
+    }
+  ]
+}

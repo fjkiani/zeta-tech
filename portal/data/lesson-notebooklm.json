@@ -1,0 +1,80 @@
+{
+  "cml7gweqrqpct07lrp4328be5": {
+    "notebookId": "0b529076-7f1d-423d-8dc3-c9b7838af369",
+    "sourceId": "4ca2adf6-4d07-4e52-aba0-19e676b352ca",
+    "schoolKey": "bronx_medical",
+    "artifacts": {},
+    "updatedAt": "2026-02-04T17:09:54.625Z"
+  },
+  "cml7i2dbssm7707lrx9g6m66q": {
+    "notebookId": "c467c722-b618-4afe-bea1-ee5fb45d8307",
+    "sourceId": "fe7a6bed-4281-4596-8f59-0463a95f0e27",
+    "schoolKey": "bronx_medical",
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/quiz.json",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/quiz.json",
+        "generatedAt": "2026-02-05T19:39:36.651Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Lesson Transcript + Teacher Context"
+        }
+      },
+      "flashcards": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/flashcards.json",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/flashcards.json",
+        "generatedAt": "2026-02-05T19:40:18.309Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Lesson Transcript + Teacher Context"
+        }
+      },
+      "audio": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/audio.mp3",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/audio.mp3"
+      },
+      "mindMap": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/mindMap.json",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/mindMap.json"
+      },
+      "dataTable": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/data.csv",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/data.csv"
+      },
+      "slideDeck": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cml7i2dbssm7707lrx9g6m66q/slides.pdf",
+        "url": "/artifacts/cml7i2dbssm7707lrx9g6m66q/slides.pdf",
+        "generatedAt": "2026-02-05T20:42:35.957Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Lesson Transcript + Teacher Context"
+        }
+      }
+    },
+    "updatedAt": "2026-02-05T20:42:35.969Z"
+  },
+  "cmla3dptmkvui08lj6268oqgj": {
+    "notebookId": "fe17c040-3864-4153-a714-e77790421245",
+    "sourceId": "30968592-9729-49b1-a778-667e73cd60f9",
+    "schoolKey": "bronx_medical",
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cmla3dptmkvui08lj6268oqgj/quiz.json",
+        "url": "/artifacts/cmla3dptmkvui08lj6268oqgj/quiz.json"
+      },
+      "flashcards": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/cmla3dptmkvui08lj6268oqgj/flashcards.json",
+        "url": "/artifacts/cmla3dptmkvui08lj6268oqgj/flashcards.json"
+      }
+    },
+    "updatedAt": "2026-02-06T03:21:12.249Z"
+  }
+}

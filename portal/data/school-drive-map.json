@@ -1,0 +1,17 @@
+{
+    "bushwick": {
+        "label": "Bushwick Leaders",
+        "folderId": "1PdRd8T4O43ZNqnyF1GAzsSIK908NdLib",
+        "tag": "bushwick"
+    },
+    "brooklyn_law": {
+        "label": "Brooklyn HS Law & Tech",
+        "folderId": "19PJSzktP-JF2vFY2CMHrE8sRu9VoSMkX",
+        "tag": "brooklyn_law"
+    },
+    "bronx_medical": {
+        "label": "Bronx HS for Medical Science",
+        "folderId": "1b9m8fPFDRZLR5V3B9JFXtehtSv9Df0ty",
+        "tag": "bronx_medical"
+    }
+}

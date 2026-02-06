@@ -1,0 +1,39 @@
+{
+    "title": "Python Data Types Mind Map",
+    "root": "Data Types",
+    "nodes": [
+        {
+            "id": "1",
+            "label": "Primitive"
+        },
+        {
+            "id": "2",
+            "label": "Non-Primitive"
+        },
+        {
+            "id": "3",
+            "label": "Integer",
+            "parent": "1"
+        },
+        {
+            "id": "4",
+            "label": "Float",
+            "parent": "1"
+        },
+        {
+            "id": "5",
+            "label": "String",
+            "parent": "1"
+        },
+        {
+            "id": "6",
+            "label": "List",
+            "parent": "2"
+        },
+        {
+            "id": "7",
+            "label": "Dictionary",
+            "parent": "2"
+        }
+    ]
+}

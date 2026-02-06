@@ -1,0 +1,265 @@
+{
+  "title": "Python Quiz",
+  "questions": [
+    {
+      "question": "In the 'warehouse' analogy, what specifically acts as the 'labeled box' used to store data in a computer's memory?",
+      "answerOptions": [
+        {
+          "text": "A variable",
+          "isCorrect": true,
+          "rationale": "Variables serve as identifiers for specific locations in memory where data values are stored for later retrieval."
+        },
+        {
+          "text": "The Python Shell",
+          "isCorrect": false,
+          "rationale": "The shell is an interactive environment to run code, not the storage mechanism itself."
+        },
+        {
+          "text": "An arithmetic operator",
+          "isCorrect": false,
+          "rationale": "Operators perform actions on data but do not store the data."
+        },
+        {
+          "text": "A data type",
+          "isCorrect": false,
+          "rationale": "A data type defines what kind of data is being stored, rather than being the storage container itself."
+        }
+      ],
+      "hint": "Think about the name we give to a value so the computer can remember it."
+    },
+    {
+      "question": "Which Python data type is specifically designed to handle whole numbers without any decimal points?",
+      "answerOptions": [
+        {
+          "text": "$int$",
+          "isCorrect": true,
+          "rationale": "Short for integer, this type represents whole numbers that remain 'intact' without fractional parts."
+        },
+        {
+          "text": "$float$",
+          "isCorrect": false,
+          "rationale": "This type is used for numbers that require decimal points."
+        },
+        {
+          "text": "$string$",
+          "isCorrect": false,
+          "rationale": "This type is used for text characters rather than numerical values."
+        },
+        {
+          "text": "$decimal$",
+          "isCorrect": false,
+          "rationale": "While it sounds correct, the standard primitive type in Python for decimal numbers is called a float."
+        }
+      ],
+      "hint": "Recall the memory trick about numbers being 'INTact'."
+    },
+    {
+      "question": "What would be the result of the Python expression $16 // 5$?",
+      "answerOptions": [
+        {
+          "text": "$3$",
+          "isCorrect": true,
+          "rationale": "The double slash operator performs integer division, which returns the whole number of times the divisor fits into the dividend, discarding the remainder."
+        },
+        {
+          "text": "$3.2$",
+          "isCorrect": false,
+          "rationale": "This would be the result of standard division ($/$), which always returns a float."
+        },
+        {
+          "text": "$1$",
+          "isCorrect": false,
+          "rationale": "This is the remainder of the division, which is calculated using the modulo operator ($\\%$) instead."
+        },
+        {
+          "text": "$4$",
+          "isCorrect": false,
+          "rationale": "Integer division does not round up; it simply truncates the decimal portion."
+        }
+      ],
+      "hint": "This operator is used for integer division, focusing only on the whole number part."
+    },
+    {
+      "question": "If you are building the 'Age Calculator' and need to find the number of 'leftover years' after calculating decades, which operator should you use?",
+      "answerOptions": [
+        {
+          "text": "$\\%$",
+          "isCorrect": true,
+          "rationale": "The modulo operator finds the remainder after division, which represents the years that do not fit into a full decade."
+        },
+        {
+          "text": "$//$",
+          "isCorrect": false,
+          "rationale": "This operator calculates how many full decades there are, not the remainder."
+        },
+        {
+          "text": "$*$",
+          "isCorrect": false,
+          "rationale": "Multiplication would increase the value rather than finding a remainder."
+        },
+        {
+          "text": "$-$",
+          "isCorrect": false,
+          "rationale": "While subtraction is part of the logic, the modulo operator is the direct way to find a remainder in one step."
+        }
+      ],
+      "hint": "Look for the operator that specifically calculates the remainder of a division."
+    },
+    {
+      "question": "What is the primary reason the $1999$ NASA Mars orbiter mission failed, according to the lesson?",
+      "answerOptions": [
+        {
+          "text": "A data type mismatch between different measurement systems.",
+          "isCorrect": true,
+          "rationale": "One team used metric units while another used imperial units, causing the computer to receive unexpected numerical types/values."
+        },
+        {
+          "text": "The computer ran out of physical memory boxes.",
+          "isCorrect": false,
+          "rationale": "The issue was the interpretation of the data, not a lack of storage capacity."
+        },
+        {
+          "text": "A syntax error caused by a missing quotation mark.",
+          "isCorrect": false,
+          "rationale": "While syntax errors are common, this specific disaster was caused by a logic/data type conflict."
+        },
+        {
+          "text": "The $input()$ function returned a string instead of an integer.",
+          "isCorrect": false,
+          "rationale": "The failure was due to conflicting unit systems, not an unhandled string from a user input."
+        }
+      ],
+      "hint": "Think about what happens when two teams use different units (meters vs. feet) for the same calculation."
+    },
+    {
+      "question": "When using the command $user\\_age = input(\"Enter your age: \")$, what is the data type of the value stored in $user\\_age$?",
+      "answerOptions": [
+        {
+          "text": "$string$",
+          "isCorrect": true,
+          "rationale": "The $input()$ function in Python always returns the user's entry as text, even if they type a number."
+        },
+        {
+          "text": "$int$",
+          "isCorrect": false,
+          "rationale": "Python does not automatically convert input to an integer; the programmer must do this manually."
+        },
+        {
+          "text": "$float$",
+          "isCorrect": false,
+          "rationale": "Input defaults to text, requiring explicit conversion if a decimal number is needed."
+        },
+        {
+          "text": "It depends on whether the user types a number or a word.",
+          "isCorrect": false,
+          "rationale": "The $input()$ function is consistent and always returns a string regardless of the content entered."
+        }
+      ],
+      "hint": "Recall the 'Part 6' note about what this specific function *always* returns."
+    },
+    {
+      "question": "Which of the following lines of code will correctly convert a string variable named $s$ into a decimal number for calculation?",
+      "answerOptions": [
+        {
+          "text": "$float(s)$",
+          "isCorrect": true,
+          "rationale": "The $float()$ function is used to cast or convert a value into a decimal number type."
+        },
+        {
+          "text": "$int(s)$",
+          "isCorrect": false,
+          "rationale": "This would convert the string to a whole number, losing any decimal information."
+        },
+        {
+          "text": "$str(s)$",
+          "isCorrect": false,
+          "rationale": "This would keep the value as a string, which cannot be used for mathematical operations like division."
+        },
+        {
+          "text": "$decimal(s)$",
+          "isCorrect": false,
+          "rationale": "In Python, the primitive keyword for this conversion is $float$, not $decimal$."
+        }
+      ],
+      "hint": "You need the function that allows numbers to 'float' their decimal points."
+    },
+    {
+      "question": "What would happen if you ran the code: $print(\"5\" + \"5\")$?",
+      "answerOptions": [
+        {
+          "text": "It would display $55$.",
+          "isCorrect": true,
+          "rationale": "Because the numbers are in quotes, Python treats them as strings and performs concatenation (gluing them together)."
+        },
+        {
+          "text": "It would display $10$.",
+          "isCorrect": false,
+          "rationale": "This would only happen if the values were integers ($5 + 5$) rather than strings."
+        },
+        {
+          "text": "It would result in a $TypeError$.",
+          "isCorrect": false,
+          "rationale": "Adding two strings is a valid operation called concatenation."
+        },
+        {
+          "text": "It would display $5 + 5$.",
+          "isCorrect": false,
+          "rationale": "The plus sign inside quotes is treated as an operator if it joins two strings, unless the entire expression is one single string."
+        }
+      ],
+      "hint": "Quotes indicate text; think about what the '$+$' sign does to two pieces of text."
+    },
+    {
+      "question": "Identify the error in the following code snippet: $message = 'Welcome to NYC\"$",
+      "answerOptions": [
+        {
+          "text": "Quote Mismatch (SyntaxError)",
+          "isCorrect": true,
+          "rationale": "Python strings must start and end with the same type of quote (either both single or both double)."
+        },
+        {
+          "text": "TypeError",
+          "isCorrect": false,
+          "rationale": "Type errors occur when operations are performed on incompatible types, not because of incorrect punctuation."
+        },
+        {
+          "text": "Integer Division Error",
+          "isCorrect": false,
+          "rationale": "This error only occurs during mathematical operations involving division."
+        },
+        {
+          "text": "Concatenation Error",
+          "isCorrect": false,
+          "rationale": "Concatenation errors happen when you try to 'glue' a string to a non-string without conversion."
+        }
+      ],
+      "hint": "Check the symbols at the beginning and the end of the text string."
+    },
+    {
+      "question": "In Python, 'Type Inference' refers to the computer's ability to:",
+      "answerOptions": [
+        {
+          "text": "Guess the data type based on the value assigned to a variable.",
+          "isCorrect": true,
+          "rationale": "Unlike some languages where you must declare the type, Python looks at the value (like $17$ or \"Maya\") and determines the type automatically."
+        },
+        {
+          "text": "Change a string into an integer automatically when needed.",
+          "isCorrect": false,
+          "rationale": "This is called type conversion or casting, and usually must be done explicitly by the programmer."
+        },
+        {
+          "text": "Detect spelling mistakes in your variable names.",
+          "isCorrect": false,
+          "rationale": "This is part of syntax checking, not related to the classification of data types."
+        },
+        {
+          "text": "Calculate the amount of memory a variable uses.",
+          "isCorrect": false,
+          "rationale": "While Python manages memory, inference specifically refers to identifying the category of data."
+        }
+      ],
+      "hint": "It is described as Python's 'superpower' for simplifying variable creation."
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "title": "Programming Flashcards",
+  "cards": [
+    {
+      "front": "In the lesson's philosophy, how is code described in relation to the computer?",
+      "back": "Code is described as a conversation between the user and the computer."
+    },
+    {
+      "front": "What are the three core steps of the fundamental programming workflow?",
+      "back": "The workflow consists of Input $\\rightarrow$ Process $\\rightarrow$ Output."
+    },
+    {
+      "front": "According to the NASA Mars orbiter example, what specific technical error caused the mission's failure?",
+      "back": "The failure was caused by a data type mismatch between metric and imperial units."
+    },
+    {
+      "front": "What visual metaphor does the lesson use to describe how a computer's memory stores variables?",
+      "back": "Memory is described as a warehouse full of labeled boxes."
+    },
+    {
+      "front": "In the variable metaphor, what does the label on the outside of the box represent?",
+      "back": "The label represents the variable name."
+    },
+    {
+      "front": "In the variable metaphor, what does the item stored inside the box represent?",
+      "back": "The item inside represents the value stored in memory."
+    },
+    {
+      "front": "What is the primary benefit of using variables in a program?",
+      "back": "Variables allow the computer to remember and track values so the programmer does not have to."
+    },
+    {
+      "front": "Which Python data type is used specifically for whole numbers without decimals?",
+      "back": "The `int` (integer) data type."
+    },
+    {
+      "front": "Which Python data type is used for decimal numbers?",
+      "back": "The `float` data type."
+    },
+    {
+      "front": "Which Python data type is used for sequences of text such as letters or words?",
+      "back": "The `string` data type."
+    },
+    {
+      "front": "What is the memory trick provided to remember what 'integers' store?",
+      "back": "**INT**egers are **INT**act, meaning they have no decimal pieces."
+    },
+    {
+      "front": "What is the memory trick provided to remember what 'floats' represent?",
+      "back": "Decimals **FLOAT** because they have a point that can move."
+    },
+    {
+      "front": "What is the memory trick provided to remember what 'strings' represent?",
+      "back": "A string allows you to string together letters like beads on a string."
+    },
+    {
+      "front": "What is the term for Python's ability to automatically determine a data type based on the assigned value?",
+      "back": "This ability is called type inference."
+    },
+    {
+      "front": "Which arithmetic operator is used to perform standard division in Python?",
+      "back": "The forward slash `/` operator."
+    },
+    {
+      "front": "In Python, what is unique about the output of the `/` division operator?",
+      "back": "The result of the `/` operator is always a `float` type."
+    },
+    {
+      "front": "Which operator is used for integer division to obtain a result without a remainder?",
+      "back": "The double forward slash `//` operator."
+    },
+    {
+      "front": "Which operator is used to find only the remainder of a division?",
+      "back": "The modulo `%` operator."
+    },
+    {
+      "front": "What is the result of the Python expression `10 // 3`?",
+      "back": "The result is 3."
+    },
+    {
+      "front": "What is the result of the Python expression `10 % 3`?",
+      "back": "The result is 1."
+    },
+    {
+      "front": "How can a programmer calculate the number of full decades in an age variable using Python operators?",
+      "back": "By using integer division: `age // 10`."
+    },
+    {
+      "front": "How can a programmer calculate the leftover years after accounting for full decades using Python operators?",
+      "back": "By using the modulo operator: `age % 10`."
+    },
+    {
+      "front": "What is the purpose of the `print()` function in Python?",
+      "back": "It is used to display output to the screen for the user."
+    },
+    {
+      "front": "In the function call `print(\"Hello\")`, what is the technical term for the data placed inside the parentheses?",
+      "back": "The data inside the parentheses is called an argument."
+    },
+    {
+      "front": "What is the fundamental rule regarding the use of single versus double quotes for strings?",
+      "back": "Either can be used, but the programmer must be consistent by opening and closing with the same type."
+    },
+    {
+      "front": "What is 'string concatenation'?",
+      "back": "Concatenation is the process of joining or sticking two strings together using the `+` operator."
+    },
+    {
+      "front": "What is the result of the Python expression `print(\"5\" + \"5\")`?",
+      "back": "The result is the string \"55\"."
+    },
+    {
+      "front": "What is the primary function of `input()` in a Python program?",
+      "back": "It pauses the program and waits for the user to type data and press Enter."
+    },
+    {
+      "front": "Regardless of what the user types, what data type is always returned by the `input()` function?",
+      "back": "The `input()` function always returns a `string`."
+    },
+    {
+      "front": "What does the escape character `\\n` represent when used inside a string?",
+      "back": "It represents a newline, which moves the cursor to the next line."
+    },
+    {
+      "front": "Which Python function converts a value into an integer?",
+      "back": "The `int()` function."
+    },
+    {
+      "front": "Which Python function converts a value into a decimal number?",
+      "back": "The `float()` function."
+    },
+    {
+      "front": "Which Python function converts a numeric value into a string?",
+      "back": "The `str()` function."
+    },
+    {
+      "front": "Why does the expression `\"You are \" + 25` cause a `TypeError` in Python?",
+      "back": "Python cannot concatenate a string and an integer without converting the integer to a string first."
+    },
+    {
+      "front": "How can a programmer fix the error in the expression `\"Total: $\" + 19.99`?",
+      "back": "By wrapping the number in the `str()` function: `\"Total: $\" + str(19.99)`."
+    },
+    {
+      "front": "Why must the result of an `input()` call be converted to an `int` or `float` before doing math?",
+      "back": "Because the `input()` function returns text, and mathematical operators cannot be performed on string types."
+    },
+    {
+      "front": "What is the first step in the five-step process for building the Age Calculator?",
+      "back": "The first step is to ask the user for input."
+    },
+    {
+      "front": "In the Age Calculator, why is the input immediately passed to the `int()` function?",
+      "back": "It is converted to an integer so that mathematical calculations can be performed on the age."
+    },
+    {
+      "front": "What error occurs if a programmer attempts to use a variable name before assigning it a value?",
+      "back": "A \"Variable Not Defined\" error (or `NameError`) occurs."
+    },
+    {
+      "front": "How do you define a string that contains an apostrophe, such as \"Joe's Pizza\", to avoid syntax errors?",
+      "back": "Enclose the entire string in double quotes: `\"Joe's Pizza\"`."
+    },
+    {
+      "front": "What is the result of the Python expression `17 / 5`?",
+      "back": "The result is 3.4."
+    },
+    {
+      "front": "What is the result of the Python expression `17 // 5`?",
+      "back": "The result is 3."
+    },
+    {
+      "front": "What is the result of the Python expression `17 % 5`?",
+      "back": "The result is 2."
+    },
+    {
+      "front": "What is the result of the operation `10 + 5`?",
+      "back": "The result is 15."
+    },
+    {
+      "front": "What is the result of the operation `10 * 5`?",
+      "back": "The result is 50."
+    },
+    {
+      "front": "In the context of the Age Calculator, what is the fourth step before printing the results?",
+      "back": "The fourth step is to convert the calculated numbers back into strings for concatenation."
+    },
+    {
+      "front": "What is the result of the code `x = 10; y = \"10\"; print(x + y)`?",
+      "back": "It results in a `TypeError` because you cannot add an integer to a string."
+    },
+    {
+      "front": "How does the lesson explain the difference between `+` for numbers versus `+` for strings?",
+      "back": "For numbers it adds them, while for strings it acts as glue to stick them together."
+    },
+    {
+      "front": "In the formula for temperature conversion $C = (F - 32) \\times \\frac{5}{9}$, what does $F$ represent?",
+      "back": "$F$ represents the temperature in Fahrenheit."
+    },
+    {
+      "front": "In the formula for temperature conversion $C = (F - 32) \\times \\frac{5}{9}$, what does $C$ represent?",
+      "back": "$C$ represents the temperature in Celsius."
+    },
+    {
+      "front": "What calculation is used to determine a user's age if you know their `birth_year` and the current year is 2026?",
+      "back": "The calculation is `2026 - birth_year`."
+    },
+    {
+      "front": "What error is produced if a programmer opens a string with a double quote but closes it with a single quote?",
+      "back": "A quote mismatch error (or `SyntaxError`) is produced."
+    },
+    {
+      "front": "Why is it useful to use descriptive variable names like `length` instead of single letters like `l`?",
+      "back": "Descriptive names act as clear labels that make the code's purpose easier to understand."
+    },
+    {
+      "front": "Which function allows the program to send a specific message to the user before waiting for their response?",
+      "back": "The `input()` function allows a prompt message as an argument."
+    },
+    {
+      "front": "What are the five fundamental skills of programming as defined by the Age Calculator challenge?",
+      "back": "The skills are: getting input, saving to variables, calculating, converting types, and printing results."
+    },
+    {
+      "front": "What is the result of `float(\"9.99\")`?",
+      "back": "The result is the float value 9.99."
+    },
+    {
+      "front": "In the variable statement `length = 10`, which side represents the label and which side represents the value?",
+      "back": "The left side (`length`) is the label/name, and the right side (`10`) is the value."
+    },
+    {
+      "front": "According to the teacher notes, what is the standard fix for a \"TypeError: unsupported operand type(s) for //: 'str' and 'int'\"?",
+      "back": "The fix is to convert the string input to an integer using `int()` before performing division."
+    },
+    {
+      "front": "Which Python operator would you use to calculate the savings in a budget tracker if you have `income` and `expenses`?",
+      "back": "The subtraction operator `-`."
+    },
+    {
+      "front": "What character is used as the assignment operator in Python?",
+      "back": "The equals sign `=`."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+Concept,Type,Mutability,Example
+Integer,Numeric,Immutable,42
+Float,Numeric,Immutable,3.14
+String,Text,Immutable,"Hello"
+List,Sequence,Mutable,"[1, 2]"
+Tuple,Sequence,Immutable,"(1, 2)"

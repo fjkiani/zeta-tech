@@ -1,0 +1,13 @@
+{
+  "name": "gdrive-to-youtube",
+  "version": "1.0.0",
+  "description": "Upload videos from Google Drive to YouTube (unlisted)",
+  "type": "module",
+  "scripts": {
+    "upload": "node upload.js",
+    "auth": "node auth.js"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

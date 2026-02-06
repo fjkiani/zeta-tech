@@ -1,0 +1,139 @@
+# Doctrine: GDrive → YouTube → Hygraph Pipeline
+
+**Mission**: Get lesson videos from Google Drive onto the portal. No manual URL copying. One script, one flow.
+
+---
+
+## THE FLOW
+
+```
+Google Drive (Lessons folder)
+        │
+        │  scripts/gdrive-to-youtube/upload.js
+        │  1. List MP4s in folder
+        │  2. Download each
+        │  3. Upload to YouTube (unlisted)
+        │  4. Write uploaded-videos.json
+        ▼
+    YouTube (unlisted)
+        │
+        │  Add MediaItem in Hygraph
+        │  videoUrl = https://www.youtube.com/watch?v=VIDEO_ID
+        │  (portal embeds automatically)
+        ▼
+    Portal (lessons page)
+```
+
+---
+
+## HOW WE DID IT FOR THE 1ST VIDEO
+
+### Step 1: Put the video in Drive
+
+- Recorded: `GMT20260203-151510_Recording_640x360.mp4` (Zoom or similar)
+- Uploaded to Google Drive → **Lessons** folder  
+- Folder ID: `1EI4okzmtKSGVjDOZCbkxOdfBszZi_OOl`
+
+### Step 2: Auth (one-time)
+
+```bash
+cd scripts/gdrive-to-youtube
+npm install
+npm run auth
+```
+
+- Uses OAuth tokens from `~/.config/mcp-gdrive/` (same as GDrive MCP)
+- Requires scopes: `drive.readonly`, `youtube.upload`
+- Add `youtube.upload` to OAuth consent screen in Google Cloud Console
+- Enable YouTube Data API v3: `gcloud services enable youtube.googleapis.com`
+
+### Step 3: Run upload
+
+```bash
+npm run upload
+# or: GDRIVE_FOLDER_ID=1EI4okzmtKSGVjDOZCbkxOdfBszZi_OOl npm run upload
+```
+
+- Downloads MP4 from Drive
+- Uploads to YouTube as **unlisted**
+- Writes `uploaded-videos.json`
+
+### Step 4: Result for 1st video
+
+```json
+{
+  "name": "GMT20260203-151510_Recording_640x360.mp4",
+  "youtubeId": "PEWIdbphaYw",
+  "url": "https://www.youtube.com/watch?v=PEWIdbphaYw"
+}
+```
+
+### Step 5: Add to Hygraph
+
+- Create MediaItem in Hygraph Studio (or via MCP/mutation)
+- `type`: VIDEO  
+- `videoUrl`: `https://www.youtube.com/watch?v=PEWIdbphaYw`  
+- `title`, `slug`, `excerpt` as needed  
+- `tags`: include `["high-school"]`  
+- Publish
+
+### Step 6: Portal shows it
+
+- Portal fetches `mediaItems` from Hygraph (type=VIDEO, tags contains high-school)
+- Converts videoUrl to embed: `https://www.youtube.com/embed/PEWIdbphaYw`
+- Renders in lesson list and detail
+
+---
+
+## RULES
+
+1. **Videos live in Drive first.** Record → upload to Lessons folder → run script.
+2. **YouTube = delivery only.** Unlisted. No public channel needed.
+3. **Hygraph = source of truth.** Portal reads from Hygraph. Add MediaItem after upload.
+4. **uploaded-videos.json** = audit log. Use it to map Drive filename → YouTube ID when creating Hygraph entries.
+
+---
+
+## FILES
+
+| File | Purpose |
+|------|---------|
+| `scripts/gdrive-to-youtube/upload.js` | Main script |
+| `scripts/gdrive-to-youtube/auth.js` | OAuth flow |
+| `scripts/gdrive-to-youtube/uploaded-videos.json` | Output: name → youtubeId |
+| `scripts/gdrive-to-youtube/README.md` | Setup instructions |
+
+---
+
+## LESSON DATE & SCHOOL ACCESS
+
+- **lessonDate** (DATE): When the lecture was posted. Used for sorting (newest first) and display on lesson cards.
+- **schools** (multi-select): Which schools can see this lesson. Options: Bronx HS Medical Science, Aviation HS, Bushwick HS, Brooklyn Law, Queens.
+  - Lessons with empty `schools` appear only when viewing "All programs".
+  - Run schema migration: see `HYGRAPH-SCHEMA-MIGRATION.md`.
+
+---
+
+## UPLOADABLE ASSETS (PDF, Video File)
+
+Each MediaItem can also have **file uploads** (via Hygraph Assets):
+
+| Field       | Purpose                         | Portal behavior                               |
+|------------|----------------------------------|-----------------------------------------------|
+| **pdfDeck** | Slide deck PDF                   | Shown in Slides section (iframe), preferred over AI-generated slides |
+| **onePager** | 1-pager PDF document             | New "1 Pager" section with iframe + download  |
+| **videoFile** | Direct video file (MP4, WebM)   | Shown as supplementary video below the YouTube lesson |
+
+**How to add:**
+1. In Hygraph Studio → Assets → Upload file (PDF or video)
+2. Edit MediaItem → connect the asset to pdfDeck, onePager, or videoFile
+3. Publish
+
+**Priority:** When both exist, portal uses Hygraph assets over local artifacts (e.g. Hygraph pdfDeck over `/artifacts/.../slides.pdf`).
+
+---
+
+## FUTURE: Automate Hygraph
+
+Today: manual step to create MediaItem after upload.  
+Later: script or API could call Hygraph mutation to create MediaItem from `uploaded-videos.json` automatically.

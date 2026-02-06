@@ -1,0 +1,255 @@
+{
+  "title": "Hallucination Quiz",
+  "questions": [
+    {
+      "question": "Which of the following best defines a GenAI 'hallucination' based on the lesson plan?",
+      "answerOptions": [
+        {
+          "text": "Information that sounds confident but is actually false, unverifiable, or fabricated.",
+          "isCorrect": true,
+          "rationale": "This aligns with the lesson's definition emphasizing the combination of a confident tone and incorrect or made-up content."
+        },
+        {
+          "text": "A deliberate attempt by the AI to deceive the user for malicious purposes.",
+          "isCorrect": false,
+          "rationale": "The source material explicitly states that AI doesn't 'lie' on purpose but rather predicts the next likely words."
+        },
+        {
+          "text": "A software bug that causes the AI to stop responding to prompts entirely.",
+          "isCorrect": false,
+          "rationale": "Hallucinations involve the production of text, not the failure to generate a response."
+        },
+        {
+          "text": "The AI's inability to understand complex medical terminology or jargon.",
+          "isCorrect": false,
+          "rationale": "While complexity might increase errors, hallucination specifically refers to the generation of plausible-sounding but false information."
+        }
+      ],
+      "hint": "Consider the relationship between how sure the AI sounds and the actual truth of its statement."
+    },
+    {
+      "question": "Why does a Large Language Model produce hallucinations instead of simply saying it doesn't know the answer?",
+      "answerOptions": [
+        {
+          "text": "It is designed to complete patterns based on word probability rather than fact-checking.",
+          "isCorrect": true,
+          "rationale": "The model's core function is predicting the next word in a sequence, which leads it to fulfill the pattern of an answer even if facts are missing."
+        },
+        {
+          "text": "It has access to a hidden database of fictional information it prioritizes.",
+          "isCorrect": false,
+          "rationale": "The model does not 'look up' facts in a database; it generates text based on trained patterns."
+        },
+        {
+          "text": "The AI has been programmed to prioritize user satisfaction over accuracy.",
+          "isCorrect": false,
+          "rationale": "While the prompt might 'pressure' it to answer, the primary cause is the underlying predictive architecture."
+        },
+        {
+          "text": "The model is currently undergoing a hardware malfunction during processing.",
+          "isCorrect": false,
+          "rationale": "Hallucinations are a standard byproduct of how probabilistic models function, not a hardware error."
+        }
+      ],
+      "hint": "Think about the primary mechanism the model uses to generate text."
+    },
+    {
+      "question": "If a student asks, 'Why did President Lincoln support the development of the internet?', which condition for hallucination are they testing?",
+      "answerOptions": [
+        {
+          "text": "Framing the question with a false premise.",
+          "isCorrect": true,
+          "rationale": "The prompt assumes a historical impossibility (Lincoln died in $1865$) as true, leading the AI to explain rather than correct it."
+        },
+        {
+          "text": "Asking for time-sensitive or future facts.",
+          "isCorrect": false,
+          "rationale": "This prompt concerns the past, not events that have yet to occur like the $2028$ Olympics."
+        },
+        {
+          "text": "Forcing specificity where no data exists.",
+          "isCorrect": false,
+          "rationale": "This condition usually involves demanding exact statistics or numbers rather than explaining a concept."
+        },
+        {
+          "text": "Providing long, multi-step reasoning.",
+          "isCorrect": false,
+          "rationale": "While the answer might be long, the core issue is the incorrect foundational assumption in the prompt."
+        }
+      ],
+      "hint": "Focus on the logical validity of the statement included within the question itself."
+    },
+    {
+      "question": "What happens when a model is asked to 'cite three peer-reviewed studies' on a nonexistent medical treatment?",
+      "answerOptions": [
+        {
+          "text": "It may fabricate journal names and DOIs that look structurally correct.",
+          "isCorrect": true,
+          "rationale": "The model understands the 'pattern' of a citation and can generate text that mimics that structure without real underlying data."
+        },
+        {
+          "text": "It will always provide a link to a 'page not found' error on the web.",
+          "isCorrect": false,
+          "rationale": "Models often generate fake text rather than external links that lead to errors."
+        },
+        {
+          "text": "It will automatically search the live internet to verify the studies exist.",
+          "isCorrect": false,
+          "rationale": "According to the source, the model completes patterns rather than verifying if sources exist during generation."
+        },
+        {
+          "text": "It will refuse the prompt because it cannot access private medical journals.",
+          "isCorrect": false,
+          "rationale": "The source material highlights that the model often fails to say 'I don't know' and instead generates fabricated citations."
+        }
+      ],
+      "hint": "Think about how the AI handles the visual format of professional references."
+    },
+    {
+      "question": "How does 'forced specificity' contribute to AI hallucinations?",
+      "answerOptions": [
+        {
+          "text": "It pressures the model to provide exact numbers or stats even when no data exists.",
+          "isCorrect": true,
+          "rationale": "Demanding exact percentages for obscure topics, like hospital protocols in $1993$, forces the AI to fill in plausible-looking values."
+        },
+        {
+          "text": "It restricts the AI to only using verified government databases.",
+          "isCorrect": false,
+          "rationale": "The AI does not have a restricted verification process that limits it to specific databases during standard text generation."
+        },
+        {
+          "text": "It improves the AI's accuracy by narrowing the focus of the search.",
+          "isCorrect": false,
+          "rationale": "In cases of obscure or undocumented facts, narrowing the focus actually increases the likelihood of made-up specifics."
+        },
+        {
+          "text": "It causes the model to time out because the data is too complex to calculate.",
+          "isCorrect": false,
+          "rationale": "The model isn't calculating; it is predicting text, so it will typically generate an answer rather than timing out."
+        }
+      ],
+      "hint": "Consider what happens when you demand a 'percentage' for a topic that was never measured."
+    },
+    {
+      "question": "According to the lesson, what is a key risk of hallucinations in the context of medicine and research?",
+      "answerOptions": [
+        {
+          "text": "Wrong information provided by a confident AI can lead to patient harm.",
+          "isCorrect": true,
+          "rationale": "In healthcare, the cost of acting on 'confident but false' information is significantly higher than in other fields."
+        },
+        {
+          "text": "The AI might use too much processing power, slowing down hospital computers.",
+          "isCorrect": false,
+          "rationale": "The primary concern mentioned is the accuracy and safety of the information, not technical performance."
+        },
+        {
+          "text": "Medical researchers might lose their jobs to more efficient AI models.",
+          "isCorrect": false,
+          "rationale": "The lesson focuses on the 'limits' and errors of AI, emphasizing the need for human verification."
+        },
+        {
+          "text": "The AI might accidentally share private patient records during a hallucination.",
+          "isCorrect": false,
+          "rationale": "While privacy is a concern in AI, the lesson specifically defines hallucination as the fabrication of false information."
+        }
+      ],
+      "hint": "Reflect on why verification is presented as the 'rule' for future healthcare workers."
+    },
+    {
+      "question": "When researchers measure hallucinations, which of these is considered a 'failure' by the model?",
+      "answerOptions": [
+        {
+          "text": "Failing to say 'I don't know' when a question has no verifiable answer.",
+          "isCorrect": true,
+          "rationale": "A robust model should refuse to answer if it lacks data, but hallucinations often occur when the model answers anyway."
+        },
+        {
+          "text": "Providing an answer that is too brief or lacks detailed explanations.",
+          "isCorrect": false,
+          "rationale": "Brevity is not a hallucination; fabrication and overconfidence are the primary metrics of error."
+        },
+        {
+          "text": "Refusing to answer a prompt that contains offensive or harmful language.",
+          "isCorrect": false,
+          "rationale": "Refusing harmful prompts is usually a safety feature, not a failure of accuracy or a hallucination."
+        },
+        {
+          "text": "Generating a response that is grammatically incorrect or contains typos.",
+          "isCorrect": false,
+          "rationale": "Hallucinations are about the truth of the content, whereas grammar is a separate linguistic issue."
+        }
+      ],
+      "hint": "Think about the appropriate response for an AI when it encounters a prompt it cannot truthfully answer."
+    },
+    {
+      "question": "Which condition describes a situation where an initial error in Step 1 leads to an even larger error in Step 7?",
+      "answerOptions": [
+        {
+          "text": "Long, multi-step reasoning with hidden falsehoods.",
+          "isCorrect": true,
+          "rationale": "As the chain of reasoning grows longer, errors compound and the model 'drifts' further from the truth."
+        },
+        {
+          "text": "Asking about nonexistent or obscure facts.",
+          "isCorrect": false,
+          "rationale": "This usually refers to a single factual claim rather than a compound chain of logic."
+        },
+        {
+          "text": "Requesting time-sensitive information about the future.",
+          "isCorrect": false,
+          "rationale": "Future facts are hallucinations based on a lack of current data, not necessarily a logical chain."
+        },
+        {
+          "text": "Using a false premise in a single-sentence question.",
+          "isCorrect": false,
+          "rationale": "A false premise can be a single step, whereas the question asks about a compounding process."
+        }
+      ],
+      "hint": "Consider how mistakes can grow when one logical point is built upon another."
+    },
+    {
+      "question": "What is the primary goal of the 'Break the AI' student exercise?",
+      "answerOptions": [
+        {
+          "text": "To develop a critical eye by observing when and how the model fails.",
+          "isCorrect": true,
+          "rationale": "The exercise is designed to help students recognize the limits of the tool so they know when to be skeptical."
+        },
+        {
+          "text": "To find ways to bypass the AI's safety filters for personal use.",
+          "isCorrect": false,
+          "rationale": "The lesson explicitly frames the exercise as 'for study, not abuse'."
+        },
+        {
+          "text": "To prove that AI is useless and should not be used in medical science.",
+          "isCorrect": false,
+          "rationale": "The goal is understanding limits for 'responsible' use, not total rejection of the tool."
+        },
+        {
+          "text": "To help the AI companies identify and fix software bugs in real-time.",
+          "isCorrect": false,
+          "rationale": "The exercise is for student learning and classroom study, not for commercial software testing."
+        }
+      ],
+      "hint": "Think about why a future healthcare worker would need to practice finding errors."
+    },
+    {
+      "question": "True or False: If an AI provides a response with a professional tone and specific dates, it is likely verified and accurate.",
+      "answerOptions": [
+        {
+          "text": "False",
+          "isCorrect": true,
+          "rationale": "The lesson emphasizes that 'Confident $\\ne$ Correct' and that AI can fabricate structure and tone without real facts."
+        },
+        {
+          "text": "True",
+          "isCorrect": false,
+          "rationale": "Tone and formatting are patterns the AI mimics; they are not indicators of factual truth."
+        }
+      ],
+      "hint": "Recall the definition of hallucination regarding the 'sound' of the information versus its reality."
+    }
+  ]
+}

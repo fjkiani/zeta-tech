@@ -1,0 +1,265 @@
+{
+  "title": "Python Quiz",
+  "questions": [
+    {
+      "question": "In the context of the 1999 NASA Mars orbiter disaster, what was the primary cause of the mission failure?",
+      "answerOptions": [
+        {
+          "text": "A hardware failure in the spacecraft's communication antenna.",
+          "isCorrect": false,
+          "rationale": "While hardware failures happen, this specific incident was caused by a software data interpretation error."
+        },
+        {
+          "text": "A data type mismatch between metric and imperial units.",
+          "isCorrect": true,
+          "rationale": "One team used metric units while the other used imperial, leading to a calculation error that destroyed the orbiter."
+        },
+        {
+          "text": "The spacecraft ran out of fuel before reaching the Martian atmosphere.",
+          "isCorrect": false,
+          "rationale": "The fuel was sufficient; the issue was the trajectory calculation caused by unit differences."
+        },
+        {
+          "text": "A typo in the name of the destination planet in the navigation code.",
+          "isCorrect": false,
+          "rationale": "The destination was correct, but the numerical data used to get there was inconsistent between teams."
+        }
+      ],
+      "hint": "Consider the 'Real-World Hook' scenario involving different measurement systems."
+    },
+    {
+      "question": "If you visualize computer memory as a warehouse, what does a 'variable' represent in this analogy?",
+      "answerOptions": [
+        {
+          "text": "The entire warehouse building.",
+          "isCorrect": false,
+          "rationale": "The warehouse represents the total memory, not a single piece of stored data."
+        },
+        {
+          "text": "A labeled storage box containing a value.",
+          "isCorrect": true,
+          "rationale": "Variables act as containers with names (labels) that store specific pieces of information (values) in memory."
+        },
+        {
+          "text": "The conveyor belt moving data to the processor.",
+          "isCorrect": false,
+          "rationale": "The conveyor belt is more like a data bus or a function, rather than a storage location."
+        },
+        {
+          "text": "The security guard protecting the data.",
+          "isCorrect": false,
+          "rationale": "Security measures are separate from the fundamental way data is addressed and stored via variables."
+        }
+      ],
+      "hint": "Think about how we keep track of specific items in a large storage space."
+    },
+    {
+      "question": "Which Python data type is most appropriate for storing a value like $9.99$?",
+      "answerOptions": [
+        {
+          "text": "int",
+          "isCorrect": false,
+          "rationale": "Integers are for whole numbers and cannot store decimal points."
+        },
+        {
+          "text": "float",
+          "isCorrect": true,
+          "rationale": "Floats are designed for decimal numbers where the 'point' can move or float."
+        },
+        {
+          "text": "string",
+          "isCorrect": false,
+          "rationale": "While it can look like a number, a string is text and cannot be used for mathematical calculations directly."
+        },
+        {
+          "text": "boolean",
+          "isCorrect": false,
+          "rationale": "Booleans only store True or False values, not numerical data."
+        }
+      ],
+      "hint": "Recall the memory trick regarding 'pieces' or 'points' in numbers."
+    },
+    {
+      "question": "What is the result of the Python expression $17 \\% 5$?",
+      "answerOptions": [
+        {
+          "text": "$3$",
+          "isCorrect": false,
+          "rationale": "This is the result of floor division ($17 // 5$), not the remainder."
+        },
+        {
+          "text": "$2$",
+          "isCorrect": true,
+          "rationale": "The modulo operator (\\%) returns the remainder of the division; $17$ divided by $5$ is $3$ with a remainder of $2$."
+        },
+        {
+          "text": "$3.4$",
+          "isCorrect": false,
+          "rationale": "This is the result of standard division ($17 / 5$), which returns a float."
+        },
+        {
+          "text": "$0.2$",
+          "isCorrect": false,
+          "rationale": "The result is a whole number remainder, not a decimal fraction of the divisor."
+        }
+      ],
+      "hint": "This operator is used in the Age Calculator to find 'leftover' years."
+    },
+    {
+      "question": "When using the `input()` function in Python, what is the data type of the value returned by default?",
+      "answerOptions": [
+        {
+          "text": "int",
+          "isCorrect": false,
+          "rationale": "Even if the user types a number, Python initially treats it as text."
+        },
+        {
+          "text": "float",
+          "isCorrect": false,
+          "rationale": "Python does not automatically assume a decimal type for user input."
+        },
+        {
+          "text": "string",
+          "isCorrect": true,
+          "rationale": "The `input()` function always returns the data as a string, requiring conversion if math is needed."
+        },
+        {
+          "text": "It depends on what the user types.",
+          "isCorrect": false,
+          "rationale": "Regardless of content, the raw input is always wrapped in quotes as a string."
+        }
+      ],
+      "hint": "Consider why we need to use functions like `int()` after getting a user's age."
+    },
+    {
+      "question": "What will be displayed if you run the code: `print(\"20\" + \"26\")`?",
+      "answerOptions": [
+        {
+          "text": "$46$",
+          "isCorrect": false,
+          "rationale": "Addition only occurs for numerical types; for strings, the plus sign acts as 'glue'."
+        },
+        {
+          "text": "\"2026\"",
+          "isCorrect": true,
+          "rationale": "String concatenation (the 'smush') joins the two pieces of text together end-to-end."
+        },
+        {
+          "text": "Error: Cannot add strings",
+          "isCorrect": false,
+          "rationale": "Adding two strings is a valid operation in Python known as concatenation."
+        },
+        {
+          "text": "\"20 26\"",
+          "isCorrect": false,
+          "rationale": "Python does not automatically add a space between strings during concatenation."
+        }
+      ],
+      "hint": "Remember the 'String Concatenation (The Smush)' rule."
+    },
+    {
+      "question": "In the Age Calculator project, why is the code `str(decades)` necessary when printing the final result?",
+      "answerOptions": [
+        {
+          "text": "To make the number look better on the screen.",
+          "isCorrect": false,
+          "rationale": "It's a requirement of the data types, not just an aesthetic choice."
+        },
+        {
+          "text": "To prevent a TypeError when combining text and numbers.",
+          "isCorrect": true,
+          "rationale": "You cannot concatenate a string and an integer directly; the integer must be converted to a string first."
+        },
+        {
+          "text": "To round the number of decades to the nearest whole number.",
+          "isCorrect": false,
+          "rationale": "Rounding is handled by floor division ($//$), not by the string function."
+        },
+        {
+          "text": "To allow the user to type in their own number of decades.",
+          "isCorrect": false,
+          "rationale": "Conversion to string is for output, whereas `input()` is used for user entry."
+        }
+      ],
+      "hint": "Recall the 'Common Beginner Mistake' involving the + operator as glue."
+    },
+    {
+      "question": "What does the special character sequence `\\n` do when used inside a string?",
+      "answerOptions": [
+        {
+          "text": "It creates a tab space for indentation.",
+          "isCorrect": false,
+          "rationale": "A tab is typically represented by `\\t`, not `\\n`."
+        },
+        {
+          "text": "It moves the cursor to the next line.",
+          "isCorrect": true,
+          "rationale": "The `\\n` character represents a 'newline', causing subsequent text to appear on the line below."
+        },
+        {
+          "text": "It tells Python to ignore the next character.",
+          "isCorrect": false,
+          "rationale": "The backslash is an escape character, but `\\n` specifically represents a line break."
+        },
+        {
+          "text": "It converts the string to a number.",
+          "isCorrect": false,
+          "rationale": "Type conversion requires functions like `int()` or `float()`, not special characters."
+        }
+      ],
+      "hint": "Think about the 'Special Character Alert' in the Input section."
+    },
+    {
+      "question": "What is the result of the expression $10 / 2$ in Python 3?",
+      "answerOptions": [
+        {
+          "text": "$5$",
+          "isCorrect": false,
+          "rationale": "While mathematically correct, Python 3's `/` operator always returns a float type."
+        },
+        {
+          "text": "$5.0$",
+          "isCorrect": true,
+          "rationale": "In Python 3, standard division ($/$) always results in a floating-point number, even if the result is a whole number."
+        },
+        {
+          "text": "\"5\"",
+          "isCorrect": false,
+          "rationale": "Division returns a numerical type, not a string."
+        },
+        {
+          "text": "$0$",
+          "isCorrect": false,
+          "rationale": "The result is the quotient, not the remainder (which would be the modulo)."
+        }
+      ],
+      "hint": "Look at the 'Arithmetic Operators' table notes for the division symbol."
+    },
+    {
+      "question": "Which of the following would cause a 'Variable Not Defined' error?",
+      "answerOptions": [
+        {
+          "text": "Using a variable name before assigning a value to it.",
+          "isCorrect": true,
+          "rationale": "The computer cannot look up a 'labeled box' if that box has not been created and labeled yet."
+        },
+        {
+          "text": "Assigning a string to a variable that previously held an integer.",
+          "isCorrect": false,
+          "rationale": "Python allows variables to change types over time; this is not an error."
+        },
+        {
+          "text": "Using double quotes for one string and single quotes for another.",
+          "isCorrect": false,
+          "rationale": "As long as the quotes match for each individual string, this is perfectly valid."
+        },
+        {
+          "text": "Naming a variable with all lowercase letters.",
+          "isCorrect": false,
+          "rationale": "Lowercase letters are standard for variable naming in Python."
+        }
+      ],
+      "hint": "Think about the order of operations in the 'Bug Hunt' section."
+    }
+  ]
+}
