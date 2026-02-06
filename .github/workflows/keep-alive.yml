@@ -1,0 +1,15 @@
+name: Keep Alive
+
+on:
+  schedule:
+    - cron: '*/14 * * * *' # Run every 14 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Site
+        run: |
+          curl -I https://zeta-academy.onrender.com || echo "Site down or invalid URL"
+          # Replace the URL above with your actual Render URL if different.
