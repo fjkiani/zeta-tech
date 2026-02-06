@@ -1,1 +1,10 @@
-export default function NotFound() { return <h1>404 - Page Not Found</h1> }
+export const dynamic = 'force-dynamic';
+
+export default function NotFound() {
+    return (
+        <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h1>404 - Page Not Found</h1>
+            <p>The mission you are looking for does not exist.</p>
+        </div>
+    );
+}
