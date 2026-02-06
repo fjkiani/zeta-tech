@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight, Trophy, Target, Zap, Clock } from 'lucide-react';
-import { currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
+
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const user = await currentUser();
