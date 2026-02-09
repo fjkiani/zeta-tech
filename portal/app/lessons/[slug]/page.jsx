@@ -58,6 +58,11 @@ export default async function LessonPage({ params }) {
   // DYNAMIC INTEL EXTRACTION
   const { objectives, takeaways } = getLessonIntel(lesson.id);
 
+  // AUTH STATUS CHECK
+  const { auth } = await import('@clerk/nextjs/server');
+  const { userId } = auth();
+  const isAuthenticated = !!userId;
+
   return (
     <LessonCockpit
       lesson={lesson}
@@ -68,6 +73,7 @@ export default async function LessonPage({ params }) {
       schoolKey={schoolKey}
       objectives={objectives}
       takeaways={takeaways}
+      isAuthenticated={isAuthenticated}
     />
   );
 }
