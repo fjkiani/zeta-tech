@@ -10,6 +10,8 @@ const isPublicRoute = createRouteMatcher([
   '/icon.svg',
   '/favicon.ico',
   '/artifacts(.*)',
+  '/schools(.*)',
+  '/schools/(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
