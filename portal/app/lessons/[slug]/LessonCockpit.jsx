@@ -32,9 +32,22 @@ export default function LessonCockpit({
 }) {
     const [activeTab, setActiveTab] = useState('overview'); // overview, quiz, flashcards, slides
     const [transcript, setTranscript] = useState(initialTranscript);
+    const [context, setContext] = useState(initialContext);
+    const [liveMapping, setLiveMapping] = useState(mapping);
 
-    // Auto-Fetch Transcript on Load if missing
+    // Auto-Fetch Data on Load (Real-time Status)
     useEffect(() => {
+        // 1. Fetch Context/Transcript/NotebookData from API
+        fetch(`/api/lessons/${lesson.id}/context`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.context) setContext(data.context);
+                if (data.transcript) setTranscript(data.transcript);
+                if (data.notebookData) setLiveMapping(data.notebookData);
+            })
+            .catch(err => console.error("Context fetch error:", err));
+
+        // 2. Fallback Scavenge if Transcript missing (Legacy/Auto-Scavenge)
         if (!initialTranscript && lesson.videoUrl) {
             console.log("Auto-Fetching Transcript...");
             fetch('/api/scavenge/transcript', {
@@ -48,7 +61,18 @@ export default function LessonCockpit({
                 })
                 .catch(err => console.error("Auto-fetch failed:", err));
         }
-    }, [initialTranscript, lesson.videoUrl]);
+    }, [initialTranscript, lesson.id, lesson.videoUrl]);
+
+    // Merge Server Props with Live API Data
+    const currentArtifacts = {
+        ...artifacts,
+        quiz: liveMapping?.artifacts?.quiz?.status === 'completed' ? liveMapping.artifacts.quiz.url : artifacts.quiz,
+        flashcards: liveMapping?.artifacts?.flashcards?.status === 'completed' ? liveMapping.artifacts.flashcards.url : artifacts.flashcards,
+        slideDeck: liveMapping?.artifacts?.slideDeck?.status === 'completed' ? liveMapping.artifacts.slideDeck.url : artifacts.slideDeck,
+        audio: liveMapping?.artifacts?.audio?.status === 'completed' ? liveMapping.artifacts.audio.url : artifacts.audio,
+        mindMap: liveMapping?.artifacts?.mindMap?.status === 'completed' ? liveMapping.artifacts.mindMap.url : artifacts.mindMap,
+        dataTable: liveMapping?.artifacts?.dataTable?.status === 'completed' ? liveMapping.artifacts.dataTable.url : artifacts.dataTable,
+    };
 
     const handleTabChange = (tab) => {
         // Scroll to section
@@ -87,7 +111,7 @@ export default function LessonCockpit({
         });
 
         return () => observer.disconnect();
-    }, [artifacts]); // Re-run if artifacts load (sections appear)
+    }, [currentArtifacts]); // Re-run if artifacts load (sections appear)
 
     // Quiz Score Tracking for AI Context
     const [quizScore, setQuizScore] = useState(null);
@@ -182,7 +206,7 @@ export default function LessonCockpit({
 
                     {/* 2. AUDIO DEEP DIVE */}
                     <section id="audio" className="scroll-mt-24">
-                        {artifacts.audio ? (
+                        {currentArtifacts.audio ? (
                             <>
                                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
                                     {mapping?.artifacts?.audio?.provenance && (
@@ -195,11 +219,11 @@ export default function LessonCockpit({
                                     <div style={{ fontSize: '64px', marginBottom: 24 }}>🎧</div>
                                     <h3 style={{ marginBottom: 8, fontSize: '20px' }}>Audio Deep Dive</h3>
                                     <p style={{ marginBottom: 24, color: '#64748b' }}>Listen to an AI-generated discussion about this lesson.</p>
-                                    <audio controls src={artifacts.audio} style={{ width: '100%', maxWidth: 600, borderRadius: 30 }} />
+                                    <audio controls src={currentArtifacts.audio} style={{ width: '100%', maxWidth: 600, borderRadius: 30 }} />
                                 </div>
                             </>
                         ) : (
-                            <GenerationActions target="audio" lessonId={lesson.id} schoolKey={schoolKey} artifacts={artifacts} videoUrl={lesson.videoUrl} />
+                            <GenerationActions target="audio" lessonId={lesson.id} schoolKey={schoolKey} artifacts={currentArtifacts} videoUrl={lesson.videoUrl} />
                         )}
                     </section>
 
@@ -207,7 +231,7 @@ export default function LessonCockpit({
 
                     {/* 3. SLIDES (PDF Deck from Hygraph or generated) */}
                     <section id="slides" className="scroll-mt-24">
-                        {artifacts.slideDeck ? (
+                        {currentArtifacts.slideDeck ? (
                             <>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                     <h3 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>Lesson Slides</h3>
@@ -224,15 +248,15 @@ export default function LessonCockpit({
                                     buttonLabel="Generate Slides"
                                     loadingLabel="Generating Slides..."
                                 >
-                                    <SlidesViewer url={artifacts.slideDeck} />
+                                    <SlidesViewer url={currentArtifacts.slideDeck} />
                                 </GenerationWrapper>
                             </>
                         ) : (
-                            <GenerationActions target="slideDeck" lessonId={lesson.id} schoolKey={schoolKey} artifacts={artifacts} videoUrl={lesson.videoUrl} />
+                            <GenerationActions target="slideDeck" lessonId={lesson.id} schoolKey={schoolKey} artifacts={currentArtifacts} videoUrl={lesson.videoUrl} />
                         )}
                     </section>
 
-                    {artifacts.onePager && (
+                    {currentArtifacts.onePager && (
                         <>
                             <div style={{ borderBottom: '1px solid #e2e8f0' }} />
                             <section id="onePager" className="scroll-mt-24">
@@ -245,13 +269,13 @@ export default function LessonCockpit({
                                 >
                                     <div className="w-full h-[85vh] min-h-[800px] rounded-2xl overflow-hidden shadow-sm border border-slate-200 bg-slate-50">
                                         <iframe
-                                            src={artifacts.onePager}
+                                            src={currentArtifacts.onePager}
                                             title="1 Pager"
                                             style={{ width: '100%', height: '100%', border: 'none' }}
                                         />
                                     </div>
                                     <div style={{ textAlign: 'right', marginTop: 8 }}>
-                                        <a href={artifacts.onePager} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#3b82f6', fontWeight: 500 }}>
+                                        <a href={currentArtifacts.onePager} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#3b82f6', fontWeight: 500 }}>
                                             Open PDF in new tab ↗
                                         </a>
                                     </div>
@@ -264,7 +288,7 @@ export default function LessonCockpit({
 
                     {/* 4. MIND MAP */}
                     <section id="mindMap" className="scroll-mt-24">
-                        {artifacts.mindMap ? (
+                        {currentArtifacts.mindMap ? (
                             <>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                     <h3 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>Concept Map</h3>
@@ -274,10 +298,10 @@ export default function LessonCockpit({
                                         </span>
                                     )}
                                 </div>
-                                <MindMapViewer url={artifacts.mindMap} />
+                                <MindMapViewer url={currentArtifacts.mindMap} />
                             </>
                         ) : (
-                            <GenerationActions target="mindMap" lessonId={lesson.id} schoolKey={schoolKey} artifacts={artifacts} videoUrl={lesson.videoUrl} />
+                            <GenerationActions target="mindMap" lessonId={lesson.id} schoolKey={schoolKey} artifacts={currentArtifacts} videoUrl={lesson.videoUrl} />
                         )}
                     </section>
 
@@ -285,7 +309,7 @@ export default function LessonCockpit({
 
                     {/* 5. QUIZ */}
                     <section id="quiz" className="scroll-mt-24">
-                        {artifacts.quiz ? (
+                        {currentArtifacts.quiz ? (
                             <>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                     <h3 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>Interactive Quiz</h3>
@@ -296,14 +320,14 @@ export default function LessonCockpit({
                                     )}
                                 </div>
                                 <QuizSection
-                                    quizUrl={artifacts.quiz}
+                                    quizUrl={currentArtifacts.quiz}
                                     lessonId={lesson.id}
                                     schoolKey={schoolKey}
                                     onScoreUpdate={handleScoreUpdate}
                                 />
                             </>
                         ) : (
-                            <GenerationActions target="quiz" lessonId={lesson.id} schoolKey={schoolKey} artifacts={artifacts} videoUrl={lesson.videoUrl} />
+                            <GenerationActions target="quiz" lessonId={lesson.id} schoolKey={schoolKey} artifacts={currentArtifacts} videoUrl={lesson.videoUrl} />
                         )}
                     </section>
 
@@ -311,7 +335,7 @@ export default function LessonCockpit({
 
                     {/* 6. FLASHCARDS */}
                     <section id="flashcards" className="scroll-mt-24">
-                        {artifacts.flashcards ? (
+                        {currentArtifacts.flashcards ? (
                             <>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                     <h3 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>Study Flashcards</h3>
@@ -321,10 +345,10 @@ export default function LessonCockpit({
                                         </span>
                                     )}
                                 </div>
-                                <FlashcardSection flashcardsUrl={artifacts.flashcards} lessonId={lesson.id} schoolKey={schoolKey} />
+                                <FlashcardSection flashcardsUrl={currentArtifacts.flashcards} lessonId={lesson.id} schoolKey={schoolKey} />
                             </>
                         ) : (
-                            <GenerationActions target="flashcards" lessonId={lesson.id} schoolKey={schoolKey} artifacts={artifacts} videoUrl={lesson.videoUrl} />
+                            <GenerationActions target="flashcards" lessonId={lesson.id} schoolKey={schoolKey} artifacts={currentArtifacts} videoUrl={lesson.videoUrl} />
                         )}
                     </section>
 
@@ -352,15 +376,15 @@ export default function LessonCockpit({
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '24px' }}>
 
                     <ContextSignal
-                        artifacts={artifacts}
-                        hasContext={initialContext.length > 0}
+                        artifacts={currentArtifacts}
+                        hasContext={context && context.length > 0}
                         hasTranscript={!!transcript}
                         lessonData={lesson}
                     />
 
                     {/* Asset Library acts as Navigation Controller */}
                     <AssetLibrary
-                        artifacts={artifacts}
+                        artifacts={currentArtifacts}
                         activeTab={activeTab}
                         onTabChange={handleTabChange}
                         completedSections={Array.from(visited)}
