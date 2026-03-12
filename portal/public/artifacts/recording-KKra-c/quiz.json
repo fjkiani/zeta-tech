@@ -1,0 +1,265 @@
+{
+  "title": "Zoom Quiz",
+  "questions": [
+    {
+      "question": "When a host chooses to record a meeting, what are the two primary destination options for saving the resulting file?",
+      "answerOptions": [
+        {
+          "text": "Local Computer and Zoom Cloud",
+          "isCorrect": true,
+          "rationale": "Zoom allows users to either store the video file directly on their hard drive or upload it to Zoom's managed servers for remote access."
+        },
+        {
+          "text": "Social Media and Cloud Drive",
+          "isCorrect": false,
+          "rationale": "While recordings can be manually uploaded to social platforms later, Zoom does not provide direct, native recording to external social media sites."
+        },
+        {
+          "text": "Internal RAM and External FTP",
+          "isCorrect": false,
+          "rationale": "Meetings must be written to non-volatile storage like a disk or server, and Zoom does not use FTP as a standard recording output."
+        },
+        {
+          "text": "Email Inbox and Local Computer",
+          "isCorrect": false,
+          "rationale": "Though a link to a cloud recording might be emailed, the video file itself is too large to be generated directly into an email inbox."
+        }
+      ],
+      "hint": "Think about the choice between physical hardware storage and remote internet-based storage."
+    },
+    {
+      "question": "In a standard Zoom meeting, what occurs if the host leaves the meeting without stopping the recording first?",
+      "answerOptions": [
+        {
+          "text": "The recording stops and begins processing automatically.",
+          "isCorrect": true,
+          "rationale": "Ending the session for the host effectively terminates the data stream, triggering the conversion process for the captured media."
+        },
+        {
+          "text": "The recording continues until the last participant leaves.",
+          "isCorrect": false,
+          "rationale": "Recording is generally tied to the host's session presence unless specific permissions or alternative hosts are configured."
+        },
+        {
+          "text": "The recording file is deleted for security reasons.",
+          "isCorrect": false,
+          "rationale": "Zoom preserves the data captured up until the point the meeting ended to ensure the user does not lose their content."
+        },
+        {
+          "text": "The recording is paused and waits for the host to log back in.",
+          "isCorrect": false,
+          "rationale": "A recording cannot remain in a 'live pause' state without an active meeting session to hold the buffer."
+        }
+      ],
+      "hint": "Consider the next logical step in a file generation process when the source stream is disconnected."
+    },
+    {
+      "question": "Which file extension is typically used for the video component of a Zoom recording?",
+      "answerOptions": [
+        {
+          "text": ".mp4",
+          "isCorrect": true,
+          "rationale": "This is a universal digital multimedia container format used to store video, audio, and subtitles across most platforms."
+        },
+        {
+          "text": ".exe",
+          "isCorrect": false,
+          "rationale": "This extension is used for executable programs, not for media playback files."
+        },
+        {
+          "text": ".pdf",
+          "isCorrect": false,
+          "rationale": "This format is intended for document exchange and does not support native video streaming playback."
+        },
+        {
+          "text": ".zip",
+          "isCorrect": false,
+          "rationale": "A compressed archive might contain a video, but it is not the format of the video file itself."
+        }
+      ],
+      "hint": "Think of the most common high-definition video format used on the web today."
+    },
+    {
+      "question": "If a user wants to record a meeting automatically as soon as it begins, where must this setting be enabled?",
+      "answerOptions": [
+        {
+          "text": "In the meeting settings within the Zoom web portal",
+          "isCorrect": true,
+          "rationale": "Advanced scheduling and automation features are managed through the user's account dashboard online."
+        },
+        {
+          "text": "On the computer's Task Manager",
+          "isCorrect": false,
+          "rationale": "Task Manager controls system processes and hardware monitoring, not specific application-level automation."
+        },
+        {
+          "text": "By clicking the 'Record' button after the meeting starts",
+          "isCorrect": false,
+          "rationale": "Manual clicking is the opposite of an 'automatic' trigger, which happens without user intervention."
+        },
+        {
+          "text": "In the computer's system BIOS",
+          "isCorrect": false,
+          "rationale": "The BIOS handles hardware initialization during boot-up and is unrelated to software application settings."
+        }
+      ],
+      "hint": "This configuration is a 'set-it-and-forget-it' preference found in your account profile."
+    },
+    {
+      "question": "What is the purpose of the 'M4A' file generated during a Zoom recording?",
+      "answerOptions": [
+        {
+          "text": "To provide an audio-only version of the meeting.",
+          "isCorrect": true,
+          "rationale": "Zoom generates a separate audio file for users who only need the sound or want to create podcasts from their sessions."
+        },
+        {
+          "text": "To store the encrypted meeting password.",
+          "isCorrect": false,
+          "rationale": "Passwords are not stored in media formats; they are handled by the authentication system."
+        },
+        {
+          "text": "To record the chat messages in a text format.",
+          "isCorrect": false,
+          "rationale": "Chat logs are typically saved as .txt files, as they contain alphanumeric characters rather than audio data."
+        },
+        {
+          "text": "To act as a backup video file for low-resolution devices.",
+          "isCorrect": false,
+          "rationale": "M4A is strictly an audio container and does not contain any visual frames or video data."
+        }
+      ],
+      "hint": "Consider why someone might want to listen to a meeting on a music player."
+    },
+    {
+      "question": "How does Zoom notify participants that a recording is currently in progress?",
+      "answerOptions": [
+        {
+          "text": "A visible indicator and an optional audio disclaimer.",
+          "isCorrect": true,
+          "rationale": "Zoom uses visual icons (like a red dot) and voice notifications to ensure all participants are aware of their privacy status."
+        },
+        {
+          "text": "By sending a physical letter to their registered address.",
+          "isCorrect": false,
+          "rationale": "Notifications must be instantaneous during the digital session to be legally and practically effective."
+        },
+        {
+          "text": "By automatically turning off all participants' cameras.",
+          "isCorrect": false,
+          "rationale": "Recording is meant to capture the meeting as it happens, not to disable the features of the participants."
+        },
+        {
+          "text": "The host must verbally tell everyone every $5$ minutes.",
+          "isCorrect": false,
+          "rationale": "While polite, the software provides automated indicators so the host does not have to interrupt the flow of the meeting."
+        }
+      ],
+      "hint": "Look for a common visual symbol used in cinematography and broadcasting to signal 'Live' or 'On'."
+    },
+    {
+      "question": "In terms of permissions, who has the default authority to start a recording in a Zoom meeting?",
+      "answerOptions": [
+        {
+          "text": "The Host",
+          "isCorrect": true,
+          "rationale": "The meeting creator or host retains primary control over administrative functions, including the initiation of recording."
+        },
+        {
+          "text": "Any participant with a camera",
+          "isCorrect": false,
+          "rationale": "Hardware capability does not grant administrative privileges within the meeting software."
+        },
+        {
+          "text": "Only participants with a paid Pro license",
+          "isCorrect": false,
+          "rationale": "Even if a participant has a license, they still require host permission to record a meeting they did not organize."
+        },
+        {
+          "text": "The first person to join the meeting",
+          "isCorrect": false,
+          "rationale": "Joining order does not determine meeting roles; the host account is assigned based on the meeting link ownership."
+        }
+      ],
+      "hint": "This individual is the 'moderator' or 'organizer' of the digital space."
+    },
+    {
+      "question": "What happens to a 'Local Recording' if the user's computer runs out of disk space during the meeting?",
+      "answerOptions": [
+        {
+          "text": "The recording will fail or stop abruptly.",
+          "isCorrect": true,
+          "rationale": "Local recordings require a continuous stream of data to be written to the drive; if the drive is full, the file cannot be completed."
+        },
+        {
+          "text": "It automatically switches to Cloud Recording.",
+          "isCorrect": false,
+          "rationale": "These are two distinct services that require separate configurations and often different license levels."
+        },
+        {
+          "text": "The computer will delete old files to make room.",
+          "isCorrect": false,
+          "rationale": "Software applications generally do not have the permission to delete unrelated system or user files to gain space."
+        },
+        {
+          "text": "Zoom will compress the video into a $1$ KB file.",
+          "isCorrect": false,
+          "rationale": "It is mathematically impossible to compress significant video data into such a tiny file size without total loss of information."
+        }
+      ],
+      "hint": "Think about what happens when you try to save a document to a drive that has $0$ bytes remaining."
+    },
+    {
+      "question": "Which of the following elements is NOT typically included in the standard video file output of a Zoom recording?",
+      "answerOptions": [
+        {
+          "text": "The private chat messages between two participants",
+          "isCorrect": true,
+          "rationale": "Privacy settings ensure that one-on-one messages are not captured in the general recording available to the host."
+        },
+        {
+          "text": "Shared screens and presentations",
+          "isCorrect": false,
+          "rationale": "Anything displayed to the group during a screen share is a central part of the visual record."
+        },
+        {
+          "text": "Active speaker video feeds",
+          "isCorrect": false,
+          "rationale": "The video of the person talking is usually the primary focus of the recording layout."
+        },
+        {
+          "text": "Audio from the participants' microphones",
+          "isCorrect": false,
+          "rationale": "Capturing the spoken dialogue is essential for the recording to be useful as a meeting archive."
+        }
+      ],
+      "hint": "Think about the word 'private' and how it conflicts with a 'shared' recording."
+    },
+    {
+      "question": "When using 'Cloud Recording', how is the recording usually shared with others after the meeting ends?",
+      "answerOptions": [
+        {
+          "text": "Via a web link provided in the Zoom portal or email",
+          "isCorrect": true,
+          "rationale": "Cloud storage allows for easy sharing through URLs, which point to the file hosted on the server."
+        },
+        {
+          "text": "By mailing a USB drive to each participant",
+          "isCorrect": false,
+          "rationale": "Physical distribution is inefficient compared to the instant access provided by cloud technology."
+        },
+        {
+          "text": "By broadcasting it on a local television station",
+          "isCorrect": false,
+          "rationale": "Zoom is a private communication tool, not a public broadcast station."
+        },
+        {
+          "text": "By manually typing out the video's binary code",
+          "isCorrect": false,
+          "rationale": "Video data consists of billions of bits, making manual transcription of the code impossible."
+        }
+      ],
+      "hint": "Consider how you share a YouTube video or a Google Doc."
+    }
+  ]
+}

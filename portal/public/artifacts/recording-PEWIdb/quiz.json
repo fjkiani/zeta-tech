@@ -1,0 +1,265 @@
+{
+  "title": "Zoom Quiz",
+  "questions": [
+    {
+      "question": "Which Zoom feature allows a host to save the meeting files directly onto their own computer hardware?",
+      "answerOptions": [
+        {
+          "text": "Local Recording",
+          "isCorrect": true,
+          "rationale": "This feature processes the video data and saves the resulting file to the user's hard drive or SSD."
+        },
+        {
+          "text": "Cloud Recording",
+          "isCorrect": false,
+          "rationale": "This option stores the meeting data on the service provider's remote servers rather than the user's physical device."
+        },
+        {
+          "text": "Instant Streaming",
+          "isCorrect": false,
+          "rationale": "Streaming refers to the live broadcast of data and does not inherently imply the storage of a file on a local disk."
+        },
+        {
+          "text": "Cache Recording",
+          "isCorrect": false,
+          "rationale": "Cache is used for temporary data storage to speed up processes, not for the permanent storage of meeting files."
+        }
+      ],
+      "hint": "Identify the option that refers to storage on your physical device rather than a remote server."
+    },
+    {
+      "question": "What visual indicator is displayed in the Zoom interface to notify all participants that the session is being recorded?",
+      "answerOptions": [
+        {
+          "text": "A red circle icon and a status message in the top-left corner",
+          "isCorrect": true,
+          "rationale": "Zoom provides a clear visual signal to ensure all participants are aware of the recording for privacy and transparency."
+        },
+        {
+          "text": "A yellow banner that flashes every $5$ minutes",
+          "isCorrect": false,
+          "rationale": "Flashing banners would be distracting to the meeting flow and are not the standard UI indicator used by the platform."
+        },
+        {
+          "text": "A watermark that appears over the host's video feed",
+          "isCorrect": false,
+          "rationale": "Watermarks are typically used for branding or security and do not serve as the primary active recording status indicator."
+        },
+        {
+          "text": "A persistent popup window that must be clicked to close",
+          "isCorrect": false,
+          "rationale": "While a disclaimer may appear at the start, a persistent popup would interfere with the visibility of shared content."
+        }
+      ],
+      "hint": "Look for a common UI symbol often used in electronics to indicate an active recording."
+    },
+    {
+      "question": "If a participant who is not the host wants to record the meeting locally, what action must the host take?",
+      "answerOptions": [
+        {
+          "text": "Grant recording permission to that specific participant",
+          "isCorrect": true,
+          "rationale": "The host maintains control over who can capture the session and must manually enable this capability for others."
+        },
+        {
+          "text": "Provide the participant with the meeting's encryption key",
+          "isCorrect": false,
+          "rationale": "Encryption keys are handled automatically by the software for security and are not related to user recording permissions."
+        },
+        {
+          "text": "Assign the participant the 'Waiting Room' manager role",
+          "isCorrect": false,
+          "rationale": "Managing the waiting room is a logistical task that does not grant rights to save video files to a local drive."
+        },
+        {
+          "text": "No action is needed as all participants can record by default",
+          "isCorrect": false,
+          "rationale": "For privacy reasons, recording rights are restricted to the host unless specifically delegated to someone else."
+        }
+      ],
+      "hint": "Consider how a host manages the specific capabilities of individual attendees during a live session."
+    },
+    {
+      "question": "What is the functional difference between clicking 'Pause' and clicking 'Stop' during a recording session?",
+      "answerOptions": [
+        {
+          "text": "Pausing results in a single continuous file, while stopping creates a new file if recording resumes",
+          "isCorrect": true,
+          "rationale": "Stopping the recording terminates the current file process, whereas pausing simply suspends the input into the current file."
+        },
+        {
+          "text": "Pausing mutes the audio, while stopping turns off the video feed",
+          "isCorrect": false,
+          "rationale": "Audio and video controls are separate from the recording functions and are managed via the microphone and camera buttons."
+        },
+        {
+          "text": "Stopping automatically uploads the file to the web, while pausing keeps it on the CPU",
+          "isCorrect": false,
+          "rationale": "The upload process typically begins only after the meeting has fully ended, regardless of whether stop or pause was used."
+        },
+        {
+          "text": "There is no functional difference; both buttons perform the same action",
+          "isCorrect": false,
+          "rationale": "These buttons provide different levels of control over how the final output files are organized and segmented."
+        }
+      ],
+      "hint": "Think about how these actions affect the number of separate video files generated at the end of the meeting."
+    },
+    {
+      "question": "Which file format is the standard output for a Zoom video recording?",
+      "answerOptions": [
+        {
+          "text": ".mp4",
+          "isCorrect": true,
+          "rationale": "This format is widely used because it offers high compatibility across different operating systems and media players."
+        },
+        {
+          "text": ".exe",
+          "isCorrect": false,
+          "rationale": "This extension is used for executable programs, not for multimedia video or audio content."
+        },
+        {
+          "text": ".pdf",
+          "isCorrect": false,
+          "rationale": "This format is intended for document exchange and cannot encapsulate the temporal data of a video stream."
+        },
+        {
+          "text": ".zip",
+          "isCorrect": false,
+          "rationale": "While recordings can be compressed into this format later, it is an archive container rather than a video playback format."
+        }
+      ],
+      "hint": "Consider the most common file extension used for digital video playback on the web."
+    },
+    {
+      "question": "What happens immediately after a meeting ends if a 'Local Recording' was in progress?",
+      "answerOptions": [
+        {
+          "text": "The recording file is converted into a viewable format",
+          "isCorrect": true,
+          "rationale": "Zoom must process the raw data captured during the meeting to finalize the video file for the user."
+        },
+        {
+          "text": "The file is automatically emailed to all invited participants",
+          "isCorrect": false,
+          "rationale": "Automated distribution of local files would consume significant bandwidth and may violate the host's privacy preferences."
+        },
+        {
+          "text": "The computer performs a mandatory system reboot to save the data",
+          "isCorrect": false,
+          "rationale": "Modern software handles file writing through the operating system without requiring a hardware restart."
+        },
+        {
+          "text": "The recording is deleted if it exceeds $1$ gigabyte in size",
+          "isCorrect": false,
+          "rationale": "Local recordings are limited only by the available space on the host's hard drive, not an arbitrary software cap."
+        }
+      ],
+      "hint": "Think about the necessary processing step required to turn raw meeting data into a standard video file."
+    },
+    {
+      "question": "Where can a host manage and share their 'Cloud Recordings' after the meeting has concluded?",
+      "answerOptions": [
+        {
+          "text": "The Zoom Web Portal",
+          "isCorrect": true,
+          "rationale": "The portal serves as the centralized management interface for cloud-based storage, settings, and sharing links."
+        },
+        {
+          "text": "The Windows Task Manager",
+          "isCorrect": false,
+          "rationale": "This system tool is used for monitoring active processes and hardware performance, not for managing cloud files."
+        },
+        {
+          "text": "The computer's BIOS settings",
+          "isCorrect": false,
+          "rationale": "BIOS manages low-level hardware initialization and is unrelated to application-level cloud storage services."
+        },
+        {
+          "text": "Only through a third-party social media account",
+          "isCorrect": false,
+          "rationale": "While files can be uploaded elsewhere, the primary management tools are built directly into the Zoom ecosystem."
+        }
+      ],
+      "hint": "Identify the online dashboard where users log in to adjust their account settings and view saved data."
+    },
+    {
+      "question": "Is it possible to generate a separate audio-only file during a Zoom recording session?",
+      "answerOptions": [
+        {
+          "text": "Yes, Zoom automatically creates an M4A audio file for every recording",
+          "isCorrect": true,
+          "rationale": "Providing a separate audio file is a standard feature that allows for easier transcription or podcast-style distribution."
+        },
+        {
+          "text": "No, the audio is permanently embedded in the video file and cannot be separated",
+          "isCorrect": false,
+          "rationale": "While audio is part of the video, the software is designed to output multiple file types simultaneously for user convenience."
+        },
+        {
+          "text": "Only if the host uses an external digital recorder",
+          "isCorrect": false,
+          "rationale": "The Zoom application itself includes the functionality to capture and save the audio stream independently."
+        },
+        {
+          "text": "Only if all cameras in the meeting are turned off",
+          "isCorrect": false,
+          "rationale": "The generation of an audio file is independent of whether video signals are being received or recorded."
+        }
+      ],
+      "hint": "Consider if the software provides flexibility for users who only need the sound from a session."
+    },
+    {
+      "question": "What is the primary function of the 'Automatic Recording' setting?",
+      "answerOptions": [
+        {
+          "text": "It begins recording as soon as the meeting starts",
+          "isCorrect": true,
+          "rationale": "This automation ensures that no part of the meeting is missed by removing the need for a manual start by the host."
+        },
+        {
+          "text": "It records only when the software detects human speech",
+          "isCorrect": false,
+          "rationale": "This would lead to fragmented files and is not a standard behavior of the recording automation feature."
+        },
+        {
+          "text": "It automatically records the host's entire desktop screen",
+          "isCorrect": false,
+          "rationale": "Recording captures the meeting interface or shared windows specifically, rather than the entire desktop unless shared."
+        },
+        {
+          "text": "It deletes the recording automatically after it has been viewed once",
+          "isCorrect": false,
+          "rationale": "Storage management and auto-deletion are separate features from the initial capture settings."
+        }
+      ],
+      "hint": "Think about a setting that triggers an action without requiring user intervention at the start of a call."
+    },
+    {
+      "question": "Which of the following determines the availability of the 'Cloud Recording' feature for a specific user?",
+      "answerOptions": [
+        {
+          "text": "The type of Zoom subscription plan the user has",
+          "isCorrect": true,
+          "rationale": "Cloud storage involves ongoing costs for the provider and is typically reserved for paid or 'Licensed' account tiers."
+        },
+        {
+          "text": "The physical weight of the user's laptop",
+          "isCorrect": false,
+          "rationale": "Hardware mass has no impact on the software's ability to communicate with remote cloud servers."
+        },
+        {
+          "text": "The number of monitors connected to the computer",
+          "isCorrect": false,
+          "rationale": "Display configuration affects visibility but does not change the feature set of the user's account."
+        },
+        {
+          "text": "The specific time of day the meeting takes place",
+          "isCorrect": false,
+          "rationale": "Cloud services are available $24/7$ and are not restricted by time-based quotas for standard accounts."
+        }
+      ],
+      "hint": "Recall which account status usually distinguishes basic free users from professional or business users."
+    }
+  ]
+}

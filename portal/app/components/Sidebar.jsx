@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Compass, MapPin, TrendingUp, Box, LogIn } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { SCHOOLS } from '../lib/schools';
 
 export default function Sidebar() {
     const pathname = usePathname();
@@ -67,7 +68,7 @@ export default function Sidebar() {
                         color: 'white', fontWeight: 800, fontSize: '20px',
                         boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
                     }}>Z</div>
-                    <span style={{ fontSize: '18px', fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.5px' }}>ZETA COMMAND</span>
+                    <span style={{ fontSize: '18px', fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.5px' }}>Zeta Tech</span>
                 </Link>
 
                 {/* Primary Navigation */}
@@ -79,10 +80,13 @@ export default function Sidebar() {
                         }
                     `}</style>
                     <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', paddingLeft: '8px' }}>Directives</div>
-                    <NavItem href="/" icon={Home} label="HQ Console" />
-                    <NavItem href="/schools" icon={MapPin} label="Sector Map" />
-                    <NavItem href="/lessons" icon={Compass} label="Mission Briefs" />
+                    <NavItem href="/" icon={Home} label="Mission Board" />
                     <NavItem href="/progress" icon={TrendingUp} label="Cadet Progress" />
+                    
+                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '32px', marginBottom: '8px', paddingLeft: '8px' }}>Courses</div>
+                    {Object.values(SCHOOLS).map(school => (
+                        <NavItem key={school.key} href={`/?school=${school.key}`} icon={Compass} label={school.label} />
+                    ))}
                     
                     <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '32px', marginBottom: '8px', paddingLeft: '8px' }}>Labs</div>
                     <NavItem href={SANDBOX_URL} icon={Box} label="Sandbox Terminal" external={true} />

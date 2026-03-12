@@ -1,0 +1,265 @@
+{
+  "title": "Sandbox Quiz",
+  "questions": [
+    {
+      "question": "What is the primary objective of implementing a 'Sandbox' in Python development?",
+      "answerOptions": [
+        {
+          "text": "To create an isolated environment for executing untrusted code safely.",
+          "isCorrect": true,
+          "rationale": "Isolation ensures that code execution is restricted to a specific environment, preventing it from accessing or damaging the host system."
+        },
+        {
+          "text": "To optimize the execution speed of mathematical algorithms.",
+          "isCorrect": false,
+          "rationale": "Sandboxing often introduces overhead due to security checks, which typically decreases rather than increases performance."
+        },
+        {
+          "text": "To automatically format Python code according to style guides.",
+          "isCorrect": false,
+          "rationale": "While code formatting is a development task, it does not involve the security or execution isolation provided by a sandbox."
+        },
+        {
+          "text": "To provide a collaborative platform for multiple developers to edit code.",
+          "isCorrect": false,
+          "rationale": "Collaboration tools focus on version control and concurrent editing, whereas a sandbox focuses on execution safety."
+        }
+      ],
+      "hint": "Think about why you might want to put a specific piece of code inside a 'box' with strict boundaries."
+    },
+    {
+      "question": "Which of the following built-in Python functions is considered highly dangerous in a sandbox because it can execute arbitrary string input?",
+      "answerOptions": [
+        {
+          "text": "eval()",
+          "isCorrect": true,
+          "rationale": "This function evaluates a string as a Python expression, which can be exploited to run unauthorized commands if the string is user-provided."
+        },
+        {
+          "text": "len()",
+          "isCorrect": false,
+          "rationale": "Calculating the length of an object is a read-only operation that does not pose an execution security risk."
+        },
+        {
+          "text": "type()",
+          "isCorrect": false,
+          "rationale": "Identifying the class of an object is a safe metadata operation that cannot be used to execute arbitrary logic."
+        },
+        {
+          "text": "range()",
+          "isCorrect": false,
+          "rationale": "Generating a sequence of numbers is a standard procedural task and does not interpret external strings as code."
+        }
+      ],
+      "hint": "Identify the function that treats a sequence of characters as if they were written directly into the source file."
+    },
+    {
+      "question": "In a secure sandbox, why is the `os` module usually restricted or removed?",
+      "answerOptions": [
+        {
+          "text": "It provides functions to interact with the host's file system and processes.",
+          "isCorrect": true,
+          "rationale": "Accessing the operating system allows a script to read, write, or delete files, which violates the principle of isolation."
+        },
+        {
+          "text": "It is deprecated in the latest versions of Python.",
+          "isCorrect": false,
+          "rationale": "The module is a core part of Python and is not deprecated; it is restricted solely for security reasons."
+        },
+        {
+          "text": "It consumes too much memory for basic Python scripts.",
+          "isCorrect": false,
+          "rationale": "Memory consumption is not the primary concern; the high-privilege capabilities of the module are the issue."
+        },
+        {
+          "text": "It conflicts with the mathematical functions in the `math` module.",
+          "isCorrect": false,
+          "rationale": "Modules in Python are designed to coexist, and there are no functional conflicts between system and math libraries."
+        }
+      ],
+      "hint": "Consider the name of the module and what level of the computer it typically interacts with."
+    },
+    {
+      "question": "What is the result of a successful 'escape' from a Python jail or sandbox?",
+      "answerOptions": [
+        {
+          "text": "The code gains unauthorized access to the host system or its resources.",
+          "isCorrect": true,
+          "rationale": "Escaping implies that the code has bypassed the sandbox's restrictions to perform actions outside its intended boundary."
+        },
+        {
+          "text": "The code completes execution faster than expected.",
+          "isCorrect": false,
+          "rationale": "Efficiency is unrelated to the security breach involved in escaping a sandbox."
+        },
+        {
+          "text": "The script successfully saves its output to a local variable.",
+          "isCorrect": false,
+          "rationale": "Saving data to a variable within the script is standard behavior and does not constitute a security bypass."
+        },
+        {
+          "text": "The Python interpreter upgrades itself to a newer version automatically.",
+          "isCorrect": false,
+          "rationale": "Interpreters do not upgrade themselves as a result of code execution; this would be a system-level administrative task."
+        }
+      ],
+      "hint": "Think about what it means for a prisoner to escape their cell."
+    },
+    {
+      "question": "When configuring a sandbox, restricting CPU time and memory usage helps prevent which type of cyberattack?",
+      "answerOptions": [
+        {
+          "text": "Denial of Service ($DoS$)",
+          "isCorrect": true,
+          "rationale": "Resource limits prevent a malicious script from consuming all system resources and crashing the host machine."
+        },
+        {
+          "text": "SQL Injection",
+          "isCorrect": false,
+          "rationale": "This attack targets database queries and is typically mitigated by input sanitization, not resource management."
+        },
+        {
+          "text": "Phishing",
+          "isCorrect": false,
+          "rationale": "Phishing is a social engineering attack used to steal credentials, which is unrelated to local script resource consumption."
+        },
+        {
+          "text": "Man-in-the-Middle",
+          "isCorrect": false,
+          "rationale": "This network attack involves intercepting communication between two parties, not the execution limits of a local process."
+        }
+      ],
+      "hint": "Focus on an attack that aims to make a service unavailable by overwhelming its capacity."
+    },
+    {
+      "question": "Which of the following describes the role of the `__builtins__` dictionary in Python sandboxing?",
+      "answerOptions": [
+        {
+          "text": "It contains the references to all standard functions that a sandbox might need to limit.",
+          "isCorrect": true,
+          "rationale": "By modifying this dictionary, developers can remove access to functions like `open()` or `__import__` to harden the environment."
+        },
+        {
+          "text": "It is a secret module used only for encrypting data within the sandbox.",
+          "isCorrect": false,
+          "rationale": "The dictionary provides global scope functions and is not an encryption tool."
+        },
+        {
+          "text": "It acts as a garbage collector for deleted objects.",
+          "isCorrect": false,
+          "rationale": "Garbage collection is managed by the Python memory manager, not by the dictionary of built-in functions."
+        },
+        {
+          "text": "It stores the documentation strings for the entire Python library.",
+          "isCorrect": false,
+          "rationale": "Documentation is stored in `__doc__` attributes, while `__builtins__` holds executable function references."
+        }
+      ],
+      "hint": "Consider where Python looks when you call a standard function like `print()` without importing anything."
+    },
+    {
+      "question": "How does a Python Sandbox differ conceptually from a Python Virtual Environment (`venv`)?",
+      "answerOptions": [
+        {
+          "text": "Sandboxes focus on security and execution isolation, while `venv` focuses on dependency management.",
+          "isCorrect": true,
+          "rationale": "A `venv` keeps library versions separate for projects, but it does not prevent a script from deleting files on the host."
+        },
+        {
+          "text": "A sandbox is only for Python 2, while `venv` is only for Python 3.",
+          "isCorrect": false,
+          "rationale": "Both concepts apply to multiple versions of Python, though the specific implementations may vary."
+        },
+        {
+          "text": "A `venv` is more secure than a sandbox because it uses passwords.",
+          "isCorrect": false,
+          "rationale": "Virtual environments do not use passwords for execution; they are intended for organization, not security enforcement."
+        },
+        {
+          "text": "Sandboxes are used for writing code, while `venv` is used for running code.",
+          "isCorrect": false,
+          "rationale": "Both tools are involved in the execution phase, but they address different concerns regarding libraries versus system safety."
+        }
+      ],
+      "hint": "Distinguish between organizing your project's packages and preventing malicious code from attacking your computer."
+    },
+    {
+      "question": "If a developer wants to allow mathematical calculations but prevent file access, which module should they likely keep available in the sandbox?",
+      "answerOptions": [
+        {
+          "text": "math",
+          "isCorrect": true,
+          "rationale": "The `math` module provides standard trigonometric and logarithmic functions that do not interact with the file system."
+        },
+        {
+          "text": "shutil",
+          "isCorrect": false,
+          "rationale": "This module is used for high-level file operations like copying or moving files, which should be restricted."
+        },
+        {
+          "text": "subprocess",
+          "isCorrect": false,
+          "rationale": "This allows the execution of external shell commands, making it a high-risk module for a sandbox."
+        },
+        {
+          "text": "pathlib",
+          "isCorrect": false,
+          "rationale": "This module is designed specifically for manipulating and interacting with file system paths."
+        }
+      ],
+      "hint": "Identify the library that deals strictly with numerical logic and constants like $\\pi$."
+    },
+    {
+      "question": "Why is the `exec()` function often disabled alongside `eval()` in restricted Python environments?",
+      "answerOptions": [
+        {
+          "text": "It can execute multi-line Python code, allowing for more complex malicious scripts.",
+          "isCorrect": true,
+          "rationale": "Unlike `eval()`, which handles single expressions, `exec()` can run entire blocks of code, increasing the surface area for attack."
+        },
+        {
+          "text": "It is only compatible with legacy Python 1.0 code.",
+          "isCorrect": false,
+          "rationale": "The function is still part of modern Python and is used for dynamic execution in controlled scenarios."
+        },
+        {
+          "text": "It automatically deletes the script after one execution.",
+          "isCorrect": false,
+          "rationale": "The function executes code in the current or a specified scope and has no built-in self-deletion mechanism."
+        },
+        {
+          "text": "It requires an active internet connection to function.",
+          "isCorrect": false,
+          "rationale": "Code execution via this function is entirely local and does not depend on network connectivity."
+        }
+      ],
+      "hint": "Think about the difference between a single mathematical expression and a full-length script."
+    },
+    {
+      "question": "Which of the following is a common technique used to bypass a poorly implemented Python sandbox?",
+      "answerOptions": [
+        {
+          "text": "Using introspection to find the original `__import__` function through the class hierarchy.",
+          "isCorrect": true,
+          "rationale": "Even if `import` is removed, Python's object model often allows navigation back to the base `object` to retrieve hidden functions."
+        },
+        {
+          "text": "Increasing the font size of the terminal to bypass memory limits.",
+          "isCorrect": false,
+          "rationale": "Visual adjustments in the terminal do not affect the internal memory allocation or logic of the interpreter."
+        },
+        {
+          "text": "Writing code in a different programming language like C++ inside the Python script.",
+          "isCorrect": false,
+          "rationale": "A Python interpreter only executes Python code; embedding another language would require specific compilers not found in a sandbox."
+        },
+        {
+          "text": "Adding more comments to the code to confuse the security scanner.",
+          "isCorrect": false,
+          "rationale": "Comments are ignored by the interpreter and do not facilitate an escape from execution restrictions."
+        }
+      ],
+      "hint": "Think about how Python allows objects to 'look' at their own internal structure and parents."
+    }
+  ]
+}

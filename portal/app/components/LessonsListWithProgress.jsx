@@ -145,7 +145,7 @@ export default function LessonsListWithProgress({ lessons = [], currentSchool = 
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
                   {byClass[className].map((lesson) => (
-                    <Link key={lesson.id} href={`/lessons/${lesson.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Link key={lesson.id} href={`/schools/${lesson.schoolKey || 'bronx_medical'}/lessons/${lesson.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                       <article style={{
                         background: 'white', borderRadius: 16, overflow: 'hidden',
                         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0',

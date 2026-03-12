@@ -1,0 +1,265 @@
+{
+  "title": "Lesson Quiz",
+  "questions": [
+    {
+      "question": "Based on the Lesson Plan, what is the primary medium used to deliver the instruction?",
+      "answerOptions": [
+        {
+          "text": "Video",
+          "isCorrect": true,
+          "rationale": "The Lesson Plan explicitly states that the content is provided via a 'Lesson video'."
+        },
+        {
+          "text": "Interactive Textbook",
+          "isCorrect": false,
+          "rationale": "The source material specifies a video format rather than a text-based interactive document."
+        },
+        {
+          "text": "Live Podcast",
+          "isCorrect": false,
+          "rationale": "While a podcast is audio-based, the source identifies the material as a 'Zoom Recording' which typically implies a visual video component."
+        },
+        {
+          "text": "Physical Handout",
+          "isCorrect": false,
+          "rationale": "The lesson is digital in nature, as indicated by the 'Zoom Recording' title and video context."
+        }
+      ],
+      "hint": "Focus on the specific format mentioned in the Lesson Plan section."
+    },
+    {
+      "question": "According to the 'Transcript/Video Context' section, where should a learner look to find the specific context or transcript for the session?",
+      "answerOptions": [
+        {
+          "text": "The video source",
+          "isCorrect": true,
+          "rationale": "The transcript section refers the user directly to the 'video source' for detailed content."
+        },
+        {
+          "text": "The description field",
+          "isCorrect": false,
+          "rationale": "The description field contains a technical placeholder and does not provide session context."
+        },
+        {
+          "text": "A physical library",
+          "isCorrect": false,
+          "rationale": "The material points to a digital source rather than a physical location for the transcript."
+        },
+        {
+          "text": "The lesson plan header",
+          "isCorrect": false,
+          "rationale": "The header identifies the lesson title but does not contain the actual transcript or context."
+        }
+      ],
+      "hint": "Check the parenthetical note provided under the Transcript header."
+    },
+    {
+      "question": "In the 'Description' section, the text displays $[object\\ Object]$. What does this typically signify in a digital content management system?",
+      "answerOptions": [
+        {
+          "text": "A placeholder indicating that a data object was not correctly stringified.",
+          "isCorrect": true,
+          "rationale": "In programming, $[object\\ Object]$ is the default string representation of a JavaScript object when it is printed without being formatted into text."
+        },
+        {
+          "text": "A highly secure encryption code for the lesson.",
+          "isCorrect": false,
+          "rationale": "This specific string is a common technical artifact of unformatted data, not a purposeful security measure."
+        },
+        {
+          "text": "The official name of the Zoom recording software.",
+          "isCorrect": false,
+          "rationale": "The software is named 'Zoom,' and this string represents a technical error in the metadata display."
+        },
+        {
+          "text": "A list of object-oriented programming objectives.",
+          "isCorrect": false,
+          "rationale": "While it contains the word 'object,' it is a systemic output rather than a curriculum list."
+        }
+      ],
+      "hint": "Consider what happens when a computer tries to display complex code as simple text."
+    },
+    {
+      "question": "If a user is accessing a 'Zoom Recording' as their primary lesson material, what is the most likely benefit for their learning schedule?",
+      "answerOptions": [
+        {
+          "text": "Asynchronous access to material.",
+          "isCorrect": true,
+          "rationale": "Recorded lessons allow students to view content at their own convenience rather than at a fixed time."
+        },
+        {
+          "text": "Real-time interaction with the instructor.",
+          "isCorrect": false,
+          "rationale": "A recording is a static file, meaning it does not offer the live interaction of a synchronous session."
+        },
+        {
+          "text": "Mandatory physical attendance.",
+          "isCorrect": false,
+          "rationale": "Digital recordings are typically accessed remotely, removing the need for physical presence."
+        },
+        {
+          "text": "Immediate verbal feedback on questions.",
+          "isCorrect": false,
+          "rationale": "Feedback in a recorded lesson is delayed because the instructor is not present during the playback."
+        }
+      ],
+      "hint": "Think about the difference between 'live' and 'recorded' interactions."
+    },
+    {
+      "question": "When a Zoom session is saved to the 'Cloud,' where is the recording primarily stored?",
+      "answerOptions": [
+        {
+          "text": "On remote servers managed by the service provider.",
+          "isCorrect": true,
+          "rationale": "Cloud storage involves saving data on remote servers accessible via the internet rather than on local hardware."
+        },
+        {
+          "text": "On the student's personal smartphone.",
+          "isCorrect": false,
+          "rationale": "While a student might download the file, the 'Cloud' refers to the initial remote storage location."
+        },
+        {
+          "text": "Directly onto a physical $DVD$ or $Blu-ray$ disc.",
+          "isCorrect": false,
+          "rationale": "Modern web-conferencing tools use digital server storage rather than physical media for cloud saves."
+        },
+        {
+          "text": "In the computer's temporary $RAM$ (Random Access Memory).",
+          "isCorrect": false,
+          "rationale": "$RAM$ is volatile and temporary, whereas recordings require long-term storage solutions."
+        }
+      ],
+      "hint": "Consider the meaning of storage that is not on your own physical device."
+    },
+    {
+      "question": "Which specific feature is often paired with a 'Zoom Recording' to improve accessibility for hearing-impaired students?",
+      "answerOptions": [
+        {
+          "text": "Audio Transcript",
+          "isCorrect": true,
+          "rationale": "Transcripts provide a text-based version of the audio, making the content accessible through reading."
+        },
+        {
+          "text": "Virtual Backgrounds",
+          "isCorrect": false,
+          "rationale": "Virtual backgrounds are aesthetic features and do not assist with audio accessibility."
+        },
+        {
+          "text": "Waiting Rooms",
+          "isCorrect": false,
+          "rationale": "Waiting rooms are security features used to manage participant entry into a live meeting."
+        },
+        {
+          "text": "Screen Annotation",
+          "isCorrect": false,
+          "rationale": "Annotations are visual drawing tools and do not provide a written record of spoken dialogue."
+        }
+      ],
+      "hint": "Look for a feature that converts spoken language into written text."
+    },
+    {
+      "question": "What is the standard video file format for a 'Zoom Recording' that ensures compatibility across most devices?",
+      "answerOptions": [
+        {
+          "text": ".mp4",
+          "isCorrect": true,
+          "rationale": "MPEG-4 (.mp4) is the industry standard for compressed video files and is the default output for Zoom recordings."
+        },
+        {
+          "text": ".exe",
+          "isCorrect": false,
+          "rationale": "An .exe file is an executable program, not a video playback format."
+        },
+        {
+          "text": ".txt",
+          "isCorrect": false,
+          "rationale": "A .txt file contains plain text and cannot store video or audio data."
+        },
+        {
+          "text": ".wav",
+          "isCorrect": false,
+          "rationale": "While .wav is an audio format, it does not support the visual video components of a lesson."
+        }
+      ],
+      "hint": "Think of the most common high-compression video format used on the web today."
+    },
+    {
+      "question": "Who usually holds the primary permission to initiate the 'Zoom Recording' mentioned in the lesson?",
+      "answerOptions": [
+        {
+          "text": "The meeting host",
+          "isCorrect": true,
+          "rationale": "By default, the host manages the recording permissions and starts the process for the session."
+        },
+        {
+          "text": "Any uninvited guest",
+          "isCorrect": false,
+          "rationale": "Security protocols typically restrict recording and meeting access to authorized users and hosts."
+        },
+        {
+          "text": "The internet service provider",
+          "isCorrect": false,
+          "rationale": "The provider supplies the connection but does not manage the internal features of a specific Zoom meeting."
+        },
+        {
+          "text": "The computer's graphics card",
+          "isCorrect": false,
+          "rationale": "Hardware components process data but do not have administrative authority over software features."
+        }
+      ],
+      "hint": "Consider which role has administrative control over the virtual classroom."
+    },
+    {
+      "question": "In a recorded lesson, which view allows the student to see both the shared presentation and the instructor's video at the same time?",
+      "answerOptions": [
+        {
+          "text": "Side-by-side mode",
+          "isCorrect": true,
+          "rationale": "Side-by-side mode splits the screen to provide visibility for both the speaker and the content they are sharing."
+        },
+        {
+          "text": "Speaker view only",
+          "isCorrect": false,
+          "rationale": "Speaker view focuses only on the person talking and may obscure the shared presentation content."
+        },
+        {
+          "text": "Minimized mode",
+          "isCorrect": false,
+          "rationale": "Minimizing the window reduces the visibility of all content, making it difficult to follow a lesson."
+        },
+        {
+          "text": "Audio-only mode",
+          "isCorrect": false,
+          "rationale": "Audio-only mode eliminates all visual data, including both the speaker and the presentation."
+        }
+      ],
+      "hint": "Think of a layout that places two distinct visual elements next to each other."
+    },
+    {
+      "question": "How do participants typically receive notification that a 'Zoom Recording' has begun?",
+      "answerOptions": [
+        {
+          "text": "A visual indicator and an audible voice announcement.",
+          "isCorrect": true,
+          "rationale": "Zoom provides these alerts to ensure all participants are aware of the recording for privacy and consent reasons."
+        },
+        {
+          "text": "A physical letter sent to their home address.",
+          "isCorrect": false,
+          "rationale": "Notifications are handled digitally within the software in real-time."
+        },
+        {
+          "text": "The screen turning completely black for $30$ seconds.",
+          "isCorrect": false,
+          "rationale": "The software is designed to continue the meeting without interruption while the recording takes place."
+        },
+        {
+          "text": "An automatic increase in their speaker volume.",
+          "isCorrect": false,
+          "rationale": "Volume levels are controlled by the user, not by the start of a recording."
+        }
+      ],
+      "hint": "Look for the standard privacy alerts used in virtual conferencing applications."
+    }
+  ]
+}

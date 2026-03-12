@@ -2,23 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ContextEditor from '../../components/ContextEditor';
-import ContextSignal from '../../components/ContextSignal';
-import ObjectivesTracker from '../../components/ObjectivesTracker';
-import AIChat from '../../components/AIChat';
-import AssetLibrary from '../../components/AssetLibrary';
-import VideoPlayer from '../../components/scavenged/VideoPlayer';
-import QuizSection from '../../components/QuizSection';
-import FlashcardSection from '../../components/FlashcardSection';
-import GapsSection from '../../components/GapsSection';
+import ContextEditor from '../../../../components/ContextEditor';
+import ContextSignal from '../../../../components/ContextSignal';
+import ObjectivesTracker from '../../../../components/ObjectivesTracker';
+import AIChat from '../../../../components/AIChat';
+import AssetLibrary from '../../../../components/AssetLibrary';
+import VideoPlayer from '../../../../components/scavenged/VideoPlayer';
+import QuizSection from '../../../../components/QuizSection';
+import FlashcardSection from '../../../../components/FlashcardSection';
+import GapsSection from '../../../../components/GapsSection';
 import GenerationActions from './GenerationActions';
 import LessonViewTracker from './LessonViewTracker';
-import MindMapViewer from '../../components/MindMapViewer';
-import CsvViewer from '../../components/CsvViewer';
-import SlidesViewer from '../../components/SlidesViewer';
-import MarkdownContent from '../../components/MarkdownContent';
-import GenerationWrapper from '../../components/GenerationWrapper';
-import { getSchoolConfig } from '../../lib/schools';
+import MindMapViewer from '../../../../components/MindMapViewer';
+import CsvViewer from '../../../../components/CsvViewer';
+import SlidesViewer from '../../../../components/SlidesViewer';
+import MarkdownContent from '../../../../components/MarkdownContent';
+import GenerationWrapper from '../../../../components/GenerationWrapper';
+import MissionConsole from '../../../../components/MissionConsole';
+import { getSchoolConfig } from '../../../../lib/schools';
 
 export default function LessonCockpit({
     lesson,
@@ -124,7 +125,7 @@ export default function LessonCockpit({
         <main style={{ maxWidth: 1400, margin: '0 auto', padding: '24px' }}>
             <LessonViewTracker lessonId={lesson.id} schoolKey={schoolKey} />
             <nav style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link href="/lessons" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>← Back to Lessons</Link>
+                <Link href="/" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>← Back to Mission Board</Link>
                 <div style={{ fontSize: '13px', color: '#94a3b8' }}>{getSchoolConfig(schoolKey).label}</div>
             </nav>
 
@@ -138,6 +139,9 @@ export default function LessonCockpit({
                             <h1 style={{ margin: '0 0 12px', fontSize: '28px', fontWeight: 800, letterSpacing: '-0.5px' }}>{lesson.title}</h1>
                             {lesson.excerpt && <p style={{ color: '#64748b', margin: 0, lineHeight: '1.6', fontSize: '16px' }}>{lesson.excerpt}</p>}
                         </article>
+
+                        {/* SCHOOL CONSOLE (CHATBOT) — Top Priority */}
+                        <MissionConsole school={getSchoolConfig(schoolKey)} />
 
                         {/* Persistent Video Player & Summary Bar */}
                         <div style={{ position: 'relative' }}>
@@ -200,40 +204,6 @@ export default function LessonCockpit({
 
                     {/* DASHBOARD SECTIONS - Stacked 1-by-1 */}
 
-                    {!isAuthenticated ? (
-                        <div style={{ marginTop: 48 }}>
-                            <div style={{
-                                padding: 64,
-                                background: '#f8fafc',
-                                border: '2px dashed #e2e8f0',
-                                borderRadius: 24,
-                                textAlign: 'center'
-                            }}>
-                                <div style={{ fontSize: '48px', marginBottom: 24 }}>🔒</div>
-                                <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginBottom: 16 }}>Unlock Full Lesson Access</h2>
-                                <p style={{ fontSize: '16px', color: '#64748b', maxWidth: 480, margin: '0 auto 32px', lineHeight: '1.6' }}>
-                                    Sign in to access the AI Tutor, Interactive Quizzes, Flashcards, and deeper learning tools for this lesson.
-                                </p>
-                                <Link href="/sign-in" style={{
-                                    display: 'inline-block',
-                                    background: '#0f172a',
-                                    color: 'white',
-                                    padding: '16px 32px',
-                                    borderRadius: 12,
-                                    textDecoration: 'none',
-                                    fontWeight: 700,
-                                    fontSize: '15px',
-                                    transition: 'transform 0.2s'
-                                }}>
-                                    Sign In to Continue →
-                                </Link>
-                                <p style={{ fontSize: '13px', color: '#94a3b8', marginTop: 24 }}>
-                                    Restricted: Quiz, Slides, Audio, Flashcards, Concept Map, Gaps Analysis
-                                </p>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
                             {/* 1. GAPS / OVERVIEW */}
                             <GapsSection lessonId={lesson.id} />
 
@@ -404,62 +374,21 @@ export default function LessonCockpit({
                                     />
                                 </div>
                             </section>
-                        </>
-                    )}
+
+                        {/* SECTOR CURRICULUM MAP — Bottom of Main Content */}
+                        <div style={{ background: 'white', padding: 32, borderRadius: 24, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+                            <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0f172a', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
+                                🗺️ {getSchoolConfig(schoolKey).label} Curriculum Map
+                            </h2>
+                            <MindMapViewer url={`/api/mindmap?school=${schoolKey}`} />
+                        </div>
 
                 </div>
 
                 {/* RIGHT COLUMN: Study Cockpit (Intel) */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '24px' }}>
 
-                    {isAuthenticated ? (
-                        <>
-                            <ContextSignal
-                                artifacts={currentArtifacts}
-                                hasContext={context && context.length > 0}
-                                hasTranscript={!!transcript}
-                                lessonData={lesson}
-                            />
-
-                            {/* Asset Library acts as Navigation Controller */}
-                            <AssetLibrary
-                                artifacts={currentArtifacts}
-                                activeTab={activeTab}
-                                onTabChange={handleTabChange}
-                                completedSections={Array.from(visited)}
-                            />
-
-                            <ObjectivesTracker objectives={objectives} />
-
-                            <AIChat
-                                lessonId={lesson.id}
-                                initialContext={initialContext}
-                                transcript={transcript}
-                                quizScore={quizScore}
-                            />
-
-                            <div style={{ padding: '20px', background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a', marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <span>💡</span> Smart Takeaways
-                                </h3>
-                                {/* Takeaways Rendering Logic */}
-                                {takeaways.length > 0 ? (
-                                    <div style={{ fontSize: '14px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: 12 }}>
-                                        {takeaways.map((t, i) => (
-                                            <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-                                                <div style={{ minWidth: 6, height: 6, borderRadius: '50%', background: '#3b82f6', marginTop: 7 }} />
-                                                <p style={{ margin: 0, lineHeight: '1.5' }}>{t}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <p style={{ fontSize: '13px', color: '#94a3b8', fontStyle: 'italic', marginTop: 8 }}>
-                                        No takeaways yet. Try summarizing the video!
-                                    </p>
-                                )}
-                            </div>
-                        </>
-                    ) : (
+                    {!isAuthenticated && (
                         <div style={{ padding: 24, background: '#f8fafc', borderRadius: 12, border: '1px solid #e2e8f0' }}>
                             <h3 style={{ fontSize: '14px', fontWeight: 600, color: '#475569', marginBottom: 8 }}>Restricted Access</h3>
                             <p style={{ fontSize: '13px', color: '#64748b' }}>
@@ -467,6 +396,53 @@ export default function LessonCockpit({
                             </p>
                         </div>
                     )}
+
+                    <ContextSignal
+                        artifacts={currentArtifacts}
+                        hasContext={context && context.length > 0}
+                        hasTranscript={!!transcript}
+                        lessonData={lesson}
+                    />
+
+                    {/* Asset Library acts as Navigation Controller */}
+                    <AssetLibrary
+                        artifacts={currentArtifacts}
+                        activeTab={activeTab}
+                        onTabChange={handleTabChange}
+                        completedSections={Array.from(visited)}
+                    />
+
+
+
+                    <ObjectivesTracker objectives={objectives} />
+
+                    <AIChat
+                        lessonId={lesson.id}
+                        initialContext={initialContext}
+                        transcript={transcript}
+                        quizScore={quizScore}
+                    />
+
+                    <div style={{ padding: '20px', background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                        <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a', marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <span>💡</span> Smart Takeaways
+                        </h3>
+                        {/* Takeaways Rendering Logic */}
+                        {takeaways.length > 0 ? (
+                            <div style={{ fontSize: '14px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: 12 }}>
+                                {takeaways.map((t, i) => (
+                                    <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                                        <div style={{ minWidth: 6, height: 6, borderRadius: '50%', background: '#3b82f6', marginTop: 7 }} />
+                                        <p style={{ margin: 0, lineHeight: '1.5' }}>{t}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p style={{ fontSize: '13px', color: '#94a3b8', fontStyle: 'italic', marginTop: 8 }}>
+                                No takeaways yet. Try summarizing the video!
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </main>

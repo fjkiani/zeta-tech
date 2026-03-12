@@ -76,5 +76,103 @@
       }
     },
     "updatedAt": "2026-02-06T03:21:12.249Z"
+  },
+  "recording-PEWIdb": {
+    "notebookId": "75d247a5-e64a-4ca1-a1a7-5d2027964034",
+    "sourceId": "6127ed86-c29b-4479-a5bb-f66784907248",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/recording-PEWIdb/quiz.json",
+        "url": "/artifacts/recording-PEWIdb/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:35:48.704Z"
+  },
+  "python-variables-g4xwG_": {
+    "notebookId": "813b85a5-e84a-46ca-bba7-0cb0c52737ec",
+    "sourceId": "ae0d5a23-2c7a-461a-88ee-19084b91d291",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/python-variables-g4xwG_/quiz.json",
+        "url": "/artifacts/python-variables-g4xwG_/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:36:07.115Z"
+  },
+  "recording-KKra-c": {
+    "notebookId": "3a29ae75-794b-4562-bf29-d54c8f964a92",
+    "sourceId": "a98f6022-4823-4db4-8d48-de54ec14a06b",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/recording-KKra-c/quiz.json",
+        "url": "/artifacts/recording-KKra-c/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:37:23.803Z"
+  },
+  "recording--N5RGA": {
+    "notebookId": "ce115e8b-535d-4bdf-b139-3c0689cb68a9",
+    "sourceId": "e9e9fbbd-82f6-469f-af42-dfb67dab7fc3",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/recording--N5RGA/quiz.json",
+        "url": "/artifacts/recording--N5RGA/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:38:05.067Z"
+  },
+  "recording-G3rLVh": {
+    "notebookId": "045ea2f2-77d1-405b-822a-9ef6386a1564",
+    "sourceId": "89365224-2424-4958-99b7-4e8895853068",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/recording-G3rLVh/quiz.json",
+        "url": "/artifacts/recording-G3rLVh/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:39:18.257Z"
+  },
+  "recording-d7QzYw": {
+    "notebookId": "5c113327-6c12-4888-ba05-09a6bfb70697",
+    "sourceId": "51741859-5d61-4009-8c92-795ed52ab2bb",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/recording-d7QzYw/quiz.json",
+        "url": "/artifacts/recording-d7QzYw/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:40:27.534Z"
+  },
+  "sandbox-python-EljqJ0": {
+    "notebookId": "72637c40-cb5b-4278-985e-e474049a8108",
+    "sourceId": "3597b67c-f77d-42de-ab82-8e1e3af2676c",
+    "schoolKey": null,
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/Users/fahadkiani/Desktop/development/High-School/portal/public/artifacts/sandbox-python-EljqJ0/quiz.json",
+        "url": "/artifacts/sandbox-python-EljqJ0/quiz.json"
+      }
+    },
+    "updatedAt": "2026-03-12T16:41:27.110Z"
+  },
+  "ai-for-python-0OK8Iy": {
+    "notebookId": "ad2c5d69-d325-4e56-8ca7-f04260fc84e7",
+    "sourceId": "fa43425a-2ce0-4a62-ac64-bfbf056cc154",
+    "schoolKey": null,
+    "artifacts": {},
+    "updatedAt": "2026-03-12T16:41:33.894Z"
   }
 }

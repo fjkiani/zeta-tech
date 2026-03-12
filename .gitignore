@@ -39,3 +39,4 @@ scripts/gdrive-to-youtube/.downloads/
 *.mov
 *.zip
 *.tar.gz
+portal/.dev_server.log

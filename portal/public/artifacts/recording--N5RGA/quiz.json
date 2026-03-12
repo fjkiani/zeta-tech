@@ -1,0 +1,135 @@
+{
+  "title": "Zoom Quiz",
+  "questions": [
+    {
+      "question": "When a host decides to record a session in Zoom, which two primary storage options are typically available?",
+      "answerOptions": [
+        {
+          "text": "Local Recording and Cloud Recording",
+          "isCorrect": true,
+          "rationale": "Zoom allows users to save files directly to their computer's hard drive or to Zoom's online storage servers for easier sharing."
+        },
+        {
+          "text": "Internal Memory and External Flash Drive",
+          "isCorrect": false,
+          "rationale": "While these involve hardware, Zoom classifies recording locations based on whether the data is stored on the host's device or the service provider's servers."
+        },
+        {
+          "text": "Cloud Storage and Social Media Stream",
+          "isCorrect": false,
+          "rationale": "Streaming to social media is a separate broadcast function rather than a standard archival recording method."
+        },
+        {
+          "text": "Browser Cache and Email Attachment",
+          "isCorrect": false,
+          "rationale": "Recordings are usually too large for cache or email systems and require dedicated file paths or cloud hosting."
+        }
+      ],
+      "hint": "Consider whether the file stays on your physical device or is uploaded to the internet."
+    },
+    {
+      "question": "What is the primary video file format used by Zoom for saving meeting recordings?",
+      "answerOptions": [
+        {
+          "text": "MP4",
+          "isCorrect": true,
+          "rationale": "This format is the industry standard for high-quality compressed video and is compatible with almost all modern media players."
+        },
+        {
+          "text": "MOV",
+          "isCorrect": false,
+          "rationale": "While common in Apple environments, Zoom utilizes a more universal compressed format to ensure cross-platform compatibility."
+        },
+        {
+          "text": "AVI",
+          "isCorrect": false,
+          "rationale": "This is an older container format that produces much larger file sizes, making it less efficient for web-based meeting recordings."
+        },
+        {
+          "text": "WMV",
+          "isCorrect": false,
+          "rationale": "This is a proprietary Windows format, and Zoom uses a standard that works natively on both Windows and macOS."
+        }
+      ],
+      "hint": "Think of the most common video file extension used for mobile and web playback."
+    },
+    {
+      "question": "In terms of privacy and transparency, how does Zoom handle the start of a recording for participants?",
+      "answerOptions": [
+        {
+          "text": "Participants receive an audible or visual notification that recording has begun.",
+          "isCorrect": true,
+          "rationale": "Zoom includes built-in safeguards to inform users they are being recorded, often requiring them to click a consent button."
+        },
+        {
+          "text": "Only the host is notified to avoid distracting the participants.",
+          "isCorrect": false,
+          "rationale": "Privacy laws generally require that all parties in a recorded session are made aware of the recording."
+        },
+        {
+          "text": "The recording indicator only appears if a participant asks for it.",
+          "isCorrect": false,
+          "rationale": "The indicator is a default security feature that cannot be hidden by the host in most standard configurations."
+        },
+        {
+          "text": "Participants are only notified if the recording is shared publicly later.",
+          "isCorrect": false,
+          "rationale": "Notifications must happen at the moment of capture to ensure real-time consent."
+        }
+      ],
+      "hint": "Think about legal requirements regarding consent and awareness during digital captures."
+    },
+    {
+      "question": "What is the functional difference between 'Pausing' and 'Stopping' a Zoom recording?",
+      "answerOptions": [
+        {
+          "text": "Pausing keeps the recording in a single file, while stopping creates a new file when restarted.",
+          "isCorrect": true,
+          "rationale": "Pausing acts as a temporary break within one continuous file, whereas stopping concludes that specific recording segment."
+        },
+        {
+          "text": "Pausing saves the file to the cloud, while stopping saves it locally.",
+          "isCorrect": false,
+          "rationale": "The storage destination is determined by the initial setting, not the method of ending the recording."
+        },
+        {
+          "text": "Stopping allows for better video quality than pausing.",
+          "isCorrect": false,
+          "rationale": "Video quality is determined by bandwidth and settings, not by how the host manages the recording controls."
+        },
+        {
+          "text": "There is no functional difference; both actions result in separate files.",
+          "isCorrect": false,
+          "rationale": "These controls are distinct to allow hosts to edit out 'dead air' or private breaks without splitting the final output."
+        }
+      ],
+      "hint": "Consider how you would want a long meeting to look if you needed to take a five-minute break in the middle."
+    },
+    {
+      "question": "Which of the following is a limitation of 'Local Recording' compared to 'Cloud Recording'?",
+      "answerOptions": [
+        {
+          "text": "Local Recording is generally not supported on iOS or Android mobile devices.",
+          "isCorrect": true,
+          "rationale": "Due to storage and file system restrictions on mobile operating systems, Zoom typically requires Cloud Recording for these devices."
+        },
+        {
+          "text": "Local Recording requires a paid subscription, whereas Cloud Recording is free for everyone.",
+          "isCorrect": false,
+          "rationale": "Actually, Local Recording is often the free option, while Cloud Recording usually requires a licensed account."
+        },
+        {
+          "text": "Local Recording cannot capture audio, only video.",
+          "isCorrect": false,
+          "rationale": "Local recordings capture the full multimedia experience of the meeting, including audio and shared screens."
+        },
+        {
+          "text": "Local Recording takes significantly longer to process than Cloud Recording.",
+          "isCorrect": false,
+          "rationale": "Processing time depends on the hardware of the computer, but it is often faster because it does not rely on server queues."
+        }
+      ],
+      "hint": "Think about the hardware limitations of a smartphone versus a desktop computer."
+    }
+  ]
+}

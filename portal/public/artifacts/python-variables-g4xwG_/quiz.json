@@ -1,0 +1,265 @@
+{
+  "title": "Python Quiz",
+  "questions": [
+    {
+      "question": "Which of the following is a valid variable name in Python?",
+      "answerOptions": [
+        {
+          "text": "$total_amount$",
+          "isCorrect": true,
+          "rationale": "Python variable names must begin with a letter or an underscore and can contain alphanumeric characters and underscores."
+        },
+        {
+          "text": "$2nd_value$",
+          "isCorrect": false,
+          "rationale": "Variable names cannot begin with a numerical digit, even though digits are allowed in subsequent positions."
+        },
+        {
+          "text": "$user-name$",
+          "isCorrect": false,
+          "rationale": "The hyphen is interpreted as a subtraction operator in Python, making it an invalid character for a variable name."
+        },
+        {
+          "text": "$class$",
+          "isCorrect": false,
+          "rationale": "Python reserves specific keywords for its internal syntax, and these cannot be repurposed as variable identifiers."
+        }
+      ],
+      "hint": "Consider which characters are legally allowed to start an identifier in Python."
+    },
+    {
+      "question": "In Python, which operator is used to assign a value to a variable?",
+      "answerOptions": [
+        {
+          "text": "$=$",
+          "isCorrect": true,
+          "rationale": "The single equals sign is the assignment operator used to bind a value to a specific variable name."
+        },
+        {
+          "text": "$==$",
+          "isCorrect": false,
+          "rationale": "This operator is used for checking equality between two values rather than assigning one to the other."
+        },
+        {
+          "text": "$:=$",
+          "isCorrect": false,
+          "rationale": "While known as the walrus operator, it is used for assignment within expressions and is not the standard variable assignment operator."
+        },
+        {
+          "text": "$\\leftarrow$",
+          "isCorrect": false,
+          "rationale": "This symbol is often used in pseudocode or other languages like R, but it is not valid syntax in Python."
+        }
+      ],
+      "hint": "Think of the simplest symbol used to associate a label with a piece of data."
+    },
+    {
+      "question": "Python is described as 'case-sensitive.' If you define $age = 25$, which of the following statements is true?",
+      "answerOptions": [
+        {
+          "text": "Accessing $Age$ will result in a NameError.",
+          "isCorrect": true,
+          "rationale": "Python treats uppercase and lowercase letters as distinct, so $age$ and $Age$ are considered completely different variables."
+        },
+        {
+          "text": "Accessing $Age$ will return the value $25$.",
+          "isCorrect": false,
+          "rationale": "This assumes the language is case-insensitive, which would ignore the capitalization of the first letter."
+        },
+        {
+          "text": "Python will automatically convert $Age$ to lowercase.",
+          "isCorrect": false,
+          "rationale": "Python does not perform automatic case conversion for variable identifiers during execution."
+        },
+        {
+          "text": "Both $age$ and $Age$ refer to the same memory location.",
+          "isCorrect": false,
+          "rationale": "Case sensitivity ensures that these two identifiers are mapped to different entries in the namespace."
+        }
+      ],
+      "hint": "Reflect on how Python distinguishes between identifiers based on capitalization."
+    },
+    {
+      "question": "What occurs when you assign a new value to an existing variable, such as changing $x = 10$ to $x = \\text{'Hello'}$?",
+      "answerOptions": [
+        {
+          "text": "The variable's value and data type are updated to the new assignment.",
+          "isCorrect": true,
+          "rationale": "Python is dynamically typed, allowing variables to change both their value and their type at any point during execution."
+        },
+        {
+          "text": "Python will raise a TypeError because the types do not match.",
+          "isCorrect": false,
+          "rationale": "This describes static typing behavior found in languages like C++, whereas Python allows type flexibility."
+        },
+        {
+          "text": "The variable will retain its original integer type and try to convert the string.",
+          "isCorrect": false,
+          "rationale": "Variables in Python do not have a fixed type; only the objects they point to possess a specific type."
+        },
+        {
+          "text": "A new variable with a different scope is automatically created.",
+          "isCorrect": false,
+          "rationale": "Reassigning a value to an existing name in the same scope simply updates what that name points to."
+        }
+      ],
+      "hint": "Think about Python's 'dynamic typing' feature and how it handles type changes."
+    },
+    {
+      "question": "Which of the following is an example of multiple assignment in Python?",
+      "answerOptions": [
+        {
+          "text": "$a, b, c = 1, 2, 3$",
+          "isCorrect": true,
+          "rationale": "Python allows assigning multiple values to multiple variables in a single line by separating them with commas."
+        },
+        {
+          "text": "$a = 1; b = 2; c = 3$",
+          "isCorrect": false,
+          "rationale": "This is a series of independent assignments separated by semicolons rather than a single multiple assignment statement."
+        },
+        {
+          "text": "$a = [1, 2, 3]$ icon",
+          "isCorrect": false,
+          "rationale": "This assigns a single list object containing three integers to a single variable name."
+        },
+        {
+          "text": "$a = b = c = (1, 2, 3)$",
+          "isCorrect": false,
+          "rationale": "This assigns the same tuple object to all three variables, rather than assigning individual values to each."
+        }
+      ],
+      "hint": "Look for a syntax that maps a sequence of values to a sequence of names simultaneously."
+    },
+    {
+      "question": "How can you determine the data type of the value currently stored in a variable named $data$?",
+      "answerOptions": [
+        {
+          "text": "Use the function $type(data)$.",
+          "isCorrect": true,
+          "rationale": "The built-in $type()$ function returns the class type of the object passed as an argument."
+        },
+        {
+          "text": "Use the command $typeof(data)$.",
+          "isCorrect": false,
+          "rationale": "While $typeof$ is used in languages like JavaScript, it is not a valid function or keyword in Python."
+        },
+        {
+          "text": "Check the variable's declaration header.",
+          "isCorrect": false,
+          "rationale": "Python does not use declaration headers for variables, as types are determined at runtime."
+        },
+        {
+          "text": "Look at the $data.dtype$ attribute.",
+          "isCorrect": false,
+          "rationale": "While libraries like NumPy use $.dtype$, standard Python variables do not have this attribute by default."
+        }
+      ],
+      "hint": "Recall the built-in function used to inspect the class of an object."
+    },
+    {
+      "question": "Which statement regarding Python variable names is FALSE?",
+      "answerOptions": [
+        {
+          "text": "Variable names can contain spaces to improve readability.",
+          "isCorrect": true,
+          "rationale": "Spaces are not allowed in variable names; developers typically use underscores (snake_case) to separate words."
+        },
+        {
+          "text": "Variable names can start with an underscore $\\_$.",
+          "isCorrect": false,
+          "rationale": "Starting a variable with an underscore is valid and often used to indicate 'private' or internal variables."
+        },
+        {
+          "text": "Variable names can contain both letters and numbers.",
+          "isCorrect": false,
+          "rationale": "Alphanumeric characters are perfectly legal in Python identifiers as long as the name doesn't start with a digit."
+        },
+        {
+          "text": "Keywords like $if$ or $while$ cannot be used as variable names.",
+          "isCorrect": false,
+          "rationale": "Reserved keywords have fixed meanings in the language grammar and cannot be redefined as identifiers."
+        }
+      ],
+      "hint": "Focus on the physical structure and whitespace rules of a valid identifier."
+    },
+    {
+      "question": "If you assign $x = 5$ and then $y = x$, what happens if you later change $x = 10$?",
+      "answerOptions": [
+        {
+          "text": "$y$ remains $5$.",
+          "isCorrect": true,
+          "rationale": "Integers are immutable; $y$ was assigned the value $5$, and changing $x$ to point to $10$ does not affect where $y$ points."
+        },
+        {
+          "text": "$y$ automatically updates to $10$.",
+          "isCorrect": false,
+          "rationale": "Variables in Python store references to objects; changing $x$ simply moves its reference to a new object, leaving $y$ alone."
+        },
+        {
+          "text": "$y$ becomes $undefined$.",
+          "isCorrect": false,
+          "rationale": "Python does not lose the reference stored in $y$ just because the original source of that reference was reassigned."
+        },
+        {
+          "text": "An error occurs because $y$ is linked to $x$.",
+          "isCorrect": false,
+          "rationale": "Variables are independent labels for objects, not direct links to other variable names."
+        }
+      ],
+      "hint": "Consider how assignment works as 'pointing' to a value rather than linking two names together."
+    },
+    {
+      "question": "What is the widely accepted naming convention for constants in Python (variables that should not change)?",
+      "answerOptions": [
+        {
+          "text": "Using all capital letters, such as $MAX\\_SPEED$.",
+          "isCorrect": true,
+          "rationale": "While Python doesn't enforce constants technically, using all caps is the PEP 8 convention to signal to other programmers that a value should remain fixed."
+        },
+        {
+          "text": "Prefixing the name with $const$, like $const\\_speed$.",
+          "isCorrect": false,
+          "rationale": "Python does not have a $const$ keyword, and prefixing with 'const' is not a standard naming convention."
+        },
+        {
+          "text": "Starting the name with a double underscore, like $\\_\\_speed$.",
+          "isCorrect": false,
+          "rationale": "Double underscores are used for name mangling in classes, not for defining constants."
+        },
+        {
+          "text": "Using camelCase, such as $maxSpeed$.",
+          "isCorrect": false,
+          "rationale": "CamelCase is typically used for class names in Python, while snake_case or all caps are used for variables and constants."
+        }
+      ],
+      "hint": "Think about how developers visually distinguish 'fixed' values from regular variables."
+    },
+    {
+      "question": "What is the result of the following code? \\n $x = 10$ \\n $x = x + 5$ \\n $print(x)$",
+      "answerOptions": [
+        {
+          "text": "$15$",
+          "isCorrect": true,
+          "rationale": "The expression $x + 5$ is evaluated using the current value of $x$ (which is $10$), and the result is then assigned back to $x$."
+        },
+        {
+          "text": "$10$",
+          "isCorrect": false,
+          "rationale": "This would only be correct if the second line failed to reassign the value back to the variable $x$."
+        },
+        {
+          "text": "$5$",
+          "isCorrect": false,
+          "rationale": "This might happen if one mistakenly thought the plus sign replaced the existing value instead of adding to it."
+        },
+        {
+          "text": "An error, because a variable cannot be on both sides of the equals sign.",
+          "isCorrect": false,
+          "rationale": "In programming, the right side of the assignment is evaluated completely before the result is stored in the variable on the left."
+        }
+      ],
+      "hint": "The assignment operator evaluates the right-hand side first before updating the left-hand side."
+    }
+  ]
+}

@@ -1715,7 +1715,527 @@
       "sessionId": "sess_1770338624191_b79lxw5",
       "userId": null,
       "payload": {}
+    },
+    {
+      "id": "evt_1773291796911_it6wt5u",
+      "timestamp": "2026-03-12T05:03:16.911Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773291796920_bc40ayh",
+      "timestamp": "2026-03-12T05:03:16.920Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773291811353_51j250j",
+      "timestamp": "2026-03-12T05:03:31.353Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773291811357_qmkyjq1",
+      "timestamp": "2026-03-12T05:03:31.357Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292693778_14uaydt",
+      "timestamp": "2026-03-12T05:18:13.778Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292693787_6w6xwky",
+      "timestamp": "2026-03-12T05:18:13.787Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292731582_ev0aarz",
+      "timestamp": "2026-03-12T05:18:51.582Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292731600_bu2rf1z",
+      "timestamp": "2026-03-12T05:18:51.600Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292766926_32qppfe",
+      "timestamp": "2026-03-12T05:19:26.926Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292766931_xrui6e4",
+      "timestamp": "2026-03-12T05:19:26.931Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292858296_s9lg30h",
+      "timestamp": "2026-03-12T05:20:58.296Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292858303_lriyfip",
+      "timestamp": "2026-03-12T05:20:58.303Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292889263_fegbb3x",
+      "timestamp": "2026-03-12T05:21:29.263Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773292889278_0e3ge9m",
+      "timestamp": "2026-03-12T05:21:29.278Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773293420420_gz4wbz2",
+      "timestamp": "2026-03-12T05:30:20.420Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773293420426_x0nbpi5",
+      "timestamp": "2026-03-12T05:30:20.426Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p2runjjl08lj63nxk4kq",
+      "schoolKey": "bushwick",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773294343670_9hp7vdt",
+      "timestamp": "2026-03-12T05:45:43.670Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773294343677_pqcmfkz",
+      "timestamp": "2026-03-12T05:45:43.677Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329138267_31nu5v1",
+      "timestamp": "2026-03-12T15:25:38.267Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329138280_uf4zfw5",
+      "timestamp": "2026-03-12T15:25:38.280Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329143477_jki5ul2",
+      "timestamp": "2026-03-12T15:25:43.478Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329143498_j6r6o14",
+      "timestamp": "2026-03-12T15:25:43.498Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294325776_7m6211i",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329217623_5rqcv5v",
+      "timestamp": "2026-03-12T15:26:57.623Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p5hrnlu007lmkuozjmjo",
+      "schoolKey": "brooklyn_law",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329217630_di6syrl",
+      "timestamp": "2026-03-12T15:26:57.630Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla4p5hrnlu007lmkuozjmjo",
+      "schoolKey": "brooklyn_law",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329232719_skqlmzm",
+      "timestamp": "2026-03-12T15:27:12.719Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329232725_cd7gdan",
+      "timestamp": "2026-03-12T15:27:12.725Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329277409_croxha4",
+      "timestamp": "2026-03-12T15:27:57.409Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329277413_ldmf620",
+      "timestamp": "2026-03-12T15:27:57.413Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773291711903_azp1cda",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329319506_zudy1jl",
+      "timestamp": "2026-03-12T15:28:39.506Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294309254_4jka1d7",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329319523_0s8a54h",
+      "timestamp": "2026-03-12T15:28:39.523Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmlacylh8t7x108ljmjmh70nd",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773294309254_4jka1d7",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329534832_wckcdn2",
+      "timestamp": "2026-03-12T15:32:14.832Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773329533143_2rhslg9",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773329534839_kxooqpo",
+      "timestamp": "2026-03-12T15:32:14.839Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmla3dptmkvui08lj6268oqgj",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773329533143_2rhslg9",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333823177_a50zauk",
+      "timestamp": "2026-03-12T16:43:43.177Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333822533_r5k89cv",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333823302_pvdr82y",
+      "timestamp": "2026-03-12T16:43:43.302Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333822533_r5k89cv",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333837945_6cias02",
+      "timestamp": "2026-03-12T16:43:57.945Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333838215_okaa5gm",
+      "timestamp": "2026-03-12T16:43:58.215Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333845923_ajshb6i",
+      "timestamp": "2026-03-12T16:44:05.923Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333845942_yjquqla",
+      "timestamp": "2026-03-12T16:44:05.942Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333898935_55sxwy8",
+      "timestamp": "2026-03-12T16:44:58.935Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773333898941_wurq4sg",
+      "timestamp": "2026-03-12T16:44:58.941Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334044376_k8vthdc",
+      "timestamp": "2026-03-12T16:47:24.376Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334044424_86m1ijv",
+      "timestamp": "2026-03-12T16:47:24.424Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334110700_rtf0oqy",
+      "timestamp": "2026-03-12T16:48:30.700Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334110732_c0k4f0e",
+      "timestamp": "2026-03-12T16:48:30.732Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonvc7zfmo07n24ncw6n1w",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334233580_jtzbqdm",
+      "timestamp": "2026-03-12T16:50:33.580Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonp27zok007k57rjgc1bb",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334233586_ueulrfc",
+      "timestamp": "2026-03-12T16:50:33.586Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonp27zok007k57rjgc1bb",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334238820_n2cnqj9",
+      "timestamp": "2026-03-12T16:50:38.820Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonk3szogt07k5qp9n9trh",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334238840_fgez555",
+      "timestamp": "2026-03-12T16:50:38.840Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonk3szogt07k5qp9n9trh",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334240626_9646nar",
+      "timestamp": "2026-03-12T16:50:40.626Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonnt3zff307n2do4tw8gw",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334240648_m0uxhd9",
+      "timestamp": "2026-03-12T16:50:40.648Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonnt3zff307n2do4tw8gw",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334271651_95rhchg",
+      "timestamp": "2026-03-12T16:51:11.651Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonstdzp1u07k5jpdix7hr",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
+    },
+    {
+      "id": "evt_1773334271676_l9o729h",
+      "timestamp": "2026-03-12T16:51:11.677Z",
+      "eventType": "lesson_view",
+      "lessonId": "cmmnonstdzp1u07k5jpdix7hr",
+      "schoolKey": "bronx_medical",
+      "sessionId": "sess_1773333837815_2n4bvbt",
+      "userId": null,
+      "payload": {}
     }
   ],
-  "updatedAt": "2026-02-06T03:06:31.926Z"
+  "updatedAt": "2026-03-12T16:51:11.677Z"
 }

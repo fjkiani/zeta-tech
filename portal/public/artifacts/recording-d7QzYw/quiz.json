@@ -1,0 +1,265 @@
+{
+  "title": "Recording Quiz",
+  "questions": [
+    {
+      "question": "What are the two primary locations where a Zoom recording can be stored after a meeting?",
+      "answerOptions": [
+        {
+          "text": "Cloud storage and local computer",
+          "isCorrect": true,
+          "rationale": "Zoom provides flexibility by allowing users to save files directly to their hard drive or to a remote server for easier sharing."
+        },
+        {
+          "text": "Internal browser cache and USB drive",
+          "isCorrect": false,
+          "rationale": "While data is temporarily cached during streaming, Zoom does not use the browser cache as a permanent storage solution for recorded sessions."
+        },
+        {
+          "text": "Cloud storage and social media platforms",
+          "isCorrect": false,
+          "rationale": "Although meetings can be live-streamed to social media, they are not automatically archived there as a standard recording file."
+        },
+        {
+          "text": "Email attachments and local computer",
+          "isCorrect": false,
+          "rationale": "Video files are generally too large to be stored as email attachments, though links to the cloud recording can be emailed."
+        }
+      ],
+      "hint": "Think about the difference between your own physical hardware and a remote online server."
+    },
+    {
+      "question": "By default, which meeting participant has the authority to initiate a recording?",
+      "answerOptions": [
+        {
+          "text": "The host",
+          "isCorrect": true,
+          "rationale": "The host is granted administrative control to manage the meeting's privacy and data collection."
+        },
+        {
+          "text": "Any participant with a paid account",
+          "isCorrect": false,
+          "rationale": "Subscription status does not automatically override the host's control over recording permissions during a live session."
+        },
+        {
+          "text": "The first person to join the meeting",
+          "isCorrect": false,
+          "rationale": "Joining order does not determine administrative privileges, which are assigned to the meeting organizer."
+        },
+        {
+          "text": "Only the IT administrator",
+          "isCorrect": false,
+          "rationale": "While administrators set global policies, the individual host manages the recording for their specific meeting."
+        }
+      ],
+      "hint": "Consider who has the most control over the meeting settings and participant list."
+    },
+    {
+      "question": "What is required for a non-host participant to record a Zoom meeting locally?",
+      "answerOptions": [
+        {
+          "text": "Permission granted by the host",
+          "isCorrect": true,
+          "rationale": "Host authorization is a security measure to ensure all parties are aware and consenting to the capture of the session."
+        },
+        {
+          "text": "A specific hardware recording device",
+          "isCorrect": false,
+          "rationale": "Zoom's recording functionality is software-based and does not require external physical hardware beyond a standard computer."
+        },
+        {
+          "text": "An invitation link sent via text message",
+          "isCorrect": false,
+          "rationale": "Meeting access methods do not influence the internal permissions required to trigger a recording."
+        },
+        {
+          "text": "A minimum of $5$ participants in the meeting",
+          "isCorrect": false,
+          "rationale": "Recording capability is based on user roles and permissions rather than the total headcount of the meeting."
+        }
+      ],
+      "hint": "This involves a direct action taken by the person who organized the call."
+    },
+    {
+      "question": "Which visual indicator signifies to all attendees that a Zoom session is currently being recorded?",
+      "answerOptions": [
+        {
+          "text": "A red icon in the top-left corner",
+          "isCorrect": true,
+          "rationale": "This persistent visual cue ensures transparency so that all participants know their audio and video are being captured."
+        },
+        {
+          "text": "A yellow border around the shared screen",
+          "isCorrect": false,
+          "rationale": "Yellow borders usually indicate that a specific window is being shared, not necessarily that it is being recorded."
+        },
+        {
+          "text": "A flashing green light on the participant list",
+          "isCorrect": false,
+          "rationale": "Green icons or lights typically represent microphone activity or active speaker status rather than recording."
+        },
+        {
+          "text": "A pop-up message that stays in the center of the screen",
+          "isCorrect": false,
+          "rationale": "While a notification appears at the start, a permanent central pop-up would obstruct the meeting view and is not used."
+        }
+      ],
+      "hint": "Look for a status change usually located at the edge of the interface."
+    },
+    {
+      "question": "When a meeting is recorded to the cloud, which file type is typically generated to provide an audio-only version?",
+      "answerOptions": [
+        {
+          "text": "M4A",
+          "isCorrect": true,
+          "rationale": "Zoom separates the audio stream into this compressed format to allow for easy distribution of podcasts or voice-only content."
+        },
+        {
+          "text": "WAV",
+          "isCorrect": false,
+          "rationale": "While high quality, this format is uncompressed and much larger than the standards Zoom typically uses for cloud efficiency."
+        },
+        {
+          "text": "MP3",
+          "isCorrect": false,
+          "rationale": "Though widely known, Zoom favors the M4A container for its specific audio encoding standards in cloud environments."
+        },
+        {
+          "text": "FLAC",
+          "isCorrect": false,
+          "rationale": "This lossless format is generally used for high-fidelity music and is not the standard for meeting audio capture."
+        }
+      ],
+      "hint": "This file extension is frequently associated with the MPEG-4 standard for audio."
+    },
+    {
+      "question": "What feature of Zoom Cloud recording automatically converts spoken dialogue into a searchable text document?",
+      "answerOptions": [
+        {
+          "text": "Audio Transcription",
+          "isCorrect": true,
+          "rationale": "This tool uses speech-to-text algorithms to create a written record that can be reviewed alongside the video."
+        },
+        {
+          "text": "Real-time Translation",
+          "isCorrect": false,
+          "rationale": "Translation changes the language of the speech, whereas transcription simply converts speech into text in the same language."
+        },
+        {
+          "text": "Voice Modulation",
+          "isCorrect": false,
+          "rationale": "Modulation alters the sound of the voice and is unrelated to creating text-based records of the conversation."
+        },
+        {
+          "text": "Meeting Summary AI",
+          "isCorrect": false,
+          "rationale": "A summary provides a condensed overview, while a transcript provides the full word-for-word dialogue."
+        }
+      ],
+      "hint": "Think about the process of writing down exactly what is being said."
+    },
+    {
+      "question": "What happens to a local recording if the host's computer loses power or shuts down unexpectedly during the meeting?",
+      "answerOptions": [
+        {
+          "text": "The file may become corrupted or fail to save",
+          "isCorrect": true,
+          "rationale": "Local recordings require a graceful termination of the software to properly 'finalize' the video file on the hard drive."
+        },
+        {
+          "text": "The recording automatically moves to the Cloud",
+          "isCorrect": false,
+          "rationale": "Local and Cloud recording paths are distinct; a local process cannot spontaneously switch to a cloud process mid-stream."
+        },
+        {
+          "text": "The recording continues through a participant's device",
+          "isCorrect": false,
+          "rationale": "Recording is tied to the specific hardware that initiated it and does not jump between devices unless manually started elsewhere."
+        },
+        {
+          "text": "The file is saved to the Zoom website automatically",
+          "isCorrect": false,
+          "rationale": "Local recordings are strictly saved to the local disk and are not synced to the web portal unless manually uploaded later."
+        }
+      ],
+      "hint": "Local files depend on the continuous operation of the software and hardware on which they are being created."
+    },
+    {
+      "question": "Which specific benefit is unique to Cloud recording compared to Local recording?",
+      "answerOptions": [
+        {
+          "text": "Capturing multiple video layouts simultaneously",
+          "isCorrect": true,
+          "rationale": "The Cloud allows for different views, like Active Speaker and Gallery View, to be recorded as separate files for greater editing flexibility."
+        },
+        {
+          "text": "Recording without an internet connection",
+          "isCorrect": false,
+          "rationale": "Recording to the cloud requires a constant connection to transmit the data to the remote server."
+        },
+        {
+          "text": "Eliminating all background noise",
+          "isCorrect": false,
+          "rationale": "Noise suppression is a function of audio processing and is available regardless of where the file is stored."
+        },
+        {
+          "text": "Immediate access to the file without processing time",
+          "isCorrect": false,
+          "rationale": "Cloud recordings actually require significant processing time on the server before they are ready for viewing."
+        }
+      ],
+      "hint": "Consider the processing power of a server versus a single user's view of the meeting."
+    },
+    {
+      "question": "What is the purpose of the 'Automatic Recording' setting in Zoom?",
+      "answerOptions": [
+        {
+          "text": "To start the recording as soon as the meeting begins",
+          "isCorrect": true,
+          "rationale": "This setting ensures that no part of a scheduled session is lost due to a manual oversight by the host."
+        },
+        {
+          "text": "To record only when the host is speaking",
+          "isCorrect": false,
+          "rationale": "Automatic recording captures the entire session continuously, regardless of who is currently talking."
+        },
+        {
+          "text": "To stop the recording when the meeting reaches its scheduled end time",
+          "isCorrect": false,
+          "rationale": "The recording typically stops only when the meeting is ended or the host manually intervenes, not just at the clock time."
+        },
+        {
+          "text": "To record only screen sharing segments",
+          "isCorrect": false,
+          "rationale": "This setting records the entire meeting duration, including video feeds and screen sharing combined."
+        }
+      ],
+      "hint": "This feature removes the need for human intervention at the start of a session."
+    },
+    {
+      "question": "To improve accessibility for viewers with hearing impairments, which Zoom Cloud feature should be prioritized?",
+      "answerOptions": [
+        {
+          "text": "Closed Captioning",
+          "isCorrect": true,
+          "rationale": "Captions provide a synchronized text overlay of the audio, allowing users to follow the meeting without sound."
+        },
+        {
+          "text": "High Definition (HD) Video",
+          "isCorrect": false,
+          "rationale": "While HD improves clarity, it does not solve the fundamental accessibility barrier for those who cannot hear the audio."
+        },
+        {
+          "text": "Stereo Audio Recording",
+          "isCorrect": false,
+          "rationale": "Stereo audio improves sound depth but does not aid individuals who require visual alternatives to sound."
+        },
+        {
+          "text": "Original Sound for Musicians",
+          "isCorrect": false,
+          "rationale": "This setting disables echo cancellation for high-fidelity audio, which is unrelated to text-based accessibility."
+        }
+      ],
+      "hint": "This feature provides a text-based representation of the spoken word in real-time."
+    }
+  ]
+}

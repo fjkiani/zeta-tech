@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { getSessionId } from '../../lib/sessionId';
+import { getSessionId } from '../../../../lib/sessionId';
 
 export default function LessonViewTracker({ lessonId, schoolKey }) {
   useEffect(() => {

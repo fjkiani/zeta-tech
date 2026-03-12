@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { fetchLessonBySlug } from '../../lib/hygraph';
-import { getLessonMapping } from '../../lib/sidecar';
-import { getLessonIntel } from '../../lib/intel';
+import { fetchLessonBySlug } from '../../../../lib/hygraph';
+import { getLessonMapping } from '../../../../lib/sidecar';
+import { getLessonIntel } from '../../../../lib/intel';
 import LessonCockpit from './LessonCockpit';
 import fs from 'fs';
 import path from 'path';
