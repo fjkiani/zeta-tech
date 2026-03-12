@@ -1,0 +1,265 @@
+{
+  "title": "Machine Learning Quiz",
+  "questions": [
+    {
+      "question": "According to the transcript, how did Arthur Samuel define the fundamental concept of machine learning through his work with chess?",
+      "answerOptions": [
+        {
+          "text": "The ability of a computer to learn and improve from patterns without being explicitly programmed.",
+          "isCorrect": true,
+          "rationale": "Machine learning is defined by the system's capacity to identify mistakes and refine its own logic independently of fixed code."
+        },
+        {
+          "text": "The requirement for a human to input every possible move and counter-move into the system's database.",
+          "isCorrect": false,
+          "rationale": "This describes explicit programming, which is the opposite of the machine learning approach described in the lesson."
+        },
+        {
+          "text": "The use of random number generation to decide which move would be most effective in a game.",
+          "isCorrect": false,
+          "rationale": "Learning involves analyzing mistakes and patterns rather than relying on purely stochastic or random choices."
+        },
+        {
+          "text": "The development of hardware that can physically move chess pieces on a board.",
+          "isCorrect": false,
+          "rationale": "The focus of Samuel's work was on the cognitive processing and algorithmic learning of the software, not physical robotics."
+        }
+      ],
+      "hint": "Consider the difference between a set of rigid instructions and a system that adapts based on its own errors."
+    },
+    {
+      "question": "What role does the 'supervision feedback' play in the model when the prediction $Y$ is inaccurate or unsafe?",
+      "answerOptions": [
+        {
+          "text": "It allows the model to be retrained and fixed to improve future outputs.",
+          "isCorrect": true,
+          "rationale": "Supervision feedback is a corrective mechanism used to refine the algorithm when it produces errors or dangerous results."
+        },
+        {
+          "text": "It automatically deletes the biased data from the input $X$ to ensure safety.",
+          "isCorrect": false,
+          "rationale": "While data may be the cause, the feedback process focuses on retraining and adjusting the model rather than just deleting inputs."
+        },
+        {
+          "text": "It serves as the final output that the user sees instead of the prediction.",
+          "isCorrect": false,
+          "rationale": "The feedback is an internal or developer-facing step in the training cycle, not the end-product provided to the user."
+        },
+        {
+          "text": "It restricts the AI from being used in healthcare or law sectors entirely.",
+          "isCorrect": false,
+          "rationale": "Feedback is meant to make the AI safer for these sectors, not to prevent its use in them."
+        }
+      ],
+      "hint": "Think of this as a recursive loop that focuses on correction and improvement."
+    },
+    {
+      "question": "Which type of supervised learning would be most appropriate for predicting the future cost of living in a specific neighborhood?",
+      "answerOptions": [
+        {
+          "text": "Regression",
+          "isCorrect": true,
+          "rationale": "Regression is used when the goal is to predict continuous, numerical values such as currency or time."
+        },
+        {
+          "text": "Classification",
+          "isCorrect": false,
+          "rationale": "Classification is used for categorical or binary outcomes, whereas cost is a continuous numeric scale."
+        },
+        {
+          "text": "Explicit Programming",
+          "isCorrect": false,
+          "rationale": "The material presents regression and classification as the two main paths for AI data processing, not traditional manual coding."
+        },
+        {
+          "text": "Autonomy feedback",
+          "isCorrect": false,
+          "rationale": "This is not a standard type of supervised learning identified in the text for predicting numerical data."
+        }
+      ],
+      "hint": "Decide if the answer is a numerical value on a scale or a choice between distinct categories."
+    },
+    {
+      "question": "If an AI model is used to determine whether a cell is a tumor or not, what category of machine learning does this fall under?",
+      "answerOptions": [
+        {
+          "text": "Classification",
+          "isCorrect": true,
+          "rationale": "Classification tasks involve sorting inputs into specific categories, such as a 'yes' or 'no' binary outcome."
+        },
+        {
+          "text": "Regression",
+          "isCorrect": false,
+          "rationale": "Regression is intended for continuous values, not for sorting items into distinct groups or labels."
+        },
+        {
+          "text": "Data Mining",
+          "isCorrect": false,
+          "rationale": "While related, the specific task of identifying a binary outcome (tumor vs. non-tumor) is defined as classification in the source."
+        },
+        {
+          "text": "Continuous Prediction",
+          "isCorrect": false,
+          "rationale": "A tumor diagnosis is a discrete category, not a continuous numerical prediction like a growth rate."
+        }
+      ],
+      "hint": "Consider whether the result is a binary 'yes or no' choice."
+    },
+    {
+      "question": "How does the transcript explain the origin of bias within AI systems?",
+      "answerOptions": [
+        {
+          "text": "AI reflects the biases present in the data it was trained on, such as biased legal records.",
+          "isCorrect": true,
+          "rationale": "If the input data contains historical inequalities, the AI will learn and perpetuate those same patterns."
+        },
+        {
+          "text": "AI intentionally creates bias to challenge human supervisors during training.",
+          "isCorrect": false,
+          "rationale": "AI does not have intentions; it simply processes the logic and data provided to it."
+        },
+        {
+          "text": "Bias is caused by the computer failing to learn the patterns in the input $X$.",
+          "isCorrect": false,
+          "rationale": "Bias usually occurs because the AI *does* learn the patterns, but those patterns themselves are unfair or skewed."
+        },
+        {
+          "text": "Bias only occurs when the AI is not given enough images during the Teachable Machine phase.",
+          "isCorrect": false,
+          "rationale": "While dataset size matters for accuracy, bias is specifically linked to the quality and nature of the training content."
+        }
+      ],
+      "hint": "Think about the phrase 'garbage in, garbage out' regarding the information used to teach the model."
+    },
+    {
+      "question": "In the context of the Bronx HS Medical Science discussion, what was the specific goal of Isaac's proposed project?",
+      "answerOptions": [
+        {
+          "text": "Using classification to screen for chromosomal alterations in Down syndrome research.",
+          "isCorrect": true,
+          "rationale": "Isaac focused on identifying the specific chromosomal changes associated with Down syndrome using AI sorting methods."
+        },
+        {
+          "text": "Predicting the housing market crash in Brooklyn using regression models.",
+          "isCorrect": false,
+          "rationale": "While the teacher mentioned the housing market as an example, this was not Isaac's specific medical project."
+        },
+        {
+          "text": "Developing new methods for painless breast cancer screenings for women.",
+          "isCorrect": false,
+          "rationale": "This was the project focus of Daniela, rather than Isaac."
+        },
+        {
+          "text": "Identifying different types of Tuberculosis and their effects on the body.",
+          "isCorrect": false,
+          "rationale": "This was a separate student project mentioned in the class discussion, not attributed to Isaac."
+        }
+      ],
+      "hint": "Look for the project that deals with genetic screening and chromosomal patterns."
+    },
+    {
+      "question": "The transcript suggests that in the future, job availability may shift primarily toward humans who possess which specific skill?",
+      "answerOptions": [
+        {
+          "text": "The ability to understand and supervise AI technologies.",
+          "isCorrect": true,
+          "rationale": "The speaker notes that jobs may lean toward those who can act as the 'pilot' and supervise AI outputs."
+        },
+        {
+          "text": "The capacity to perform manual labor without the aid of machines.",
+          "isCorrect": false,
+          "rationale": "The text suggests that most future jobs will lean toward AI, making manual labor less central than supervision."
+        },
+        {
+          "text": "Advanced expertise in playing chess at a professional level.",
+          "isCorrect": false,
+          "rationale": "Chess was used only as a historical example of early machine learning, not a future career requirement."
+        },
+        {
+          "text": "The skill of building hardware for self-driving cars from scratch.",
+          "isCorrect": false,
+          "rationale": "The focus of the lesson is on the software supervision and data logic rather than hardware manufacturing."
+        }
+      ],
+      "hint": "Think about the 'pilot' analogy used by the instructor."
+    },
+    {
+      "question": "Why is the human mind still considered essential despite the power of AI to process data?",
+      "answerOptions": [
+        {
+          "text": "The human mind connects concepts and logic where gaps exist that AI might not bridge alone.",
+          "isCorrect": true,
+          "rationale": "AI helps make sense of data, but human intuition and contextual understanding are needed to fill in conceptual gaps."
+        },
+        {
+          "text": "Human minds are required to manually calculate the numerical predictions for regression.",
+          "isCorrect": false,
+          "rationale": "AI is specifically used to handle these complex data calculations that humans cannot easily process."
+        },
+        {
+          "text": "Only humans can provide the $50$ images required for the Teachable Machine project.",
+          "isCorrect": false,
+          "rationale": "While humans provide the images, the essential role of the human mind is deeper than just data collection."
+        },
+        {
+          "text": "Human minds are the only ones capable of training AI on biased law data.",
+          "isCorrect": false,
+          "rationale": "Training AI on biased data is a mistake to be avoided, not a unique 'essential' strength of the human mind."
+        }
+      ],
+      "hint": "Focus on the idea of 'connecting the dots' between different theories and ideas."
+    },
+    {
+      "question": "In the Teachable Machine project described, what is the significance of the 'accuracy' metric?",
+      "answerOptions": [
+        {
+          "text": "It shows how well the model can predict a result based on new, unseen input.",
+          "isCorrect": true,
+          "rationale": "Accuracy measures the effectiveness of the model's training by testing it against information it hasn't seen before."
+        },
+        {
+          "text": "It determines how many images the student is allowed to pass to the AI model.",
+          "isCorrect": false,
+          "rationale": "The number of images is an input parameter ($50$ images), not the resulting accuracy metric."
+        },
+        {
+          "text": "It measures the speed at which the algorithm can process the input $X$.",
+          "isCorrect": false,
+          "rationale": "Accuracy refers to the correctness of the prediction $Y$, not the computational speed of the model."
+        },
+        {
+          "text": "It indicates whether the student used regression or classification for the project.",
+          "isCorrect": false,
+          "rationale": "Both regression and classification models have accuracy metrics; it does not distinguish between the two types."
+        }
+      ],
+      "hint": "Think about how we judge if a student has successfully learned a new skill."
+    },
+    {
+      "question": "What percentage of cancer patients are affected by breast cancer, as noted in Daniela's research project?",
+      "answerOptions": [
+        {
+          "text": "$23\\%$",
+          "isCorrect": true,
+          "rationale": "The transcript explicitly mentions this statistic during Daniela's presentation on women's healthcare."
+        },
+        {
+          "text": "$50\\%$",
+          "isCorrect": false,
+          "rationale": "Fifty was the number of images suggested for the Teachable Machine exercise, not the cancer statistic."
+        },
+        {
+          "text": "$5\\%$",
+          "isCorrect": false,
+          "rationale": "Five years was the timeframe used in the 'aircraft' analogy regarding technological impossibility."
+        },
+        {
+          "text": "$10\\%$",
+          "isCorrect": false,
+          "rationale": "This value was not mentioned in the statistics provided in the student project responses."
+        }
+      ],
+      "hint": "This numerical value was cited to emphasize the impact of screening methods."
+    }
+  ]
+}

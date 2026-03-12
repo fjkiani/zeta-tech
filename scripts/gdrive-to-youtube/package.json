@@ -8,6 +8,7 @@
     "auth": "node auth.js"
   },
   "dependencies": {
-    "googleapis": "^144.0.0"
+    "googleapis": "^144.0.0",
+    "youtube-transcript": "^1.2.1"
   }
 }

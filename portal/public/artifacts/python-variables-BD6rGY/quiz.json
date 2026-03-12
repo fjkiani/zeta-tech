@@ -1,0 +1,395 @@
+{
+  "title": "Machine Learning Quiz",
+  "questions": [
+    {
+      "question": "According to the source material, how did Arthur Samuel demonstrate the primary capability of machine learning?",
+      "answerOptions": [
+        {
+          "text": "By programming a computer with every possible move in a game of checkers.",
+          "isCorrect": false,
+          "rationale": "This would be explicit programming rather than machine learning, where the computer discovers the moves itself."
+        },
+        {
+          "text": "By teaching a computer to play chess through pattern recognition and learning from mistakes.",
+          "isCorrect": true,
+          "rationale": "Machine learning is defined as learning without explicit programming, where the system improves based on identified patterns and feedback."
+        },
+        {
+          "text": "By creating a robot that could physically move pieces on a board faster than a human.",
+          "isCorrect": false,
+          "rationale": "The 'superpower' mentioned is the ability to process high-dimensional data and find logic, not physical speed."
+        },
+        {
+          "text": "By writing a code that used binary logic to simulate human emotional responses to winning.",
+          "isCorrect": false,
+          "rationale": "The focus of Samuel's work was on strategy and decision-making abilities, not emotional simulation."
+        }
+      ],
+      "hint": "Think about how a computer develops strategies on its own without a human coder writing every single instruction."
+    },
+    {
+      "question": "In the core machine learning workflow, if $X$ represents the input data (clues), what does $Y$ represent?",
+      "answerOptions": [
+        {
+          "text": "The mathematical algorithm being used.",
+          "isCorrect": false,
+          "rationale": "The algorithm is the process that happens between the input $X$ and the result $Y$."
+        },
+        {
+          "text": "The feedback loop used for supervision.",
+          "isCorrect": false,
+          "rationale": "Feedback is part of the training process to improve the mapping, not the output itself."
+        },
+        {
+          "text": "The prediction or labeled result.",
+          "isCorrect": true,
+          "rationale": "The standard framework maps the input $X$ to an output $Y$, which serves as the prediction the model is trained to reach."
+        },
+        {
+          "text": "The error rate of the final model.",
+          "isCorrect": false,
+          "rationale": "Error rates are a measure of performance, while $Y$ is the specific target value for each data point."
+        }
+      ],
+      "hint": "Consider the relationship where the system takes a feature as input and generates a corresponding answer as the result."
+    },
+    {
+      "question": "Which type of supervised learning would be most appropriate for predicting the specific dollar amount a house will be worth in 10 years?",
+      "answerOptions": [
+        {
+          "text": "Classification",
+          "isCorrect": false,
+          "rationale": "Classification deals with discrete categories or binary outcomes, not continuous numerical values."
+        },
+        {
+          "text": "Type Inference",
+          "isCorrect": false,
+          "rationale": "Type inference is a Python feature where the computer guesses a data type, not a type of machine learning model."
+        },
+        {
+          "text": "Regression",
+          "isCorrect": true,
+          "rationale": "Regression is used to predict continuous values that grow or change over time, such as prices or rates."
+        },
+        {
+          "text": "Concatenation",
+          "isCorrect": false,
+          "rationale": "Concatenation is the process of joining two strings together in programming."
+        }
+      ],
+      "hint": "Think about whether you are looking for a 'yes/no' answer or a 'continuous number' that changes over time."
+    },
+    {
+      "question": "In a medical model designed to determine if a tumor is malignant or benign, what is the output $Y$ specifically called?",
+      "answerOptions": [
+        {
+          "text": "Features",
+          "isCorrect": false,
+          "rationale": "Features are the inputs like size, age, and thickness used to make the prediction."
+        },
+        {
+          "text": "Labels",
+          "isCorrect": true,
+          "rationale": "Labels represent the target results or categories (like cancerous or not) that the model is trained to predict."
+        },
+        {
+          "text": "Algorithms",
+          "isCorrect": false,
+          "rationale": "The algorithm is the logical structure of the model, not the output categories themselves."
+        },
+        {
+          "text": "Decimals",
+          "isCorrect": false,
+          "rationale": "While a model might use probabilities, the final categories in classification are discrete labels."
+        }
+      ],
+      "hint": "This term refers to the pre-determined answer or category assigned to a piece of data in supervised learning."
+    },
+    {
+      "question": "When using the `input()` function in Python, what is the default data type of the value returned, regardless of what the user types?",
+      "answerOptions": [
+        {
+          "text": "Integer",
+          "isCorrect": false,
+          "rationale": "Even if a user types a number, Python does not automatically treat it as a math-ready integer."
+        },
+        {
+          "text": "Float",
+          "isCorrect": false,
+          "rationale": "Floating point numbers are for decimals; the input function defaults to text."
+        },
+        {
+          "text": "String",
+          "isCorrect": true,
+          "rationale": "The `input()` function captures user entries as text characters, which must be converted if math is required."
+        },
+        {
+          "text": "Boolean",
+          "isCorrect": false,
+          "rationale": "Boolean values represent true/false; the input function captures general text input."
+        }
+      ],
+      "hint": "Python treats everything typed into the console as general text by default."
+    },
+    {
+      "question": "What would be the output of the Python expression $17 // 5$?",
+      "answerOptions": [
+        {
+          "text": "$3.4$",
+          "isCorrect": false,
+          "rationale": "$3.4$ is the result of standard division, but the double slash operator behaves differently."
+        },
+        {
+          "text": "$3$",
+          "isCorrect": true,
+          "rationale": "The floor division operator ($//$) discards the remainder and provides only the whole number of times the divisor fits into the dividend."
+        },
+        {
+          "text": "$2$",
+          "isCorrect": false,
+          "rationale": "$2$ is the remainder, which would be the result if the modulo operator was used instead."
+        },
+        {
+          "text": "$175$",
+          "isCorrect": false,
+          "rationale": "This would only happen if the numbers were treated as strings and concatenated, not if they were used in an arithmetic expression."
+        }
+      ],
+      "hint": "This operator performs integer division and ignores any decimals or remainders."
+    },
+    {
+      "question": "In Python, what is the result of the 'modulo' operator when calculating $15 \\% 3$?",
+      "answerOptions": [
+        {
+          "text": "$5$",
+          "isCorrect": false,
+          "rationale": "$5$ is the quotient of the division, not the remainder."
+        },
+        {
+          "text": "$1$",
+          "isCorrect": false,
+          "rationale": "$1$ would be the result if there was a remainder of one, but $15$ is perfectly divisible by $3$."
+        },
+        {
+          "text": "$0$",
+          "isCorrect": true,
+          "rationale": "The modulo operator (\\%) returns the remainder of a division, and since $15$ divided by $3$ has no remainder, the result is $0$."
+        },
+        {
+          "text": "$153$",
+          "isCorrect": false,
+          "rationale": "This is a result of string concatenation, whereas the modulo operator is used for mathematical calculation."
+        }
+      ],
+      "hint": "This operator is used to find what is left over after a division is completed."
+    },
+    {
+      "question": "If you have the code $x = \"5\"$ and $y = \"10\"$, what will the expression `print(x + y)` output?",
+      "answerOptions": [
+        {
+          "text": "$15$",
+          "isCorrect": false,
+          "rationale": "Addition only occurs between numerical types; these variables are enclosed in quotes, making them text."
+        },
+        {
+          "text": "$510$",
+          "isCorrect": true,
+          "rationale": "Because the variables are strings, the `+` operator performs concatenation, gluing the two pieces of text together."
+        },
+        {
+          "text": "An error message saying you cannot add strings.",
+          "isCorrect": false,
+          "rationale": "Python allows adding two strings together; it only errors if you try to add a string to a number without conversion."
+        },
+        {
+          "text": "$50$",
+          "isCorrect": false,
+          "rationale": "Multiplication is not the default behavior of the plus operator even if the values were numbers."
+        }
+      ],
+      "hint": "Think about how Python treats values that are enclosed in quotation marks."
+    },
+    {
+      "question": "Why is 'supervision feedback' critical in the machine learning process?",
+      "answerOptions": [
+        {
+          "text": "It prevents the computer from needing any input data.",
+          "isCorrect": false,
+          "rationale": "Input data ($X$) is always necessary to start the process; feedback happens after an initial attempt."
+        },
+        {
+          "text": "It allows the model to improve if the initial prediction is inaccurate or unsafe.",
+          "isCorrect": true,
+          "rationale": "Feedback loops enable the system to go back, retrain the model, and adjust its parameters based on its errors."
+        },
+        {
+          "text": "It automatically converts all strings into integers.",
+          "isCorrect": false,
+          "rationale": "Type conversion is a manual coding task or a specific function, not a general machine learning feedback loop."
+        },
+        {
+          "text": "It ensures the AI develops human emotions for better diagnostics.",
+          "isCorrect": false,
+          "rationale": "The goal of AI in the source is logic and accurate prediction, not the simulation of feelings."
+        }
+      ],
+      "hint": "This step occurs when a prediction is 'completely off' and the system needs to fix its mistakes."
+    },
+    {
+      "question": "What 'superpower' of machine learning allows it to outperform humans in fields like medicine or finance?",
+      "answerOptions": [
+        {
+          "text": "The ability to ignore mathematical errors in data sets.",
+          "isCorrect": false,
+          "rationale": "Errors must be analyzed and managed; ignoring them would lead to dangerous predictions like false positives."
+        },
+        {
+          "text": "The capacity to visualize 5D and 6D graphs physically.",
+          "isCorrect": false,
+          "rationale": "Humans struggle to visualize beyond 3D; AI uses math to process data without needing a physical visualization."
+        },
+        {
+          "text": "The ability to process and find patterns in high-dimensional data across hundreds of concurrent variables.",
+          "isCorrect": true,
+          "rationale": "AI can bridge gaps and connect concepts that are too complex for the human mind to calculate manually."
+        },
+        {
+          "text": "The guarantee that every prediction made will be 100\\% accurate.",
+          "isCorrect": false,
+          "rationale": "The transcript emphasizes that AI is far from perfect and can be biased or make mistakes."
+        }
+      ],
+      "hint": "Consider the limitations of the human brain when dealing with hundreds of different data points simultaneously."
+    },
+    {
+      "question": "In the context of AI ethics discussed in the transcript, what is a primary danger of training an AI on historical law data?",
+      "answerOptions": [
+        {
+          "text": "The AI might delete the data to save memory.",
+          "isCorrect": false,
+          "rationale": "The concerns raised are about the quality of results, not technical storage issues."
+        },
+        {
+          "text": "The AI will apply existing human biases against minorities if the original laws were biased.",
+          "isCorrect": true,
+          "rationale": "AI learns from its input; if that input contains bias, the AI will reinforce and repeat that bias in its predictions."
+        },
+        {
+          "text": "The AI will automatically become too compassionate toward criminals.",
+          "isCorrect": false,
+          "rationale": "AI is based on data logic and patterns; it does not have inherent human emotions like compassion."
+        },
+        {
+          "text": "The AI will run out of memory due to the large number of historical cases.",
+          "isCorrect": false,
+          "rationale": "Modern computing power is designed to handle large datasets; the real concern is social impact and fairness."
+        }
+      ],
+      "hint": "The machine learning model is only as good as the information it is given to learn from."
+    },
+    {
+      "question": "Which of these is a correct example of 'string concatenation' in Python?",
+      "answerOptions": [
+        {
+          "text": "`print(\"score\" + str(10))`",
+          "isCorrect": true,
+          "rationale": "To join a string and a number, the number must first be converted into a string type using the `str()` function."
+        },
+        {
+          "text": "`print(\"score\" + 10)`",
+          "isCorrect": false,
+          "rationale": "This results in a Type Error because Python cannot automatically join a string and an integer."
+        },
+        {
+          "text": "`print(\"score\" * 10)`",
+          "isCorrect": false,
+          "rationale": "While valid Python code, the `*` operator performs repetition rather than joining two different pieces of data (concatenation)."
+        },
+        {
+          "text": "`print(score + \"10\")`",
+          "isCorrect": false,
+          "rationale": "If `score` is a variable holding a number, this would still cause a Type Error unless `score` itself was converted to a string."
+        }
+      ],
+      "hint": "Recall the 'glue' concept where both pieces of data must be of the same 'text' type to be joined together."
+    },
+    {
+      "question": "What does the term 'Type Inference' mean in the Python programming language?",
+      "answerOptions": [
+        {
+          "text": "The programmer must manually declare if a variable is a float or string every time.",
+          "isCorrect": false,
+          "rationale": "Manual declaration is required in some other languages, but Python simplifies this process."
+        },
+        {
+          "text": "Python automatically guesses the data type based on the value assigned to the variable.",
+          "isCorrect": true,
+          "rationale": "Python 'infers' the type, meaning it assigns integer, float, or string status based on what the variable holds without being told explicitly."
+        },
+        {
+          "text": "The computer converts all text to binary before the user can see it.",
+          "isCorrect": false,
+          "rationale": "While computers use binary internally, type inference refers specifically to high-level variable categorization."
+        },
+        {
+          "text": "It is a function that prevents the user from typing incorrect characters.",
+          "isCorrect": false,
+          "rationale": "Type inference doesn't stop user input errors; it just categorizes the data once it is received."
+        }
+      ],
+      "hint": "Think about how Python knows a variable is a number just by looking at the value you gave it."
+    },
+    {
+      "question": "In the 'memory box' analogy for Python variables, what does the label on the outside of the box represent?",
+      "answerOptions": [
+        {
+          "text": "The actual data stored inside.",
+          "isCorrect": false,
+          "rationale": "The data inside is the 'value,' while the label is how we find that value."
+        },
+        {
+          "text": "The variable name used to reference the data.",
+          "isCorrect": true,
+          "rationale": "The label is the identifier (the name) used to reference the specific location in memory where the value is stored."
+        },
+        {
+          "text": "The size of the computer's memory bank.",
+          "isCorrect": false,
+          "rationale": "The label is specific to a single variable, not the entire system's storage capacity."
+        },
+        {
+          "text": "The mathematical result of a calculation.",
+          "isCorrect": false,
+          "rationale": "A calculation result is a value that would be placed *inside* a box, not the label itself."
+        }
+      ],
+      "hint": "If you want to tell the computer to 'remember this for later,' you need to give it a specific name."
+    },
+    {
+      "question": "Which specific sector did student Daniela propose to transform using AI classification techniques?",
+      "answerOptions": [
+        {
+          "text": "Military warfare and drone strategy.",
+          "isCorrect": false,
+          "rationale": "This was a different student proposal that was scrutinized for its impact on humanity."
+        },
+        {
+          "text": "Stock market predictions for finance.",
+          "isCorrect": false,
+          "rationale": "The instructor mentioned finance and the stock market as potential areas, but this wasn't Daniela's specific proposal."
+        },
+        {
+          "text": "Women's healthcare, specifically breast cancer screening.",
+          "isCorrect": true,
+          "rationale": "Daniela proposed using AI to improve screening and diagnostic accuracy for women's health issues like breast cancer."
+        },
+        {
+          "text": "Automated legal tutoring for law students.",
+          "isCorrect": false,
+          "rationale": "While education and personalized tutors were discussed as general ideas, they were not Daniela's medical-focused response."
+        }
+      ],
+      "hint": "Her proposal focused on medical research that was previously neglected or considered too painful for patients."
+    }
+  ]
+}

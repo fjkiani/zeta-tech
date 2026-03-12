@@ -1,0 +1,265 @@
+{
+  "title": "Machine Learning Quiz",
+  "questions": [
+    {
+      "question": "According to the lecture, how did Arthur Samuel define the primary capability of machine learning?",
+      "answerOptions": [
+        {
+          "text": "The capacity of a computer to simulate human consciousness and empathy.",
+          "isCorrect": false,
+          "rationale": "While a popular topic in science fiction, the source focuses on the development of abilities or strategies rather than emotions."
+        },
+        {
+          "text": "The ability of computers to learn and develop strategies without being explicitly programmed for every step.",
+          "isCorrect": true,
+          "rationale": "Samuel used the game of chess to demonstrate that computers could learn patterns and improve through experience rather than fixed coding."
+        },
+        {
+          "text": "The power to process large datasets faster than the human brain's biological limits.",
+          "isCorrect": false,
+          "rationale": "Processing speed is a feature of general computing, whereas machine learning specifically refers to the method of acquiring new abilities."
+        },
+        {
+          "text": "The requirement for a human coder to write every specific move for a computer to function.",
+          "isCorrect": false,
+          "rationale": "This describes traditional programming, which is the opposite of the learning-based approach Samuels pioneered."
+        }
+      ],
+      "hint": "Consider the difference between a computer following a rigid script versus identifying patterns on its own."
+    },
+    {
+      "question": "In the context of supervised learning, what does the variable $X$ typically represent?",
+      "answerOptions": [
+        {
+          "text": "The final prediction or label assigned by the model.",
+          "isCorrect": false,
+          "rationale": "The final result or target outcome is represented by $Y$."
+        },
+        {
+          "text": "The mathematical algorithm that bridges the gap between data and answers.",
+          "isCorrect": false,
+          "rationale": "The algorithm is the process or model itself, while $X$ serves as the material the algorithm works upon."
+        },
+        {
+          "text": "The input data points or 'clues' provided to the model.",
+          "isCorrect": true,
+          "rationale": "Supervised learning uses $X$ as the input features, such as the size of a house or an image of an object, to begin the mapping process."
+        },
+        {
+          "text": "The error rate calculated after a model makes a wrong prediction.",
+          "isCorrect": false,
+          "rationale": "The error rate is a metric used in the feedback loop to improve accuracy, not the initial data input."
+        }
+      ],
+      "hint": "Think about what the model 'looks at' first before it tries to determine an answer."
+    },
+    {
+      "question": "Which type of machine learning would be most appropriate for predicting the specific numeric cost of living in a city ten years from now?",
+      "answerOptions": [
+        {
+          "text": "Classification",
+          "isCorrect": false,
+          "rationale": "Classification is used for categorical labels like 'high' or 'low,' rather than specific continuous numbers."
+        },
+        {
+          "text": "Supervision Feedback",
+          "isCorrect": false,
+          "rationale": "This is a process used to improve a model, not a specific type of predictive category."
+        },
+        {
+          "text": "Regression",
+          "isCorrect": true,
+          "rationale": "Regression is designed to predict continuous values or numbers that grow and change over time, such as prices or salaries."
+        },
+        {
+          "text": "Explicit Programming",
+          "isCorrect": false,
+          "rationale": "This is the traditional method of coding and is generally considered the opposite of a machine learning approach."
+        }
+      ],
+      "hint": "Focus on whether the outcome is a specific quantity on a continuous scale or a simple category."
+    },
+    {
+      "question": "When building a model to determine if an X-ray shows a bone fracture or not, which component represents the labels ($Y$)?",
+      "answerOptions": [
+        {
+          "text": "The raw pixels and density values of the X-ray image.",
+          "isCorrect": false,
+          "rationale": "Raw data from an image serves as the input features ($X$), not the final classification."
+        },
+        {
+          "text": "The categories of 'Fractured' and 'Not Fractured'.",
+          "isCorrect": true,
+          "rationale": "The labels represent the ground truth or the 'right answer' categories that the model is trying to predict."
+        },
+        {
+          "text": "The age and medical history of the patient.",
+          "isCorrect": false,
+          "rationale": "Patient history acts as additional input features ($X$) to help the model make a more informed prediction."
+        },
+        {
+          "text": "The hardware camera used to capture the digital scan.",
+          "isCorrect": false,
+          "rationale": "Hardware is the tool for data collection, whereas $Y$ is a conceptual output in the data framework."
+        }
+      ],
+      "hint": "Identify the 'answer' the computer is supposed to give after analyzing the image."
+    },
+    {
+      "question": "Why is the ability to process high-dimensional data described as a 'superpower' in the lecture?",
+      "answerOptions": [
+        {
+          "text": "It allows the computer to ignore $X$ and $Y$ mapping entirely.",
+          "isCorrect": false,
+          "rationale": "Mapping is the fundamental goal of supervised learning; high-dimensional data simply makes that mapping more complex."
+        },
+        {
+          "text": "It ensures that the AI will never make an error in medical diagnosis.",
+          "isCorrect": false,
+          "rationale": "The lecture emphasizes that AI is far from perfect and frequently requires human supervision to manage errors."
+        },
+        {
+          "text": "Humans struggle to visualize patterns beyond two or three dimensions, while math allows algorithms to find structures across hundreds of variables.",
+          "isCorrect": true,
+          "rationale": "Machine learning can connect dots across vast amounts of data\u2014like science, science, and medicine\u2014that the human mind cannot easily synthesize."
+        },
+        {
+          "text": "It reduces the amount of training data needed to build a reliable model.",
+          "isCorrect": false,
+          "rationale": "High-dimensional data often requires *more* training and processing power, not less."
+        }
+      ],
+      "hint": "Consider the limitations of human visualization compared to mathematical calculations."
+    },
+    {
+      "question": "What is the purpose of the 'supervision feedback' loop mentioned in the lesson transcript?",
+      "answerOptions": [
+        {
+          "text": "To allow the AI to develop human emotions through trial and error.",
+          "isCorrect": false,
+          "rationale": "AI development focuses on logic and pattern recognition, not the simulation of biological empathy."
+        },
+        {
+          "text": "To improve the model by retraining it when predictions are inaccurate or unsafe.",
+          "isCorrect": true,
+          "rationale": "If a prediction is 'off,' the model must be adjusted and trained again with better data or corrected inputs to improve future accuracy."
+        },
+        {
+          "text": "To prevent the model from using any algorithms during the training phase.",
+          "isCorrect": false,
+          "rationale": "Algorithms are essential for processing the data; the feedback loop refines how the algorithm performs."
+        },
+        {
+          "text": "To manually code every correct answer into the computer's memory.",
+          "isCorrect": false,
+          "rationale": "The goal is for the machine to learn the patterns, not just memorize a hard-coded list of answers."
+        }
+      ],
+      "hint": "Think about what happens when a student gets a quiz answer wrong and has to study that specific topic again."
+    },
+    {
+      "question": "Which of the following scenarios describes a 'Classification' problem rather than 'Regression'?",
+      "answerOptions": [
+        {
+          "text": "Determining if an email is 'Spam' or 'Not Spam'.",
+          "isCorrect": true,
+          "rationale": "This involves sorting data into discrete, binary categories, which is the hallmark of classification."
+        },
+        {
+          "text": "Estimating the total enrollment numbers for a school next year.",
+          "isCorrect": false,
+          "rationale": "Since enrollment involves a continuous range of numbers, this is a regression problem."
+        },
+        {
+          "text": "Predicting the stock market value of a tech company in USD.",
+          "isCorrect": false,
+          "rationale": "Predicting currency values involves continuous numeric data, categorizing it as regression."
+        },
+        {
+          "text": "Calculating the exact square footage of a building based on its age.",
+          "isCorrect": false,
+          "rationale": "Measurements and numerical predictions represent regression tasks."
+        }
+      ],
+      "hint": "Look for the example where the answer is a simple 'either/or' choice."
+    },
+    {
+      "question": "The lecture notes that AI is 'far from perfect' due to bias. How does this bias typically enter the system?",
+      "answerOptions": [
+        {
+          "text": "The computer develops its own opinions about minority groups over time.",
+          "isCorrect": false,
+          "rationale": "Computers do not have personal opinions; they only reflect the logic and data they are provided."
+        },
+        {
+          "text": "The input training data itself may contain historical human biases.",
+          "isCorrect": true,
+          "rationale": "If an AI is trained on laws or data that were biased towards certain groups, the resulting model will naturally apply those same biases."
+        },
+        {
+          "text": "The AI model intentionally ignores the $X$ and $Y$ mapping to create conflict.",
+          "isCorrect": false,
+          "rationale": "AI models are mathematical tools designed to follow patterns, not to intentionally cause social issues."
+        },
+        {
+          "text": "The 'supervision feedback' loop is only performed by robots.",
+          "isCorrect": false,
+          "rationale": "The transcript emphasizes that humans must provide the supervision to catch and correct these issues."
+        }
+      ],
+      "hint": "Think about the phrase 'garbage in, garbage out' regarding the quality of the information used for teaching."
+    },
+    {
+      "question": "In the 'Teachable Machine' project described, how does the instructor suggest improving a model that is not accurate?",
+      "answerOptions": [
+        {
+          "text": "Switching from classification to regression mid-project.",
+          "isCorrect": false,
+          "rationale": "The project is fundamentally a classification task; changing the logic type wouldn't fix poor data quality."
+        },
+        {
+          "text": "Providing the model with better or more varied images (input features).",
+          "isCorrect": true,
+          "rationale": "Accuracy depends on the quality of the 'X' fed into the model; if the 50 images provided are poor, the model cannot classify effectively."
+        },
+        {
+          "text": "Deleting the $Y$ labels so the computer can guess freely.",
+          "isCorrect": false,
+          "rationale": "In supervised learning, labels are required for the machine to understand the 'right answer' it is aiming for."
+        },
+        {
+          "text": "Asking the AI to simulate human empathy toward the objects.",
+          "isCorrect": false,
+          "rationale": "Object recognition is a technical data task that does not involve emotional simulation."
+        }
+      ],
+      "hint": "Recall the steps involving the camera and the 50 images of notebooks or pencils."
+    },
+    {
+      "question": "Why is 'Managing Risk' considered a vital part of choosing an AI architecture in medicine?",
+      "answerOptions": [
+        {
+          "text": "Because medicine only uses regression, which is inherently safer.",
+          "isCorrect": false,
+          "rationale": "Medicine uses both regression and classification; the risk comes from the impact of the prediction, not the model type."
+        },
+        {
+          "text": "Because errors in medicine (like a missed heart attack) are more critical than errors in logistics.",
+          "isCorrect": true,
+          "rationale": "The architect must evaluate accuracy and potential failure because a false negative in healthcare has life-altering consequences."
+        },
+        {
+          "text": "Because medical AI is designed to replace all human doctors by 2030.",
+          "isCorrect": false,
+          "rationale": "The source states that humans must remain in place to supervise these technologies, not that they will be fully replaced."
+        },
+        {
+          "text": "Because medical data is low-dimensional and easy for humans to calculate manually.",
+          "isCorrect": false,
+          "rationale": "Medical data is often high-dimensional, which is exactly why AI is used to find patterns humans might miss."
+        }
+      ],
+      "hint": "Consider the stakes of being wrong in a hospital versus being wrong about a delivery schedule."
+    }
+  ]
+}

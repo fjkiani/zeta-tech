@@ -1,0 +1,225 @@
+{
+  "title": "Machine Learning Flashcards",
+  "cards": [
+    {
+      "front": "How did Arthur Samuel define machine learning?",
+      "back": "The study that allows computers to develop abilities or strategies without being explicitly programmed."
+    },
+    {
+      "front": "What was the specific game Arthur Samuel used to teach computers to learn from patterns?",
+      "back": "Chess"
+    },
+    {
+      "front": "In the supervised learning framework, what does the variable $X$ represent?",
+      "back": "The input data points or features provided to the model."
+    },
+    {
+      "front": "In the supervised learning framework, what does the variable $Y$ represent?",
+      "back": "The output or the prediction that the model produces."
+    },
+    {
+      "front": "What is the purpose of a 'supervision feedback loop' in machine learning?",
+      "back": "It allows the model to improve by retraining when predictions are inaccurate or unsafe."
+    },
+    {
+      "front": "Term: Regression",
+      "back": "Definition: A type of supervised learning used to predict a continuous numerical value."
+    },
+    {
+      "front": "Term: Classification",
+      "back": "Definition: A type of supervised learning used to predict discrete categories or binary outcomes."
+    },
+    {
+      "front": "If a model predicts the future cost of a house based on its square footage, which machine learning type is being used?",
+      "back": "Regression"
+    },
+    {
+      "front": "Determining whether an email is 'spam' or 'not spam' is an example of a _____ problem.",
+      "back": "Classification"
+    },
+    {
+      "front": "In a medical model, the output categories 'malignant' and 'benign' are known as _____.",
+      "back": "Labels"
+    },
+    {
+      "front": "Why is processing high-dimensional data considered a 'superpower' of machine learning?",
+      "back": "Algorithms can find patterns across hundreds of features that the human brain cannot visualize."
+    },
+    {
+      "front": "In a self-driving car model, what role does the front-facing camera image play?",
+      "back": "It serves as the input or feature set."
+    },
+    {
+      "front": "What is the key takeaway regarding AI bias mentioned in the lectures?",
+      "back": "AI is not perfect and can inherit biases present in the data used to train it."
+    },
+    {
+      "front": "According to the transcripts, why is human supervision necessary as AI technology advances?",
+      "back": "Humans must watch the technologies, manage risks, and analyze errors to ensure safety."
+    },
+    {
+      "front": "What are the three foundational steps of every computer program's workflow?",
+      "back": "Input, Process, and Output."
+    },
+    {
+      "front": "In the 'memory box' analogy for variables, what does the label on the outside of the box represent?",
+      "back": "The variable name."
+    },
+    {
+      "front": "In the 'memory box' analogy for variables, what does the content inside the box represent?",
+      "back": "The value or data stored in memory."
+    },
+    {
+      "front": "What does the assignment operator ($=$) signify in programming?",
+      "back": "It assigns a value to a variable name rather than asserting mathematical equality."
+    },
+    {
+      "front": "Term: Integer (int)",
+      "back": "Definition: A data type representing a whole number without decimals."
+    },
+    {
+      "front": "Term: Float",
+      "back": "Definition: A data type representing a number that contains a decimal point."
+    },
+    {
+      "front": "Term: String (str)",
+      "back": "Definition: A data type representing text characters, usually enclosed in quotes."
+    },
+    {
+      "front": "What Python function is used to capture data directly from the user?",
+      "back": "The $input()$ function."
+    },
+    {
+      "front": "What is the default data type of any value returned by the Python $input()$ function?",
+      "back": "String"
+    },
+    {
+      "front": "The process of joining two strings together using the plus ($+$) operator is called _____.",
+      "back": "Concatenation"
+    },
+    {
+      "front": "Why will the Python expression $'Score' + 10$ result in an error?",
+      "back": "Python cannot concatenate a string and an integer without explicit type conversion."
+    },
+    {
+      "front": "How can you fix a 'type mismatch' error when trying to combine a string and a number in a print statement?",
+      "back": "Convert the number to a string using the $str()$ function."
+    },
+    {
+      "front": "What is the purpose of the $int()$ function in Python?",
+      "back": "To convert a string or float into an integer data type."
+    },
+    {
+      "front": "What does the 'integer division' operator ($//$) do in Python?",
+      "back": "It performs division and discards the remainder, providing only the whole number result."
+    },
+    {
+      "front": "What is the result of the Python expression $17 // 5$?",
+      "back": "$3$"
+    },
+    {
+      "front": "What is the purpose of the 'modulo' operator ($\\%%$) in Python?",
+      "back": "It returns only the remainder of a division operation."
+    },
+    {
+      "front": "In a string, what is the function of the escape sequence $\\n$?",
+      "back": "It moves the cursor to a new line."
+    },
+    {
+      "front": "Term: Type Inference",
+      "back": "Definition: Python's ability to automatically guess a variable's data type based on the value assigned."
+    },
+    {
+      "front": "What happens when you multiply a string by an integer in Python (e.g., $'Score' * 3$)?",
+      "back": "The string is repeated that number of times (e.g., $'ScoreScoreScore'$)."
+    },
+    {
+      "front": "In the 'Teachable Machine' project, how many images per object are recommended to train the model?",
+      "back": "Approximately $50$ images."
+    },
+    {
+      "front": "What real-world metric is used to evaluate how well an AI model distinguishes between objects like a notebook and a pencil?",
+      "back": "Accuracy"
+    },
+    {
+      "front": "What historical event did the instructor use to illustrate the danger of data type mismatches?",
+      "back": "The Mars Orbiter burning in the atmosphere due to metric and imperial unit confusion."
+    },
+    {
+      "front": "Under what condition is 'classification' preferred over 'regression' in medical AI?",
+      "back": "When the goal is a binary diagnosis, such as determining if a condition is present or absent."
+    },
+    {
+      "front": "How does supervised learning differ from simple 'if-then' programming?",
+      "back": "The computer learns the mapping between inputs and outputs from data rather than following manually coded rules."
+    },
+    {
+      "front": "What is the primary risk of building a medical AI without managing 'error rate'?",
+      "back": "Inaccurate predictions could lead to critical failures in patient diagnosis or safety."
+    },
+    {
+      "front": "Concept: Concatenation Requirement",
+      "back": "Rule: To combine a string and an integer, the integer must first be converted to a string."
+    },
+    {
+      "front": "Why is 'personalizing AI tutors' for every child considered a high-societal-impact project?",
+      "back": "It addresses individual educational needs at scale, which is difficult for humans alone."
+    },
+    {
+      "front": "When calculating 'decades' from 'years' in Python, which operator ensures you get a whole number of decades?",
+      "back": "The integer division operator ($//$)."
+    },
+    {
+      "front": "What does a modulo result of $0$ indicate when dividing two numbers?",
+      "back": "The first number is perfectly divisible by the second with no remainder."
+    },
+    {
+      "front": "What is the specific danger of using AI trained on biased legal data?",
+      "back": "The AI will systematically apply those same biases against specific groups, such as minorities."
+    },
+    {
+      "front": "In Python, which characters must enclose string data types?",
+      "back": "Quotes (either single or double)."
+    },
+    {
+      "front": "What is the 'brain' of the computer often compared to in the transcript's analogies?",
+      "back": "A warehouse"
+    },
+    {
+      "front": "According to the transcript, why do humans struggle with high-dimensional data visualization?",
+      "back": "The human mind generally cannot visualize beyond two or three dimensions."
+    },
+    {
+      "front": "What is the intended outcome of a 'classification' model for tuberculosis screening?",
+      "back": "A binary result identifying whether a sample indicates tuberculosis or not."
+    },
+    {
+      "front": "What is the term for transforming data from one type (like a string) to another (like an integer)?",
+      "back": "Type conversion"
+    },
+    {
+      "front": "In the house price model example, why is 'square footage' considered a feature?",
+      "back": "It is an input variable used by the algorithm to calculate the predicted price."
+    },
+    {
+      "front": "What is the outcome of the Python expression $15 \\%% 3$?",
+      "back": "$0$ (because there is no remainder)."
+    },
+    {
+      "front": "What makes AI 'not just another quiz' but a 'project' according to the instructor?",
+      "back": "It allows students to visually see what AI is doing in real-time using cameras and data."
+    },
+    {
+      "front": "Why is 'human life experience' cited as a factor that AI has difficulty replicating in diagnostics?",
+      "back": "AI operates on data and patterns, whereas humans factor in nuance and subjective experience."
+    },
+    {
+      "front": "In Python code, what happens to the remainder when using the $//$ operator?",
+      "back": "It is discarded."
+    },
+    {
+      "front": "What is the core benefit of using AI for logistics or manufacturing defect detection?",
+      "back": "It increases human productivity by automating repetitive or complex monitoring tasks."
+    }
+  ]
+}

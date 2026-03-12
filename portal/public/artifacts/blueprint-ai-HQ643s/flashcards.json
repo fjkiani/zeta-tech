@@ -1,0 +1,245 @@
+{
+  "title": "AI Flashcards",
+  "cards": [
+    {
+      "front": "What is the primary reason humans must remain involved with AI technology?",
+      "back": "To provide necessary supervision and watch over the technologies."
+    },
+    {
+      "front": "According to the transcript, which group of people will likely hold the available jobs in the future?",
+      "back": "Humans who understand and can supervise AI technologies."
+    },
+    {
+      "front": "How did Arthur Samuel teach a computer to play chess without explicit programming?",
+      "back": "By having the computer learn patterns, recognize mistakes, and improve over time."
+    },
+    {
+      "front": "What is the simple definition of Artificial Intelligence provided in the lesson?",
+      "back": "The ability of a computer to learn without explicit programming."
+    },
+    {
+      "front": "In the machine learning process, what does the variable $X$ represent?",
+      "back": "The input or clue passed into the algorithm."
+    },
+    {
+      "front": "In the machine learning process, what does the variable $Y$ represent?",
+      "back": "The prediction or answer produced by the model."
+    },
+    {
+      "front": "What is the function of 'supervision feedback' in AI development?",
+      "back": "It allows for model improvement when a prediction is incorrect or unsafe."
+    },
+    {
+      "front": "When an AI prediction is 'completely off' or unsafe, what step must be taken before getting a new output?",
+      "back": "The model must be fixed and trained again."
+    },
+    {
+      "front": "In the 'Teachable Machine' project, what is the purpose of passing 50 images to the model?",
+      "back": "To train the AI model to recognize and predict a specific object."
+    },
+    {
+      "front": "In the context of AI predictions, what does 'accuracy' measure?",
+      "back": "How correct the model is at predicting outcomes based on its training."
+    },
+    {
+      "front": "What metaphor is used to describe a student's autonomy in directing AI toward complex missions?",
+      "back": "A pilot commanding an aircraft."
+    },
+    {
+      "front": "What is a major cited limitation of AI regarding its training data?",
+      "back": "AI is far from perfect and often contains bias."
+    },
+    {
+      "front": "How does biased training data, such as biased law, affect AI performance?",
+      "back": "The AI will apply that same bias toward the groups targeted in the data."
+    },
+    {
+      "front": "What role does AI play in assisting the human mind with complex data?",
+      "back": "It connects gaps in concepts, ideas, and theories that the human mind cannot link alone."
+    },
+    {
+      "front": "Term: Regression",
+      "back": "Definition: A path in supervised learning used to predict a continuous numerical value."
+    },
+    {
+      "front": "Term: Classification",
+      "back": "Definition: A path in supervised learning used to predict categorical or binary outcomes."
+    },
+    {
+      "front": "How does the goal of regression differ from the goal of classification?",
+      "back": "Regression predicts numerical values while classification predicts yes/no or binary outcomes."
+    },
+    {
+      "front": "What is an example of a regression task mentioned in the transcript?",
+      "back": "Predicting the future cost of living in Bushwick."
+    },
+    {
+      "front": "Predicting whether a heart image indicates a future heart attack is an example of _____.",
+      "back": "Classification"
+    },
+    {
+      "front": "Predicting the number of students enrolled in a school ten years from now is an example of _____.",
+      "back": "Regression"
+    },
+    {
+      "front": "What binary outcome might an AI classification model predict regarding medical cells?",
+      "back": "Whether a cell is a tumor or not a tumor."
+    },
+    {
+      "front": "Why must developers be cautious when analyzing AI errors?",
+      "back": "To ensure they are not providing wrong or harmful information."
+    },
+    {
+      "front": "What are the three core requirements for the student project assignment?",
+      "back": "Identify a problem, define the input/output, and ensure societal impact."
+    },
+    {
+      "front": "In Daniela's project, what is the specific focus within women's healthcare?",
+      "back": "Improving breast cancer screening methods to be less painful."
+    },
+    {
+      "front": "What percentage of cancer patients are affected by breast cancer according to the transcript?",
+      "back": "23\\%"
+    },
+    {
+      "front": "What is the objective of Isaac's project regarding Down syndrome?",
+      "back": "To use classification to screen for chromosomal alterations."
+    },
+    {
+      "front": "How does the student project on Tuberculosis propose to use AI?",
+      "back": "By using classification to determine different types of the disease."
+    },
+    {
+      "front": "What is the 'input' in the context of the Teachable Machine project?",
+      "back": "A new image used to see if the model recognizes it."
+    },
+    {
+      "front": "What does the transcript suggest about the 'convincing' nature of AI answers?",
+      "back": "AI is convincing even when it is far from perfect or incorrect."
+    },
+    {
+      "front": "What specific societal mission is mentioned regarding self-driving technology?",
+      "back": "Building self-driving cars."
+    },
+    {
+      "front": "According to the transcript, AI is used to make sense of _____ and _____.",
+      "back": "Logic; data"
+    },
+    {
+      "front": "What is the consequence for humans who lack the skill set to supervise AI?",
+      "back": "They might not find many jobs available to them."
+    },
+    {
+      "front": "What is the relationship between AI and 'explicit programming' in machine learning?",
+      "back": "Machine learning allows computers to learn without being explicitly programmed for every task."
+    },
+    {
+      "front": "Why is 'testing the accuracy' emphasized in the lesson?",
+      "back": "Because AI will inevitably make mistakes that need to be caught."
+    },
+    {
+      "front": "Identify the 'prediction' component in a model identifying a Tesla.",
+      "back": "The classification of 'Tesla' or 'Not a Tesla'."
+    },
+    {
+      "front": "What is the ultimate goal of the student AI projects described?",
+      "back": "To solve a problem in productivity, health, or law with societal impact."
+    },
+    {
+      "front": "What does the model do with the 'input' before producing a 'prediction'?",
+      "back": "It runs an algorithm to learn from the data."
+    },
+    {
+      "front": "What is a 'continuous value' in the context of supervised learning?",
+      "back": "A numerical output that can represent a range, such as price or population."
+    },
+    {
+      "front": "How does the transcript define the autonomy of a human 'pilot' in AI?",
+      "back": "The freedom to take the AI 'aircraft' on specific missions to solve problems."
+    },
+    {
+      "front": "What is the core problem Isaac aims to address with AI?",
+      "back": "Understanding chromosomal alterations and helping those with Down syndrome."
+    },
+    {
+      "front": "In the Tuberculosis project, what determines how the disease affects the body?",
+      "back": "The specific type of the disease identified through classification."
+    },
+    {
+      "front": "What must a student define when identifying a problem for their AI project?",
+      "back": "What the problem is and why it is a problem."
+    },
+    {
+      "front": "Why was Arthur Samuel mentioned in the discussion of AI history?",
+      "back": "He provided a foundational example of machine learning by teaching a computer chess."
+    },
+    {
+      "front": "If an AI is trained on biased data regarding minorities, what is the result?",
+      "back": "The AI will apply bias toward those minorities."
+    },
+    {
+      "front": "What does the 'Teachable Machine' provide to show how well it identifies an object?",
+      "back": "An accuracy score."
+    },
+    {
+      "front": "Predicting the housing market crash is an example of using AI for _____.",
+      "back": "Prediction"
+    },
+    {
+      "front": "What is the 'Y' in a model predicting the cost of living in 10 years?",
+      "back": "The specific dollar amount (continuous value)."
+    },
+    {
+      "front": "What is the 'X' in a project using images to detect a heart attack?",
+      "back": "The image of the heart."
+    },
+    {
+      "front": "What is the main takeaway regarding the relationship between AI and the human mind?",
+      "back": "We use AI to our benefit to connect data points the human mind cannot."
+    },
+    {
+      "front": "In the lesson, what is the primary purpose of identifying 'gaps' in concepts or ideas?",
+      "back": "To identify where AI can be used to make sense of complex information."
+    },
+    {
+      "front": "What category of supervised learning uses 'yes or no' outcomes?",
+      "back": "Classification"
+    },
+    {
+      "front": "How does the classroom describe the current accuracy of AI?",
+      "back": "It is nowhere close to perfect."
+    },
+    {
+      "front": "What kind of data might be used as an input for predicting school enrollment?",
+      "back": "Historical enrollment records and population data."
+    },
+    {
+      "front": "What was the specific change in breast cancer screening Daniela noted?",
+      "back": "The screening methods were changed to be less painful."
+    },
+    {
+      "front": "What is the 'mission' mentioned in the transcript regarding cancer research?",
+      "back": "Predicting how to cure cancer."
+    },
+    {
+      "front": "How does the algorithm interact with the 'clue' provided by the human?",
+      "back": "It processes the clue to learn and generate a prediction."
+    },
+    {
+      "front": "Why is it important to identify the chromosomal alteration in Isaac's project?",
+      "back": "To correctly identify and screen for Down syndrome."
+    },
+    {
+      "front": "What determines if an AI project has 'societal impact'?",
+      "back": "Whether it solves a meaningful problem in human productivity, health, or law."
+    },
+    {
+      "front": "What must be analyzed to ensure an AI model is not giving 'wrong information'?",
+      "back": "Errors and accuracy metrics."
+    },
+    {
+      "front": "Arthur Samuel's chess computer learned to improve by analyzing its own _____.",
+      "back": "Mistakes"
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "title": "AI Flashcards",
+  "cards": [
+    {
+      "front": "How did Arthur Samuel define machine learning?",
+      "back": "The field of study that gives computers the ability to learn without being explicitly programmed."
+    },
+    {
+      "front": "In the context of machine learning, what does the variable $X$ represent?",
+      "back": "The input data points or features provided to the model."
+    },
+    {
+      "front": "In the context of machine learning, what does the variable $Y$ represent?",
+      "back": "The output prediction, label, or target result."
+    },
+    {
+      "front": "What is the primary goal of supervised learning?",
+      "back": "To teach a computer to map an input $X$ to the correct output $Y$ by providing it with the right answers during training."
+    },
+    {
+      "front": "Which type of supervised learning is used to predict continuous numerical values, such as future housing prices?",
+      "back": "Regression."
+    },
+    {
+      "front": "Which type of supervised learning is used to categorize data into discrete groups, such as 'spam' or 'not spam'?",
+      "back": "Classification."
+    },
+    {
+      "front": "In a medical AI model diagnosing tumors as 'malignant' or 'benign', what is the categorical output called?",
+      "back": "A label."
+    },
+    {
+      "front": "Why is the ability to process high-dimensional data considered an AI 'superpower'?",
+      "back": "It allows algorithms to find patterns across hundreds of features that the human brain cannot visualize."
+    },
+    {
+      "front": "What is a significant risk when training AI on historical data that contains human prejudice?",
+      "back": "The AI will learn and apply the same biases in its predictions."
+    },
+    {
+      "front": "In a self-driving car system, what role do the raw images from the front-facing camera play?",
+      "back": "They serve as the feature set (input data) for the model."
+    },
+    {
+      "front": "If a model predicts the cost of living in 10 years, which machine learning technique is it employing?",
+      "back": "Regression."
+    },
+    {
+      "front": "What is the term for the loop used to improve a model when its predictions are inaccurate?",
+      "back": "Supervision feedback."
+    },
+    {
+      "front": "Term: Supervised Learning",
+      "back": "Definition: A machine learning framework where the model is trained on labeled data to learn a mapping from inputs to outputs."
+    },
+    {
+      "front": "How does classification differ from regression regarding the type of output produced?",
+      "back": "Classification predicts discrete categories (binary or multi-class), while regression predicts continuous numerical values."
+    },
+    {
+      "front": "What are the three foundational steps of every computer program's workflow?",
+      "back": "Input, Process, and Output."
+    },
+    {
+      "front": "In the 'memory box' analogy of Python variables, what does the label on the outside of the box represent?",
+      "back": "The variable name used to reference the data's location in memory."
+    },
+    {
+      "front": "In the 'memory box' analogy of Python variables, what does the content inside the box represent?",
+      "back": "The value or actual data stored."
+    },
+    {
+      "front": "In Python, what is the specific function of the assignment operator ($=$)?",
+      "back": "It assigns a value to a variable label rather than stating mathematical equality."
+    },
+    {
+      "front": "What is the default data type of the value returned by Python's `input()` function?",
+      "back": "String (text)."
+    },
+    {
+      "front": "Which Python data type is used specifically for whole numbers without decimals?",
+      "back": "Integer (int)."
+    },
+    {
+      "front": "Which Python data type is used for numbers that include decimal points?",
+      "back": "Float."
+    },
+    {
+      "front": "Which Python data type is used to represent text characters, usually enclosed in quotes?",
+      "back": "String (str)."
+    },
+    {
+      "front": "What is Python's 'type inference' capability?",
+      "back": "The ability of the language to automatically determine a variable's data type based on the value assigned to it."
+    },
+    {
+      "front": "What is the result of the Python expression $17 // 5$?",
+      "back": "3 (integer division discards the remainder)."
+    },
+    {
+      "front": "In Python, what does the modulo operator ($\\%$) calculate?",
+      "back": "The remainder left over after division."
+    },
+    {
+      "front": "What is the result of the Python expression $15 \\% 3$?",
+      "back": "0"
+    },
+    {
+      "front": "Term: String Concatenation",
+      "back": "Definition: The process of joining two or more strings together into one, typically using the $+$ operator."
+    },
+    {
+      "front": "In Python, why does the code `print(\"Score: \" + 10)` result in an error?",
+      "back": "Python cannot directly concatenate a string with an integer without type conversion."
+    },
+    {
+      "front": "Which Python function must be used to convert an integer to a string for concatenation?",
+      "back": "The `str()` function."
+    },
+    {
+      "front": "What is the purpose of the escape sequence $\\backslash n$ in a Python string?",
+      "back": "To move the cursor to a new line."
+    },
+    {
+      "front": "If $x = \"5\"$ and $y = \"10\"$, what is the output of `print(x + y)`?",
+      "back": "\"510\" (the strings are concatenated, not mathematically added)."
+    },
+    {
+      "front": "What was the cause of the 1999 NASA Mars Orbiter crash involving data types?",
+      "back": "A mismatch between metric units (newtons) and imperial units (pounds-force) in the software."
+    },
+    {
+      "front": "What is the purpose of using curly brackets ($\\{\\}$) in Python string formatting?",
+      "back": "They act as placeholders where variable values will be inserted at runtime."
+    },
+    {
+      "front": "How does an 'f-string' (formatted string literal) improve Python code readability?",
+      "back": "It allows variables to be embedded directly inside a string using curly brackets preceded by the letter 'f'."
+    },
+    {
+      "front": "In the context of program logic, what is 'type conversion'?",
+      "back": "Transforming data from one type (e.g., string) to another (e.g., integer) to perform specific operations."
+    },
+    {
+      "front": "Which Python operator is used for standard division that always returns a float?",
+      "back": "The forward slash ($/$)."
+    },
+    {
+      "front": "Which Python operator is used for 'floor division' to obtain a whole number?",
+      "back": "Double forward slash ($//$)."
+    },
+    {
+      "front": "What is the 'glue' of string operations in Python?",
+      "back": "Concatenation."
+    },
+    {
+      "front": "In Python string formatting, what does the `.format()` method achieve?",
+      "back": "It inserts values into string placeholders defined by curly brackets."
+    },
+    {
+      "front": "Why must you use `int()` when processing age input for calculations in Python?",
+      "back": "Because `input()` returns a string, and mathematical operations require numerical data types."
+    },
+    {
+      "front": "What financial damage was caused by the data type mismatch in the Mars Climate Orbiter mission?",
+      "back": "$300$ million dollars."
+    },
+    {
+      "front": "According to the transcript, why is AI compared to 'the new electricity'?",
+      "back": "It is a foundational technology expected to transform every industry similarly to how electricity did in the past."
+    },
+    {
+      "front": "What machine learning concept involves a 'pilot' supervising an 'aircraft' (technology)?",
+      "back": "Human supervision/Human-in-the-loop."
+    },
+    {
+      "front": "In classification problems, what is a 'binary outcome'?",
+      "back": "A result that can only be one of two possibilities, such as True/False or Yes/No."
+    },
+    {
+      "front": "When using `input(\"How old are you? \")`, where is the user's response stored in the code?",
+      "back": "It is stored as the value of the variable assigned to the input function."
+    },
+    {
+      "front": "Why is accuracy testing critical in medical AI compared to logistics AI?",
+      "back": "Errors in medicine can have life-or-death consequences, requiring higher risk management."
+    },
+    {
+      "front": "If a Python variable is defined as `price = 9.99`, what data type is it?",
+      "back": "Float."
+    },
+    {
+      "front": "If a Python variable is defined as `active = \"True\"`, why is it not a boolean?",
+      "back": "Because it is enclosed in quotes, making it a string."
+    },
+    {
+      "front": "Concept: Teachable Machine",
+      "back": "A tool used to train AI models by feeding them images of different classes and testing their predictive accuracy."
+    },
+    {
+      "front": "In Python math, what symbol represents multiplication?",
+      "back": "The asterisk ($*$)."
+    },
+    {
+      "front": "What is the primary difference between a 'False Positive' and a 'False Negative' in AI diagnostics?",
+      "back": "A False Positive incorrectly identifies a condition as present; a False Negative incorrectly identifies it as absent."
+    },
+    {
+      "front": "Which Python function converts a string or integer to a decimal-based number?",
+      "back": "The `float()` function."
+    },
+    {
+      "front": "What does the 'Process' step in the Input-Process-Output workflow typically involve?",
+      "back": "Running algorithms or logic on the input data to generate a result."
+    },
+    {
+      "front": "How does the computer 'improve' in Arthur Samuel's chess example?",
+      "back": "By analyzing patterns and learning from mistakes rather than following fixed rules."
+    },
+    {
+      "front": "In Python, what character is used to denote the start and end of a string?",
+      "back": "Double quotes (\") or single quotes (')."
+    },
+    {
+      "front": "Why would a medical researcher use classification to study Alzheimer's disease?",
+      "back": "To predict whether a patient will develop the disease (True) or not (False)."
+    },
+    {
+      "front": "In Python, what happens if you try to subtract a string from another string?",
+      "back": "It will result in a TypeError because subtraction is not defined for strings."
+    },
+    {
+      "front": "What is the result of $10 // 3$ in Python?",
+      "back": "3"
+    },
+    {
+      "front": "What is the result of $10 \\% 3$ in Python?",
+      "back": "1"
+    },
+    {
+      "front": "How many images per object were recommended in the transcript to train the Teachable Machine model?",
+      "back": "50 images."
+    },
+    {
+      "front": "In the transcript, what sector did Daniela choose to transform with AI?",
+      "back": "Women's healthcare (specifically breast cancer screening)."
+    },
+    {
+      "front": "In the transcript, what condition did Isaac propose for AI screening?",
+      "back": "Down syndrome (detecting the extra chromosome)."
+    },
+    {
+      "front": "What is the primary risk of an 'unsupervised' AI in high-stakes fields like law?",
+      "back": "It may produce biased or unfair outcomes due to flaws in its training data."
+    },
+    {
+      "front": "If a user enters '25' into an `input()` prompt, what code is needed to use that value for math?",
+      "back": "`int(variable_name)` or `float(variable_name)` to convert the string to a number."
+    },
+    {
+      "front": "What does the transcript suggest is the main takeaway for using AI in the modern world?",
+      "back": "To use AI to bridge gaps in logic and data that the human mind cannot connect alone."
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "title": "Machine Learning Quiz",
+  "questions": [
+    {
+      "question": "Based on Arthur Samuel's early work with computers and chess, what is the core definition of machine learning used in this course?",
+      "answerOptions": [
+        {
+          "text": "The capacity of a computer to process data at speeds exceeding human biological limits.",
+          "isCorrect": false,
+          "rationale": "While processing speed is a characteristic of computers, it does not define the 'learning' aspect of machine learning."
+        },
+        {
+          "text": "The study that gives computers the ability to learn without being explicitly programmed.",
+          "isCorrect": true,
+          "rationale": "This definition emphasizes that the machine develops strategies and abilities through patterns rather than a coder writing every specific rule."
+        },
+        {
+          "text": "A method of programming where a human coder provides a fixed set of rules for every possible scenario.",
+          "isCorrect": false,
+          "rationale": "This describes traditional programming, which is the opposite of the 'learning without explicit programming' definition."
+        },
+        {
+          "text": "The simulation of human emotions and empathy within a digital framework.",
+          "isCorrect": false,
+          "rationale": "Emotion simulation is a subset of general AI goals but is not the primary capability defined by Samuel's machine learning research."
+        }
+      ],
+      "hint": "Consider how Samuel's chess program improved without the coder manually entering every move."
+    },
+    {
+      "question": "In the context of supervised learning, what does the variable $X$ typically represent?",
+      "answerOptions": [
+        {
+          "text": "The final prediction or target label.",
+          "isCorrect": false,
+          "rationale": "The prediction or label is represented by the output variable $Y$."
+        },
+        {
+          "text": "The error rate of the mathematical algorithm.",
+          "isCorrect": false,
+          "rationale": "The error rate is a metric used to evaluate the model, not the input data represented by $X$."
+        },
+        {
+          "text": "The input features or data points provided to the model.",
+          "isCorrect": true,
+          "rationale": "In supervised learning, $X$ represents the raw data or 'clues' that the computer uses to learn a mapping to the correct answer."
+        },
+        {
+          "text": "The specific algorithm used to process the data.",
+          "isCorrect": false,
+          "rationale": "The algorithm is the 'brain' or process that connects $X$ to $Y$, not the input data itself."
+        }
+      ],
+      "hint": "Think of this as the 'clue' or information you feed into the machine."
+    },
+    {
+      "question": "Which type of supervised learning is most appropriate for predicting the future salary of an individual as a specific numerical value?",
+      "answerOptions": [
+        {
+          "text": "Classification",
+          "isCorrect": false,
+          "rationale": "Classification deals with discrete categories or binary outcomes, not continuous numerical values."
+        },
+        {
+          "text": "Unsupervised Feedback",
+          "isCorrect": false,
+          "rationale": "Supervision feedback is a mechanism for improvement, not a type of predictive modeling category."
+        },
+        {
+          "text": "Regression",
+          "isCorrect": true,
+          "rationale": "Regression is used to predict continuous values that grow or change over time, such as prices, rates, or salaries."
+        },
+        {
+          "text": "Binary Mapping",
+          "isCorrect": false,
+          "rationale": "While related to classification (yes/no), it does not describe the prediction of continuous numerical data like a salary."
+        }
+      ],
+      "hint": "Determine if a salary is a discrete category or a continuous number."
+    },
+    {
+      "question": "A model is designed to look at an email and determine if it is 'Spam' or 'Not Spam'. This is an example of which technique?",
+      "answerOptions": [
+        {
+          "text": "Linear Regression",
+          "isCorrect": false,
+          "rationale": "Regression predicts continuous numbers, whereas spam detection involves choosing between discrete categories."
+        },
+        {
+          "text": "Classification",
+          "isCorrect": true,
+          "rationale": "Classification is the correct choice because the output is a discrete category or a binary 'yes/no' decision."
+        },
+        {
+          "text": "Explicit Programming",
+          "isCorrect": false,
+          "rationale": "Explicit programming involves a human coder writing every rule, which is the opposite of the machine learning approach described."
+        },
+        {
+          "text": "Input Processing",
+          "isCorrect": false,
+          "rationale": "This is a general step in all programs, not the specific machine learning technique used for categorizing data."
+        }
+      ],
+      "hint": "Consider whether the outcome is a continuous value or a category."
+    },
+    {
+      "question": "Why is the ability to process high-dimensional data referred to as a machine learning 'superpower'?",
+      "answerOptions": [
+        {
+          "text": "It allows the computer to ignore the mapping between $X$ and $Y$.",
+          "isCorrect": false,
+          "rationale": "Mapping between inputs and outputs is the core of supervised learning; it cannot be ignored."
+        },
+        {
+          "text": "It ensures that the computer will never make an error in medical diagnosis.",
+          "isCorrect": false,
+          "rationale": "The material states AI is far from perfect and can still make critical errors even with lots of data."
+        },
+        {
+          "text": "Algorithms can find patterns across hundreds of features that the human brain cannot visualize.",
+          "isCorrect": true,
+          "rationale": "Humans struggle to visualize data beyond 2D or 3D, while math allows algorithms to find structures across many concurrent variables."
+        },
+        {
+          "text": "It reduces the amount of training data needed to build a reliable model.",
+          "isCorrect": false,
+          "rationale": "High-dimensional data often requires more processing power and training, not less."
+        }
+      ],
+      "hint": "Think about the limitations of human visualization compared to mathematical calculations."
+    },
+    {
+      "question": "In Python, using the memory box analogy, what does the label on the outside of the box represent?",
+      "answerOptions": [
+        {
+          "text": "The specific data value stored inside the box.",
+          "isCorrect": false,
+          "rationale": "The data inside is the 'value'; the label is how you identify that value."
+        },
+        {
+          "text": "The variable name used to reference the data.",
+          "isCorrect": true,
+          "rationale": "The label serves as the identifier or variable name used to reference the specific location in memory where the value is stored."
+        },
+        {
+          "text": "The total memory capacity of the computer.",
+          "isCorrect": false,
+          "rationale": "The label identifies a single piece of data (a variable), not the entire system's memory."
+        },
+        {
+          "text": "A comment that is ignored by the Python interpreter.",
+          "isCorrect": false,
+          "rationale": "A variable name is not ignored; it is required for the code to access stored information."
+        }
+      ],
+      "hint": "Think about how you find a specific box in a large warehouse."
+    },
+    {
+      "question": "What happens when you use the Python operator $//$ (integer division), such as in the expression $17 // 5$?",
+      "answerOptions": [
+        {
+          "text": "It returns the remainder of the division.",
+          "isCorrect": false,
+          "rationale": "The remainder is returned by the modulo operator ($\\%$)."
+        },
+        {
+          "text": "It provides a decimal result for high precision.",
+          "isCorrect": false,
+          "rationale": "Standard division ($/$) provides a decimal (float); integer division ($//$) discards decimals."
+        },
+        {
+          "text": "It discards the remainder and provides only the whole number.",
+          "isCorrect": true,
+          "rationale": "Integer division ($//$) calculates how many times the divisor fits into the dividend, ignoring any leftover values."
+        },
+        {
+          "text": "It rounds the result to the nearest hundredth.",
+          "isCorrect": false,
+          "rationale": "Python's integer division truncates the decimal part rather than rounding to a specific decimal place."
+        }
+      ],
+      "hint": "Think about division that only keeps the 'whole' part of the answer."
+    },
+    {
+      "question": "If a Python user enters a number into an `input()` function, what is the default data type of that value?",
+      "answerOptions": [
+        {
+          "text": "Integer",
+          "isCorrect": false,
+          "rationale": "Python does not automatically convert input to a number; it must be manually cast."
+        },
+        {
+          "text": "Float",
+          "isCorrect": false,
+          "rationale": "While a user might type a decimal, the `input()` function still captures it as text initially."
+        },
+        {
+          "text": "String",
+          "isCorrect": true,
+          "rationale": "By default, Python treats all entries from the `input()` function as text (string), regardless of what characters were typed."
+        },
+        {
+          "text": "Boolean",
+          "isCorrect": false,
+          "rationale": "Input is captured as text, not as a True/False logical value."
+        }
+      ],
+      "hint": "Recall the 'trap' mentioned in the lecture regarding doing math on user input."
+    },
+    {
+      "question": "Which line of Python code correctly combines a string and a number without causing an error?",
+      "answerOptions": [
+        {
+          "text": "`print(\"Score: \" + 10)`",
+          "isCorrect": false,
+          "rationale": "Python cannot concatenate a string and an integer directly with the plus operator."
+        },
+        {
+          "text": "`print(\"Score: \" + str(10))`",
+          "isCorrect": true,
+          "rationale": "The number must first be converted into a string using the `str()` function before it can be concatenated with another string."
+        },
+        {
+          "text": "`print(\"Score: \" + int(10))`",
+          "isCorrect": false,
+          "rationale": "Converting to an integer does not solve the concatenation problem; the target must be a string."
+        },
+        {
+          "text": "`print(\"Score: \" , str(10))`",
+          "isCorrect": false,
+          "rationale": "While this might work to display the values, the question asks for the correct way to perform string concatenation (glueing them)."
+        }
+      ],
+      "hint": "You need to change the type of the number to match the text."
+    },
+    {
+      "question": "In Python's core workflow of 'Input, Process, Output,' what does the `\\n` character sequence do when used inside a string?",
+      "answerOptions": [
+        {
+          "text": "It terminates the program immediately.",
+          "isCorrect": false,
+          "rationale": "This sequence is for formatting text, not controlling program execution."
+        },
+        {
+          "text": "It converts a string to a new numerical data type.",
+          "isCorrect": false,
+          "rationale": "Numerical conversion is handled by functions like `int()` or `float()`, not escape characters."
+        },
+        {
+          "text": "It moves the cursor to a new line for the subsequent text.",
+          "isCorrect": true,
+          "rationale": "The `\\n` sequence is an escape character used to create a line break within a string."
+        },
+        {
+          "text": "It clears the current memory box to save space.",
+          "isCorrect": false,
+          "rationale": "Text formatting characters do not have the capability to manage or clear system memory."
+        }
+      ],
+      "hint": "Think about what happens when you press the 'Enter' key while typing."
+    },
+    {
+      "question": "What is 'type inference' in the Python programming language?",
+      "answerOptions": [
+        {
+          "text": "The requirement that the user manually declares every variable type.",
+          "isCorrect": false,
+          "rationale": "This describes statically typed languages; Python is dynamically typed."
+        },
+        {
+          "text": "Python's ability to automatically guess the data type based on the value assigned.",
+          "isCorrect": true,
+          "rationale": "Python is smart enough to recognize that `10` is an integer and `\"Hello\"` is a string without the coder explicitly stating it."
+        },
+        {
+          "text": "A function that forces a variable to change from a string to an integer.",
+          "isCorrect": false,
+          "rationale": "Forcing a change is called 'type conversion' or 'casting,' not inference."
+        },
+        {
+          "text": "The process where Python ignores data types to treat everything as binary.",
+          "isCorrect": false,
+          "rationale": "Python maintains strict data types even though it identifies them automatically."
+        }
+      ],
+      "hint": "Consider how Python knows whether a variable is a number or text without you telling it."
+    },
+    {
+      "question": "According to the material, why is human supervision critical when using AI in fields like medicine?",
+      "answerOptions": [
+        {
+          "text": "AI models are generally too slow to make decisions in real-time.",
+          "isCorrect": false,
+          "rationale": "AI is often used for its speed; the issue is accuracy and ethics, not latency."
+        },
+        {
+          "text": "AI can be trained on biased data, leading to unfair or incorrect outcomes.",
+          "isCorrect": true,
+          "rationale": "The material explains that AI is far from perfect and can apply biases found in its training data, requiring human oversight to manage risk."
+        },
+        {
+          "text": "Humans are needed only to write the explicit rules for the AI to follow.",
+          "isCorrect": false,
+          "rationale": "Machine learning is defined by the absence of explicit rules; humans oversee the outcomes and the training process."
+        },
+        {
+          "text": "Medical data is the only type of data that AI cannot process effectively.",
+          "isCorrect": false,
+          "rationale": "AI is highly effective at processing medical data; however, the consequences of its errors are much more critical."
+        }
+      ],
+      "hint": "Reflect on the 'AI is not perfect' section of the transcript."
+    }
+  ]
+}

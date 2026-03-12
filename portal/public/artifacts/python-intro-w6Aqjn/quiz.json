@@ -1,0 +1,395 @@
+{
+  "title": "Machine Learning Quiz",
+  "questions": [
+    {
+      "question": "According to the lecture, how did Arthur Samuel define the primary capability of machine learning?",
+      "answerOptions": [
+        {
+          "text": "The power to process massive datasets faster than the human brain can calculate.",
+          "isCorrect": false,
+          "rationale": "While true of computers, this describes processing speed rather than the specific nature of learning defined by Samuel."
+        },
+        {
+          "text": "The ability for computers to develop strategies or abilities without being explicitly programmed.",
+          "isCorrect": true,
+          "rationale": "Samuel's work with chess demonstrated that computers can learn patterns and improve through experience rather than fixed instructions."
+        },
+        {
+          "text": "The capacity for a machine to perfectly simulate human emotions and empathetic responses.",
+          "isCorrect": false,
+          "rationale": "The material focuses on logic, patterns, and data mapping rather than emotional simulation."
+        },
+        {
+          "text": "A system that ensures a computer will never make an error on its first attempt at a task.",
+          "isCorrect": false,
+          "rationale": "Machine learning typically involves mistakes and a feedback loop to improve over time."
+        }
+      ],
+      "hint": "Think about whether a human coder has to write every single specific move for the computer to follow."
+    },
+    {
+      "question": "In the supervised learning framework, what does the component $X$ represent?",
+      "answerOptions": [
+        {
+          "text": "The final prediction or labeled answer provided by the model.",
+          "isCorrect": false,
+          "rationale": "This describes the output, often represented as $Y$, which is the result of the model's processing."
+        },
+        {
+          "text": "The mathematical algorithm used to bridge the gap between data and results.",
+          "isCorrect": false,
+          "rationale": "The algorithm is the process or model that sits between the input and the output."
+        },
+        {
+          "text": "The input data points or features provided to the system.",
+          "isCorrect": true,
+          "rationale": "In supervised learning, $X$ represents the raw clues or data fed into the model to find a pattern."
+        },
+        {
+          "text": "The error rate calculated after the model makes a mistake.",
+          "isCorrect": false,
+          "rationale": "The error rate is part of the evaluation or feedback loop, not the initial input data."
+        }
+      ],
+      "hint": "Consider the term used for the 'clues' we give the computer so it can find an answer."
+    },
+    {
+      "question": "A researcher is building a model to determine if an email is 'spam' or 'not spam.' Which type of supervised learning is being applied?",
+      "answerOptions": [
+        {
+          "text": "Regression",
+          "isCorrect": false,
+          "rationale": "Regression is used for predicting continuous numerical values, not categorical labels."
+        },
+        {
+          "text": "Linear Algebra",
+          "isCorrect": false,
+          "rationale": "This is a branch of mathematics used in ML, but it is not a specific type of supervised learning task like classification."
+        },
+        {
+          "text": "Type Inference",
+          "isCorrect": false,
+          "rationale": "Type inference is a programming concept where the language guesses a data type, not a machine learning technique."
+        },
+        {
+          "text": "Classification",
+          "isCorrect": true,
+          "rationale": "Classification is used when the output is discrete or binary, such as a 'yes/no' or 'true/false' category."
+        }
+      ],
+      "hint": "Is the output a continuous growing number or a specific category?"
+    },
+    {
+      "question": "If an AI is designed to predict the specific dollar amount of a house in ten years, it is using which learning method?",
+      "answerOptions": [
+        {
+          "text": "Classification",
+          "isCorrect": false,
+          "rationale": "Classification deals with categories like 'benign' or 'malignant' rather than specific numerical values."
+        },
+        {
+          "text": "Regression",
+          "isCorrect": true,
+          "rationale": "Regression focuses on predicting continuous values, such as prices or rates that change over time."
+        },
+        {
+          "text": "Binary Logic",
+          "isCorrect": false,
+          "rationale": "Binary logic results in true/false outcomes, which is insufficient for predicting a wide range of house prices."
+        },
+        {
+          "text": "Type Conversion",
+          "isCorrect": false,
+          "rationale": "This is a programming step to change data formats, not a learning method for future predictions."
+        }
+      ],
+      "hint": "The answer involves predicting a value that continuously grows or changes numerically."
+    },
+    {
+      "question": "What is the primary purpose of the 'supervision feedback' loop in machine learning?",
+      "answerOptions": [
+        {
+          "text": "To allow the computer to ignore $X$ and $Y$ mapping when data is too complex.",
+          "isCorrect": false,
+          "rationale": "Mapping $X$ to $Y$ is the core goal of supervised learning and cannot be ignored."
+        },
+        {
+          "text": "To improve the model by adjusting it when predictions are inaccurate or unsafe.",
+          "isCorrect": true,
+          "rationale": "Feedback allows the system to go back, fix errors, and retrain the model for better accuracy."
+        },
+        {
+          "text": "To convert string data into integers automatically without human intervention.",
+          "isCorrect": false,
+          "rationale": "Data type conversion is a pre-processing step, whereas the feedback loop focuses on the model's performance."
+        },
+        {
+          "text": "To ensure that the AI never encounters biased data during the training phase.",
+          "isCorrect": false,
+          "rationale": "Feedback happens after a prediction is made; it does not prevent biased data from entering the system initially."
+        }
+      ],
+      "hint": "Think about what happens after the computer makes a prediction that is completely wrong."
+    },
+    {
+      "question": "In the 'Brain Warehouse' analogy for computer programming, what does the label on the outside of a box represent?",
+      "answerOptions": [
+        {
+          "text": "The actual data or value stored inside the memory.",
+          "isCorrect": false,
+          "rationale": "The content inside the box is the value; the label is just how we find it."
+        },
+        {
+          "text": "The variable name used to reference a specific memory location.",
+          "isCorrect": true,
+          "rationale": "The label is the identifier (variable name) that allows the programmer to access stored data."
+        },
+        {
+          "text": "The amount of space the memory occupies in the system.",
+          "isCorrect": false,
+          "rationale": "Memory size is a hardware constraint, not what the variable label represents in code."
+        },
+        {
+          "text": "A comment that the computer ignores during execution.",
+          "isCorrect": false,
+          "rationale": "The computer uses the label to find the data, so it is not ignored like a comment."
+        }
+      ],
+      "hint": "Consider how you identify different pieces of information you have saved in your code."
+    },
+    {
+      "question": "When using the Python `input()` function to ask for a user's age, what is the default data type of the returned value?",
+      "answerOptions": [
+        {
+          "text": "Integer",
+          "isCorrect": false,
+          "rationale": "While ages are numbers, Python's input function does not automatically convert text to integers."
+        },
+        {
+          "text": "Float",
+          "isCorrect": false,
+          "rationale": "Floats are numbers with decimals, but the input function defaults to text regardless of the content."
+        },
+        {
+          "text": "String",
+          "isCorrect": true,
+          "rationale": "Python treats all user entries via the input function as text characters (strings) by default."
+        },
+        {
+          "text": "Boolean",
+          "isCorrect": false,
+          "rationale": "Booleans represent true/false values, which is not the default format for general user input."
+        }
+      ],
+      "hint": "Recall the 'trap' mentioned in the transcript where math failed on an age variable."
+    },
+    {
+      "question": "Which Python operator would you use if you wanted to discard the remainder and only keep the whole number during division?",
+      "answerOptions": [
+        {
+          "text": "The Modulo operator ($ \\% $)",
+          "isCorrect": false,
+          "rationale": "The modulo operator returns only the remainder, which is the opposite of discarding it."
+        },
+        {
+          "text": "The standard Division operator ($ / $)",
+          "isCorrect": false,
+          "rationale": "A single forward slash performs standard division and typically returns a decimal (float)."
+        },
+        {
+          "text": "The Integer Division operator ($ // $)",
+          "isCorrect": true,
+          "rationale": "Double forward slashes perform integer division, which fits the divisor into the dividend and discards the remainder."
+        },
+        {
+          "text": "The Assignment operator ($ = $)",
+          "isCorrect": false,
+          "rationale": "The equals sign is used to assign values to variables, not for mathematical division."
+        }
+      ],
+      "hint": "This operator was used to calculate the number of full 'decades' in the age project."
+    },
+    {
+      "question": "Why is the ability to process high-dimensional data considered an AI 'superpower' compared to human cognition?",
+      "answerOptions": [
+        {
+          "text": "Humans are physically unable to view data on a computer screen for more than two hours.",
+          "isCorrect": false,
+          "rationale": "This is a physical limitation of humans, but doesn't explain the mathematical advantage of AI."
+        },
+        {
+          "text": "AI can ignore the relationship between input $X$ and output $Y$ to save processing power.",
+          "isCorrect": false,
+          "rationale": "Ignoring the $X$ and $Y$ relationship would prevent the AI from learning anything useful."
+        },
+        {
+          "text": "Mathematical algorithms can find structures and patterns across hundreds of variables that the human brain cannot visualize.",
+          "isCorrect": true,
+          "rationale": "Humans struggle to visualize data beyond 2D or 3D, while AI can process and connect many concurrent variables."
+        },
+        {
+          "text": "High-dimensional data allows the AI to operate without needing any training or feedback.",
+          "isCorrect": false,
+          "rationale": "More complex data often requires more training and feedback, not less."
+        }
+      ],
+      "hint": "Think about the limits of human visualization compared to the mathematical reach of algorithms."
+    },
+    {
+      "question": "What is the result of the Python expression `\"5\" + \"10\"`?",
+      "answerOptions": [
+        {
+          "text": "$ 15 $",
+          "isCorrect": false,
+          "rationale": "This would be the result if the values were integers, but they are enclosed in quotes, making them strings."
+        },
+        {
+          "text": "$ 510 $",
+          "isCorrect": true,
+          "rationale": "Because the values are strings, the `+` operator performs concatenation, gluing the two pieces of text together."
+        },
+        {
+          "text": "$ 5.10 $",
+          "isCorrect": false,
+          "rationale": "Concatenation does not add decimal points between the joined strings."
+        },
+        {
+          "text": "It results in a TypeError.",
+          "isCorrect": false,
+          "rationale": "Joining two strings is valid in Python; the error only occurs when mixing a string with a non-string."
+        }
+      ],
+      "hint": "Remember the concept of 'concatenation' or 'the glue' for text."
+    },
+    {
+      "question": "In Python, what does the term 'Type Inference' refer to?",
+      "answerOptions": [
+        {
+          "text": "The requirement that a programmer must manually declare every variable type before using it.",
+          "isCorrect": false,
+          "rationale": "This describes statically typed languages, whereas Python handles types differently."
+        },
+        {
+          "text": "The process where Python automatically guesses the data type based on the value assigned to a variable.",
+          "isCorrect": true,
+          "rationale": "Python is smart enough to know that $ 10 $ is an integer and $ \"10\" $ is a string based on how they are written."
+        },
+        {
+          "text": "A way for the computer to convert all numerical inputs into binary code for faster math.",
+          "isCorrect": false,
+          "rationale": "While computers use binary, type inference specifically refers to high-level data types like floats and strings."
+        },
+        {
+          "text": "The model's ability to infer the $Y$ output from an $X$ input in machine learning.",
+          "isCorrect": false,
+          "rationale": "This describes prediction in ML, not the programming concept of type inference."
+        }
+      ],
+      "hint": "Consider whether you have to tell Python 'this is a number' every time you create a variable."
+    },
+    {
+      "question": "Why did the Mars Climate Orbiter crash according to the lecture material?",
+      "answerOptions": [
+        {
+          "text": "A physical failure in the ship's engine during the atmosphere entry.",
+          "isCorrect": false,
+          "rationale": "The failure was rooted in software and data handling rather than mechanical engine parts."
+        },
+        {
+          "text": "A data type mismatch where one system used metric units and the other used imperial units.",
+          "isCorrect": true,
+          "rationale": "The crash was a famous example of a 'type mismatch' error where inconsistent units led to a total mission failure."
+        },
+        {
+          "text": "The AI model was trained on biased data regarding the Martian landscape.",
+          "isCorrect": false,
+          "rationale": "Bias in training data is a common ML problem, but this specific incident was a unit conversion error."
+        },
+        {
+          "text": "The system attempted to divide by zero using the modulo operator.",
+          "isCorrect": false,
+          "rationale": "Dividing by zero causes errors, but the specific cause mentioned was the mismatch of measurement systems."
+        }
+      ],
+      "hint": "It was a critical error involving two different systems of measurement."
+    },
+    {
+      "question": "Which Python code snippet correctly converts an integer variable named `score` into a string so it can be combined with text?",
+      "answerOptions": [
+        {
+          "text": "`print(score + 10)`",
+          "isCorrect": false,
+          "rationale": "This performs mathematical addition and does not convert the type to a string."
+        },
+        {
+          "text": "`str(score)`",
+          "isCorrect": true,
+          "rationale": "The `str()` function is specifically used for type conversion to transform data into a string format."
+        },
+        {
+          "text": "`int(score)`",
+          "isCorrect": false,
+          "rationale": "This would convert a value into an integer, which is the opposite of the goal."
+        },
+        {
+          "text": "`\"score\"` ",
+          "isCorrect": false,
+          "rationale": "Putting quotes around the word makes it a literal string of the word 'score', but it doesn't convert the variable's value."
+        }
+      ],
+      "hint": "Look for the function that 'transforms' data types."
+    },
+    {
+      "question": "What is a significant risk associated with AI in the fields of law and medicine?",
+      "answerOptions": [
+        {
+          "text": "AI models are too perfect and will eventually replace all human oversight.",
+          "isCorrect": false,
+          "rationale": "The material emphasizes that AI is far from perfect and requires human supervision."
+        },
+        {
+          "text": "AI can inherit and apply biases present in its training data, leading to unfair outcomes.",
+          "isCorrect": true,
+          "rationale": "If training data (like past legal rulings) is biased, the AI will learn and perpetuate those same biases."
+        },
+        {
+          "text": "AI refuses to process data that has more than three concurrent variables.",
+          "isCorrect": false,
+          "rationale": "AI's superpower is actually its ability to process many variables at once."
+        },
+        {
+          "text": "There is no way to test the accuracy of a classification model once it is built.",
+          "isCorrect": false,
+          "rationale": "Accuracy can be tested using metrics like false positives and false negatives."
+        }
+      ],
+      "hint": "Recall the discussion about AI not being 'perfect' and its relationship with minority groups in law."
+    },
+    {
+      "question": "Which of the following represents the sequence of the core workflow for most computer programs?",
+      "answerOptions": [
+        {
+          "text": "Process $ \\rightarrow $ Input $ \\rightarrow $ Output",
+          "isCorrect": false,
+          "rationale": "Processing cannot happen before the system receives the necessary input."
+        },
+        {
+          "text": "Input $ \\rightarrow $ Output $ \\rightarrow $ Process",
+          "isCorrect": false,
+          "rationale": "Output is the final result, not the step before processing."
+        },
+        {
+          "text": "Input $ \\rightarrow $ Process $ \\rightarrow $ Output",
+          "isCorrect": true,
+          "rationale": "The standard flow involves taking in information, performing logic or math on it, and then returning a result."
+        },
+        {
+          "text": "Output $ \\rightarrow $ Input $ \\rightarrow $ Feedback",
+          "isCorrect": false,
+          "rationale": "Feedback usually follows the output, but the sequence must start with input to function."
+        }
+      ],
+      "hint": "Think about the foundational steps: passing something in, doing something to it, and getting something back."
+    }
+  ]
+}

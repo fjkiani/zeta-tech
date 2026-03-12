@@ -1,0 +1,265 @@
+{
+  "title": "Machine Learning Flashcards",
+  "cards": [
+    {
+      "front": "Arthur Samuel defined machine learning as the study that gives computers the ability to learn without being _____.",
+      "back": "Explicitly programmed"
+    },
+    {
+      "front": "In the context of machine learning history, what specific game did Arthur Samuel teach a computer to play using pattern recognition?",
+      "back": "Chess"
+    },
+    {
+      "front": "Metaphorically, AI has been described by industry leaders as 'the new _____.'",
+      "back": "Electricity"
+    },
+    {
+      "front": "In supervised learning, what does the variable $X$ represent?",
+      "back": "Input data or features"
+    },
+    {
+      "front": "In supervised learning, what does the variable $Y$ represent?",
+      "back": "Output, prediction, or labels"
+    },
+    {
+      "front": "What is the primary objective of a machine learning model in supervised learning regarding $X$ and $Y$?",
+      "back": "Learning how to map the input ($X$) to the correct output ($Y$)."
+    },
+    {
+      "front": "Term: Supervised Learning",
+      "back": "Definition: A framework where the computer is provided with data and the correct answers (labels) to learn a mapping function."
+    },
+    {
+      "front": "Which type of supervised learning is used to predict a continuous numerical value?",
+      "back": "Regression"
+    },
+    {
+      "front": "Which type of supervised learning is used to predict discrete categories or binary outcomes?",
+      "back": "Classification"
+    },
+    {
+      "front": "Predicting the future price of a house based on its square footage is an example of which type of machine learning?",
+      "back": "Regression"
+    },
+    {
+      "front": "Determining whether an email is 'Spam' or 'Not Spam' is an example of which type of machine learning?",
+      "back": "Classification"
+    },
+    {
+      "front": "Concept: High-dimensional data",
+      "back": "Definition: Data containing hundreds of features that allow algorithms to find patterns the human brain cannot visualize."
+    },
+    {
+      "front": "What is the primary limitation of human visualization compared to mathematical algorithms in data analysis?",
+      "back": "Humans struggle to visualize data beyond two or three dimensions."
+    },
+    {
+      "front": "In a model designed for tumor diagnosis, what do the categories 'malignant' and 'benign' represent?",
+      "back": "Labels or target results ($Y$)"
+    },
+    {
+      "front": "In a self-driving car system, what role does the front-facing camera image play in supervised learning?",
+      "back": "It serves as the input or feature set ($X$)."
+    },
+    {
+      "front": "Why is AI considered 'far from perfect' regarding societal data?",
+      "back": "It can be trained on biased data, leading the model to apply that same bias to its predictions."
+    },
+    {
+      "front": "What component of the machine learning process allows for improvements when a model's predictions are inaccurate?",
+      "back": "Supervision feedback (or the feedback loop)"
+    },
+    {
+      "front": "For the 'Teachable Machine' project, what is the suggested minimum number of images per object needed to train the model?",
+      "back": "50 images"
+    },
+    {
+      "front": "How is the performance of a classification model typically evaluated after training?",
+      "back": "By testing its accuracy on new, unseen inputs (e.g., via a camera)."
+    },
+    {
+      "front": "What determines the specific risks a developer must manage when building an AI model?",
+      "back": "The chosen architecture and the field of application (e.g., medicine vs. logistics)."
+    },
+    {
+      "front": "If a house costs $\\$500,000$ now and a model predicts it will be worth $\\$800,000$ in 10 years, what type of variable is being predicted?",
+      "back": "A continuous value"
+    },
+    {
+      "front": "Predicting whether a patient will develop Alzheimer\u2019s disease (True/False) is a _____ problem.",
+      "back": "Classification"
+    },
+    {
+      "front": "In a medical context, why might an error in a diagnostic AI be considered more critical than an error in a logistics AI?",
+      "back": "Because the risk involves human life and health outcomes rather than just delivery efficiency."
+    },
+    {
+      "front": "According to the lecture, why is human supervision necessary even as technology advances?",
+      "back": "Humans must watch and supervise technology to ensure safety and accuracy."
+    },
+    {
+      "front": "What specific student project idea involved using classification to screen for extra chromosomes?",
+      "back": "Down syndrome research"
+    },
+    {
+      "front": "What was the specific 'social impact' goal for the breast cancer project mentioned by student Daniela?",
+      "back": "To motivate more women to get screened by using less painful methods and improving diagnosis."
+    },
+    {
+      "front": "Which medical condition did a student propose using classification for to distinguish between various types affecting different body parts?",
+      "back": "Tuberculosis"
+    },
+    {
+      "front": "What is the 'superpower' of machine learning in the context of complex data sets?",
+      "back": "The ability to process high-dimensional data and find structures with many concurrent variables."
+    },
+    {
+      "front": "Predicting the stock market index 10 years from now as a specific point value is a _____ task.",
+      "back": "Regression"
+    },
+    {
+      "front": "In the supervised learning workflow, what follows the application of the algorithm to the input data?",
+      "back": "The prediction (output $Y$)"
+    },
+    {
+      "front": "The 'Teachable Machine' allows users to see visually how AI classifies objects like a _____ and a _____.",
+      "back": "Notebook; pencil"
+    },
+    {
+      "front": "When a model is not accurate, what are the two primary areas for improvement according to the transcript?",
+      "back": "Improving the images or the data fed into the model."
+    },
+    {
+      "front": "What is the difference between a binary outcome and a continuous value?",
+      "back": "A binary outcome is a 'yes/no' choice, while a continuous value is a number that can grow or change along a scale."
+    },
+    {
+      "front": "Concept: Feature Set",
+      "back": "Definition: The collection of raw data or characteristics (like square footage or pixel data) provided to the model for analysis."
+    },
+    {
+      "front": "In the ethical checklist for application architects, what should be prioritized over generating profit?",
+      "back": "Ensuring the AI 'superpower' helps people and has a positive societal impact."
+    },
+    {
+      "front": "What is the 'so-what' factor in a student project assignment?",
+      "back": "The social impact or reason why the problem is important to solve."
+    },
+    {
+      "front": "How does supervised learning help bridge the gap between human capability and complex logic?",
+      "back": "It makes sense of data and logic that the human mind cannot connect due to complexity or dimensionality."
+    },
+    {
+      "front": "Which input data points were mentioned as necessary to predict if someone is at risk for a heart attack?",
+      "back": "Images of the heart or medical records."
+    },
+    {
+      "front": "What is the term for the 'answers' or 'target results' provided to an AI during training?",
+      "back": "Labels"
+    },
+    {
+      "front": "Predicting a person's future salary based on their experience is an example of _____.",
+      "back": "Regression"
+    },
+    {
+      "front": "According to the transcript, why might AI training data be biased against minorities in a legal context?",
+      "back": "Because the historical laws or data it is trained on may contain inherent human biases."
+    },
+    {
+      "front": "In the supervised learning process, what is the 'clue' passed to the computer to find an answer?",
+      "back": "The input ($X$)"
+    },
+    {
+      "front": "What is the expected outcome of the Teachable Machine project when an object is held in front of the camera?",
+      "back": "The AI identifies and tells the user what the object is (e.g., 'it's a notebook')."
+    },
+    {
+      "front": "How can a model's prediction accuracy be improved if it is 'getting really bad'?",
+      "back": "By retraining the model with better or more comprehensive data."
+    },
+    {
+      "front": "If a researcher uses square footage, price, and market demand to predict house values, these variables are the _____.",
+      "back": "Inputs (or Features)"
+    },
+    {
+      "front": "What is the key takeaway of regression regarding value over time?",
+      "back": "It focuses on values that continuously change or grow with time."
+    },
+    {
+      "front": "In classification, the output is considered _____, meaning it belongs to a specific, separate category.",
+      "back": "Discrete"
+    },
+    {
+      "front": "Which field was identified as being transformed by the ability to help patients understand X-rays?",
+      "back": "Radiology (or Medicine)"
+    },
+    {
+      "front": "What is the ultimate goal of applying AI to a sector like education?",
+      "back": "To solve specific problems like providing every child with a personalized AI tutor."
+    },
+    {
+      "front": "True or False: Machine learning models always ensure the computer will never make an error.",
+      "back": "False"
+    },
+    {
+      "front": "What does the 'pilot and aircraft' analogy represent in the AI lesson?",
+      "back": "The human as the pilot directing the powerful AI 'aircraft' toward meaningful missions."
+    },
+    {
+      "front": "In the medical diagnosis project, what three inputs ($X$) are used to predict if a tumor is cancerous?",
+      "back": "Size, age, and thickness."
+    },
+    {
+      "front": "What happens in the 'training' phase of supervised learning?",
+      "back": "The algorithm processes inputs and labels to learn the relationship between them."
+    },
+    {
+      "front": "Why is 'explicit programming' NOT considered machine learning?",
+      "back": "Because machine learning requires the computer to develop its own strategies based on data patterns rather than being told every step."
+    },
+    {
+      "front": "The transcript mentions that 23% of cancer patients are affected by _____ cancer.",
+      "back": "Breast"
+    },
+    {
+      "front": "What are the two types of supervised learning discussed in the warmup?",
+      "back": "Regression and Classification"
+    },
+    {
+      "front": "What determines if a problem is a 'classification' problem?",
+      "back": "The output is a categorical 'yes or no' or 'true or false' label."
+    },
+    {
+      "front": "If a model predicts the rate of economic growth, it is using _____.",
+      "back": "Regression"
+    },
+    {
+      "front": "What is the first step in the supervised learning cycle before running the algorithm?",
+      "back": "Providing the input ($X$)."
+    },
+    {
+      "front": "A model predicting if a manufacturing part is 'defective' or 'functional' is a _____ task.",
+      "back": "Classification"
+    },
+    {
+      "front": "What is the main takeaway regarding humans who do NOT learn to supervise AI?",
+      "back": "They may find fewer jobs available as most roles lean toward AI supervision."
+    },
+    {
+      "front": "In the context of Down syndrome, what is the 'extra chromosome' used as in a classification model?",
+      "back": "The identifying feature for screening."
+    },
+    {
+      "front": "What determines the 'accuracy' percentage in the Teachable Machine project?",
+      "back": "How often the model correctly identifies the test object compared to its training labels."
+    },
+    {
+      "front": "The process where the computer learns from mistakes and improves is the essence of _____.",
+      "back": "Machine Learning"
+    },
+    {
+      "front": "In a logistics project, the primary goal is often efficiency, whereas in medicine the primary goal is often _____.",
+      "back": "Accuracy or patient safety"
+    }
+  ]
+}

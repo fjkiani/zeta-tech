@@ -1,0 +1,253 @@
+{
+  "title": "Machine Learning Flashcards",
+  "cards": [
+    {
+      "front": "According to the lecture, what are the three foundational steps of every computer program?",
+      "back": "Input, process, and output."
+    },
+    {
+      "front": "In the 'memory box' analogy for Python variables, what does the label on the outside of the box represent?",
+      "back": "The variable name (or identifier)."
+    },
+    {
+      "front": "In Python, what is the result of the expression $17 // 5$?",
+      "back": "3 (integer division discards the remainder)."
+    },
+    {
+      "front": "Which Python operator is used to find the remainder of a division (modulo)?",
+      "back": "The percent sign ($\\% $)."
+    },
+    {
+      "front": "What is the default data type of the value returned by the Python `input()` function?",
+      "back": "String (text)."
+    },
+    {
+      "front": "In a Python string or print function, what is the purpose of the escape sequence `\\n`?",
+      "back": "To move the cursor to a new line."
+    },
+    {
+      "front": "Term: String Concatenation",
+      "back": "Definition: The process of joining two or more strings together using the $+$ operator."
+    },
+    {
+      "front": "Why will the code `print(\"score\" + 10)` fail in Python?",
+      "back": "Python cannot concatenate a string and an integer without converting the integer to a string first."
+    },
+    {
+      "front": "Which Python function is used to convert a numerical value into a string?",
+      "back": "The `str()` function."
+    },
+    {
+      "front": "In Python, what is 'type inference'?",
+      "back": "The language's ability to automatically detect a variable's data type based on the value assigned to it."
+    },
+    {
+      "front": "Arthur Samuel defined machine learning as the study that gives computers the ability to learn without _____.",
+      "back": "Being explicitly programmed."
+    },
+    {
+      "front": "In a supervised learning model, what does the variable $X$ typically represent?",
+      "back": "Input data or features."
+    },
+    {
+      "front": "In a supervised learning model, what does the variable $Y$ typically represent?",
+      "back": "The output prediction or label."
+    },
+    {
+      "front": "Which type of supervised learning is used when predicting a continuous numerical value, such as house prices?",
+      "back": "Regression."
+    },
+    {
+      "front": "Which type of supervised learning is used to predict discrete categories or binary outcomes (e.g., True/False)?",
+      "back": "Classification."
+    },
+    {
+      "front": "Determining if an email is 'spam' or 'not spam' is an example of which type of machine learning problem?",
+      "back": "Classification."
+    },
+    {
+      "front": "Why is the ability to process high-dimensional data considered a 'superpower' of machine learning?",
+      "back": "It allows algorithms to find patterns across hundreds of features that the human brain cannot visualize."
+    },
+    {
+      "front": "In the context of a self-driving car, what component serves as the 'input' ($X$) for the supervised learning system?",
+      "back": "The raw images from the front-facing camera."
+    },
+    {
+      "front": "What is the primary risk of training an AI model on data that contains historical societal prejudices?",
+      "back": "The AI will learn and apply those same biases in its predictions."
+    },
+    {
+      "front": "In medical AI, what do the categories 'malignant' and 'benign' represent in a diagnosis model?",
+      "back": "The labels or target results ($Y$)."
+    },
+    {
+      "front": "How does supervised learning utilize the 'right answers' during training?",
+      "back": "It provides the model with labeled data so it can learn to map inputs to the correct outputs."
+    },
+    {
+      "front": "What occurs during the 'feedback loop' phase of the machine learning process?",
+      "back": "The model is evaluated and retrained to improve accuracy if its predictions are poor."
+    },
+    {
+      "front": "Which field involves using classification to identify whether a patient will develop a heart attack (Yes/No)?",
+      "back": "Medicine/Healthcare."
+    },
+    {
+      "front": "What is the result of multiplying a string by an integer in Python (e.g., `\"score\" * 3`)?",
+      "back": "The string repeats that number of times (`\"scorescorescore\"`)."
+    },
+    {
+      "front": "Concept: High-Dimensional Data",
+      "back": "Definition: Data that contains a large number of concurrent variables or features, often exceeding human visualization capabilities."
+    },
+    {
+      "front": "What are the two sub-types of supervised learning discussed in the lecture?",
+      "back": "Regression and Classification."
+    },
+    {
+      "front": "How does machine learning 'bridge the gap' where human calculation fails?",
+      "back": "By processing data in dimensions higher than 2D or 3D to connect complex logic and concepts."
+    },
+    {
+      "front": "In the project involving pencils and notebooks, how many images per object are students instructed to provide for training?",
+      "back": "50 images."
+    },
+    {
+      "front": "What measurement is used to determine how well an AI model is performing its task?",
+      "back": "Accuracy."
+    },
+    {
+      "front": "What is 'type conversion' in Python?",
+      "back": "The process of transforming data from one type (e.g., float) to another (e.g., integer)."
+    },
+    {
+      "front": "How does the 'assignment operator' ($=$) differ from the 'equals' sign in programming logic?",
+      "back": "It tells the computer to store a value in a variable name rather than asserting that two sides are mathematically equal."
+    },
+    {
+      "front": "Why is regression inappropriate for a tumor diagnosis model that outputs 'cancerous' or 'non-cancerous'?",
+      "back": "Because the desired output is a binary category (Yes/No), not a continuous numerical value."
+    },
+    {
+      "front": "What is the specific chromosomal alteration that identifies Down syndrome in classification screening?",
+      "back": "The presence of an extra chromosome."
+    },
+    {
+      "front": "In the 'Women's Health' project proposal, what is a primary goal for using AI in breast cancer screening?",
+      "back": "To improve motivation for testing by making screening methods less painful and more accurate."
+    },
+    {
+      "front": "What role does a radiologist play in the context of the medical AI discussion?",
+      "back": "They are experts who currently interpret X-rays, a task AI aims to simplify for patients."
+    },
+    {
+      "front": "In the student tuberculosis project, what is classification used to determine?",
+      "back": "The specific type of tuberculosis and how it affects different parts of the body."
+    },
+    {
+      "front": "What determines the 'risk' that an application architect must manage when building an AI model?",
+      "back": "The specific architecture chosen for the problem."
+    },
+    {
+      "front": "Which Python function allows a program to 'listen' and accept data from a user?",
+      "back": "The `input()` function."
+    },
+    {
+      "front": "If a house costs $\\$500,000$ and you predict it will be $\\$800,000$ in 10 years, which ML method are you using?",
+      "back": "Regression."
+    },
+    {
+      "front": "Why is AI compared to 'electricity' in the transcripts?",
+      "back": "To emphasize that it is a foundational technology expected to transform every industry."
+    },
+    {
+      "front": "What is the goal of the 'Teachable Machine' project assignment?",
+      "back": "To visually see what AI is doing by training a model to recognize objects via a camera."
+    },
+    {
+      "front": "In the Python quiz, what happened when `score + 10` was run without conversion?",
+      "back": "A 'TypeError' occurred because strings and integers cannot be concatenated directly."
+    },
+    {
+      "front": "What defines the data type 'Float'?",
+      "back": "A numerical value that includes a decimal point."
+    },
+    {
+      "front": "What is the result of the Python operation $15 \\% 3$?",
+      "back": "0 (because there is no remainder)."
+    },
+    {
+      "front": "How does the computer improve at chess in Arthur Samuel's model?",
+      "back": "By learning patterns and recognizing which moves lead to mistakes."
+    },
+    {
+      "front": "In Python, which characters are used to denote the start and end of a 'string'?",
+      "back": "Quotes (either single or double)."
+    },
+    {
+      "front": "Which AI tool is recommended in the 'Intro to Python' transcript to help students build code step-by-step?",
+      "back": "Perplexity."
+    },
+    {
+      "front": "What is the difference between the operators $/$ and $//$ in Python?",
+      "back": "$/$ performs standard division (returning a float), while $//$ performs integer division (returning a whole number)."
+    },
+    {
+      "front": "What is the primary objective of the Python class according to the instructor?",
+      "back": "To solve hard problems using AI and Python, rather than just learning Python syntax."
+    },
+    {
+      "front": "In the 'Application Architect' section, why is error analysis more critical in medicine than in logistics?",
+      "back": "Because errors in medicine can have life-or-death consequences, whereas logistics errors are typically less critical."
+    },
+    {
+      "front": "Identify the $X$ and $Y$ in a manufacturing defect model.",
+      "back": "$X$ is the image of the product; $Y$ is the prediction of 'defect' or 'no defect'."
+    },
+    {
+      "front": "What is the 'societal impact' goal of the student project assignment?",
+      "back": "To ensure the AI 'superpower' helps people rather than just generating profit."
+    },
+    {
+      "front": "In Python, how does `x = 5` differ from `x = \"5\"`?",
+      "back": "The first is an integer (number); the second is a string (text)."
+    },
+    {
+      "front": "Why can't humans easily connect concepts from across fields like science and medicine manually?",
+      "back": "The sheer volume of data and complex variables makes it impossible for the human mind to calculate every connection."
+    },
+    {
+      "front": "What is the core purpose of a 'binary outcome' in classification?",
+      "back": "To provide a simple Yes/No or True/False answer to a specific question."
+    },
+    {
+      "front": "How does training size (e.g., 50 images) affect a classification model's accuracy?",
+      "back": "More varied training images generally help the model better recognize the object and improve accuracy."
+    },
+    {
+      "front": "According to the transcript, who are the 'Titans of Industry'?",
+      "back": "The students themselves, as they are granted resources to solve problems using AI."
+    },
+    {
+      "front": "In the Python age calculator, which operator calculates 'leftover years' after finding full decades?",
+      "back": "The modulo operator ($\\% $)."
+    },
+    {
+      "front": "What does the 'glue' represent in the Python lecture on strings?",
+      "back": "Concatenation ($+$ operator)."
+    },
+    {
+      "front": "What is the predicted role of humans in factories by 2030?",
+      "back": "To supervise and manage robots that handle the production process."
+    },
+    {
+      "front": "What is the 'Trap' mentioned regarding the Python `input()` function?",
+      "back": "Trying to perform math on the input without first converting the default string type to an integer."
+    },
+    {
+      "front": "What is the 'so what' factor in the student project assignment?",
+      "back": "The underlying reason why a problem is important to solve for society."
+    }
+  ]
+}
