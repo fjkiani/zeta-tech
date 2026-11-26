@@ -1,16 +1,12 @@
-# notebooklm-py – Google NotebookLM API for High School
+# notebooklm-py – Google NotebookLM for High School LMS
 
-Programmatic access to Google NotebookLM for content generation, research, and automation.
+Programmatic access to Google NotebookLM for content generation.
 
-## Features
+**Account:** Gemini **Pro** under `fjkiani1@gmail.com`  
+(override with `NOTEBOOKLM_ACCOUNT_EMAIL`)
 
-- **Content generation**: Audio overviews, video, slide decks, quizzes, flashcards, infographics, mind maps, data tables
-- **Batch downloads** of all artifacts
-- **Export formats**: JSON, Markdown, HTML (quiz/flashcards); JSON (mind maps); CSV (data tables)
-- **Research agents**: Web + Drive research with auto-import
-- **Sharing**: Public links and user permissions via API
-- **CLI + Python API** for scripts and automation
-- **Claude Code skills** for natural-language automation
+This portal does **not** apply free-tier soft caps (~3 audio/day). Quotas come
+from live `notebooklm usage --json` on the Pro account.
 
 Source: [github.com/teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)
 
@@ -18,97 +14,78 @@ Source: [github.com/teng-lin/notebooklm-py](https://github.com/teng-lin/notebook
 
 ## Setup
 
-### 1. Activate the virtual environment
-
 ```bash
-cd /Users/fahadkiani/Desktop/development/High-School
-source .venv-notebooklm/bin/activate
+cd /path/to/zeta-tech
+python3 -m venv .venv-notebooklm
+.venv-notebooklm/bin/pip install -r scripts/notebooklm-py/requirements.txt
 ```
 
-Or use the wrapper script:
+### Authenticate (Pro account)
+
+**Preferred for Cloud Agents / CI** — set env/secret (never commit):
+
+```bash
+export NOTEBOOKLM_ACCOUNT_EMAIL=fjkiani1@gmail.com
+export NOTEBOOKLM_AUTH_JSON="$(cat ~/.notebooklm/profiles/default/storage_state.json)"
+./scripts/notebooklm-py/auth-bootstrap.sh
+```
+
+**Local one-time browser login:**
 
 ```bash
 ./scripts/notebooklm-py/notebooklm.sh login
+# Sign in as fjkiani1@gmail.com
+./scripts/notebooklm-py/notebooklm.sh auth check --test
+./scripts/notebooklm-py/notebooklm.sh usage --json
 ```
 
-### 2. Authenticate (one-time)
+Cookies land in `~/.notebooklm/profiles/<profile>/storage_state.json`.
+**Never commit** that file.
+
+### Keep cookies fresh (unattended)
 
 ```bash
-notebooklm login
+# When using file-based auth (not NOTEBOOKLM_AUTH_JSON):
+./scripts/notebooklm-py/notebooklm.sh auth refresh --verify
+# Cadence: every 15–20 minutes via cron/systemd
 ```
 
-A browser opens for Google sign-in. Credentials are stored in `~/.notebooklm/storage_state.json`.
-
-### 3. Verify
-
-```bash
-notebooklm list
-```
+Portal `ensureAuth()` calls `auth refresh --verify` automatically before generate
+when cookies exist but look stale.
 
 ---
 
-## Quick Usage (CLI)
+## Quick Usage
 
 ```bash
-# Create notebook and add sources
-notebooklm create "High School Research"
-notebooklm use <notebook_id>
-notebooklm source add "https://en.wikipedia.org/wiki/..."
-notebooklm source add "./Bronx-HS-Medical-Science/syllabus.pdf"
+NLM=./scripts/notebooklm-py/notebooklm.sh
 
-# Chat
-notebooklm ask "What are the key themes?"
+$NLM create "High School Research"
+$NLM use <notebook_id>
+$NLM source add "./Bronx-HS-Medical-Science/week0.5-lesson-plan.md"
 
-# Generate content
-notebooklm generate audio "make it engaging" --wait
-notebooklm generate quiz --difficulty hard
-notebooklm generate flashcards --quantity more
-notebooklm generate slide-deck
-notebooklm generate mind-map
-notebooklm generate data-table "compare key concepts"
+$NLM generate audio "engaging deep dive for high-school" --format deep-dive --wait
+$NLM generate quiz "focus on misconceptions" --difficulty medium --quantity standard --wait
+$NLM generate flashcards --quantity more --wait
+$NLM generate slide-deck "one concept per slide" --format detailed --wait
+$NLM generate mind-map --kind interactive --instructions "Root = topic; depth ≤ 3"
+$NLM generate data-table "Columns: Concept, Definition, Example, Common Mistake" --wait
 
-# Download
-notebooklm download audio ./podcast.mp3
-notebooklm download quiz --format markdown ./quiz.md
-notebooklm download flashcards --format json ./cards.json
+$NLM download audio ./podcast.mp3
+$NLM download quiz --format json ./quiz.json
 ```
+
+Portal generate API (`POST /api/lessons/[id]/generate`) builds these prompts
+from school/lesson context and **rejects stub downloads** (< ~1KB audio).
 
 ---
 
-## Python API
+## Env vars
 
-```python
-import asyncio
-from notebooklm import NotebookLMClient
-
-async def main():
-    async with await NotebookLMClient.from_storage() as client:
-        nb = await client.notebooks.create("Research")
-        await client.sources.add_url(nb.id, "https://example.com", wait=True)
-        result = await client.chat.ask(nb.id, "Summarize this")
-        print(result.answer)
-        # Generate and download
-        status = await client.artifacts.generate_audio(nb.id, instructions="make it fun")
-        await client.artifacts.wait_for_completion(nb.id, status.task_id)
-        await client.artifacts.download_audio(nb.id, "podcast.mp3")
-
-asyncio.run(main())
-```
-
----
-
-## Claude Code Skills
-
-```bash
-notebooklm skill install
-```
-
-Then use natural language in Claude Code: *"Create a podcast about quantum computing"*, *"Download the quiz as markdown"*.
-
----
-
-## Requirements
-
-- Python 3.10+
-- Google account
-- Storage: `~/.notebooklm/storage_state.json` (created by `login`)
+| Var | Purpose |
+|---|---|
+| `NOTEBOOKLM_ACCOUNT_EMAIL` | Expected Google account (default `fjkiani1@gmail.com`) |
+| `NOTEBOOKLM_AUTH_JSON` | Inline Playwright `storage_state` / cookie JSON |
+| `NOTEBOOKLM_PROFILE` | Named profile when using on-disk cookies |
+| `NOTEBOOKLM_HL` | Output language |
+| `NOTEBOOKLM_BACKEND` | `web` (default) or `android` |
