@@ -61,7 +61,7 @@
 - **Option B**: Next.js API routes that spawn notebooklm CLI subprocesses.
 - **Option C**: Queue-based worker (e.g. Inngest, Bull) – teacher triggers “generate for lesson X”, worker runs notebooklm, stores results.
 
-**Auth**: notebooklm uses `~/.notebooklm/storage_state.json`. Backend runs with that stored session (service account or single shared login). For multi-tenant later, you’d need per-teacher NotebookLM notebooks or a different auth model.
+**Auth**: Gemini Pro under `fjkiani1@gmail.com` (`NOTEBOOKLM_ACCOUNT_EMAIL`). Prefer `NOTEBOOKLM_AUTH_JSON` for headless agents; otherwise `~/.notebooklm/profiles/*/storage_state.json` + `auth refresh --verify`. Do not assume free-tier quotas — use live `usage --json`. Multi-tenant later still needs per-teacher notebooks or a different auth model.
 
 ### 2. Data Model (Hygraph)
 
