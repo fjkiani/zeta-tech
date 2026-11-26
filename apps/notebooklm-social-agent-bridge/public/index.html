@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zeta Tech — NotebookLM Social Bridge</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <h1 class="brand">Zeta <span>Tech</span></h1>
+        <p class="lede">
+          NotebookLM classroom artifacts → LinkedIn via the social agent.
+          Pick a lesson, draft the post, push it through LangGraph.
+        </p>
+        <div class="status-row">
+          <div class="pill">
+            <span class="dot" id="bridgeDot"></span>
+            <span id="bridgeStatus">Checking bridge…</span>
+          </div>
+          <div class="pill">
+            <span class="dot" id="lgDot"></span>
+            <span id="lgStatus">Checking LangGraph…</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <h2>Lessons</h2>
+          <p class="hint">
+            Sourced from zeta-tech NotebookLM lesson transcripts and artifacts.
+          </p>
+          <div class="lesson-list" id="lessonList"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Post</h2>
+          <p class="hint" id="selectedHint">Select a lesson to draft a post.</p>
+          <textarea
+            id="postText"
+            placeholder="Draft appears here…"
+            spellcheck="true"
+          ></textarea>
+          <div class="actions">
+            <button class="ghost" id="draftBtn" disabled>Draft from lesson</button>
+            <button class="ghost" id="dryRunBtn" disabled>Dry run</button>
+            <button class="primary" id="uploadBtn" disabled>Upload to LinkedIn</button>
+          </div>
+          <div class="meta" id="meta"></div>
+          <pre class="log" id="log">Ready.</pre>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const els = {
+        list: document.getElementById("lessonList"),
+        post: document.getElementById("postText"),
+        draftBtn: document.getElementById("draftBtn"),
+        dryRunBtn: document.getElementById("dryRunBtn"),
+        uploadBtn: document.getElementById("uploadBtn"),
+        hint: document.getElementById("selectedHint"),
+        meta: document.getElementById("meta"),
+        log: document.getElementById("log"),
+        bridgeDot: document.getElementById("bridgeDot"),
+        bridgeStatus: document.getElementById("bridgeStatus"),
+        lgDot: document.getElementById("lgDot"),
+        lgStatus: document.getElementById("lgStatus"),
+      };
+
+      let selectedId = null;
+      let lessons = [];
+
+      function log(msg, obj) {
+        const line =
+          typeof obj === "undefined"
+            ? msg
+            : msg + "\n" + JSON.stringify(obj, null, 2);
+        els.log.textContent = line;
+      }
+
+      function setSelected(id) {
+        selectedId = id;
+        for (const btn of els.list.querySelectorAll(".lesson")) {
+          btn.classList.toggle("active", btn.dataset.id === id);
+        }
+        const lesson = lessons.find((l) => l.id === id);
+        els.hint.textContent = lesson
+          ? `Selected: ${lesson.title}`
+          : "Select a lesson to draft a post.";
+        els.draftBtn.disabled = !id;
+        els.dryRunBtn.disabled = !id && !els.post.value.trim();
+        els.uploadBtn.disabled = !els.post.value.trim() && !id;
+      }
+
+      async function api(path, opts) {
+        const res = await fetch(path, {
+          headers: { "content-type": "application/json" },
+          ...opts,
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const err = new Error(data.error || data.message || res.statusText);
+          err.data = data;
+          err.status = res.status;
+          throw err;
+        }
+        return data;
+      }
+
+      async function refreshHealth() {
+        try {
+          const h = await api("/api/health");
+          els.bridgeDot.className = "dot ok";
+          els.bridgeStatus.textContent = "Bridge online";
+          if (h.langgraph?.ok) {
+            els.lgDot.className = "dot ok";
+            els.lgStatus.textContent =
+              "LangGraph · " + (h.langgraph.apiUrl || "connected");
+          } else {
+            els.lgDot.className = "dot bad";
+            els.lgStatus.textContent =
+              "LangGraph offline · " + (h.langgraph?.apiUrl || "unset");
+          }
+          return h;
+        } catch (e) {
+          els.bridgeDot.className = "dot bad";
+          els.bridgeStatus.textContent = "Bridge unreachable";
+          els.lgDot.className = "dot bad";
+          els.lgStatus.textContent = "LangGraph unknown";
+          log("Health check failed", { message: e.message });
+        }
+      }
+
+      async function loadLessons() {
+        const data = await api("/api/lessons");
+        lessons = data.lessons || [];
+        els.list.innerHTML = "";
+        for (const lesson of lessons) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "lesson";
+          btn.dataset.id = lesson.id;
+          const art = (lesson.artifacts || []).slice(0, 3).join(", ") || "no artifacts";
+          const excerpt = (lesson.excerpt || "No transcript excerpt").slice(0, 140);
+          btn.innerHTML = `<strong>${lesson.title}</strong><small>${art}<br/>${excerpt}</small>`;
+          btn.addEventListener("click", () => setSelected(lesson.id));
+          els.list.appendChild(btn);
+        }
+        log(`Loaded ${lessons.length} lessons.`);
+      }
+
+      els.draftBtn.addEventListener("click", async () => {
+        if (!selectedId) return;
+        els.draftBtn.disabled = true;
+        try {
+          const data = await api("/api/draft", {
+            method: "POST",
+            body: JSON.stringify({ lessonId: selectedId, platform: "linkedin" }),
+          });
+          els.post.value = data.post;
+          els.meta.textContent = `${data.chars} characters · ${data.title}`;
+          els.uploadBtn.disabled = false;
+          els.dryRunBtn.disabled = false;
+          log("Draft ready", data);
+        } catch (e) {
+          log("Draft failed", e.data || { message: e.message });
+        } finally {
+          els.draftBtn.disabled = !selectedId;
+        }
+      });
+
+      els.dryRunBtn.addEventListener("click", async () => {
+        try {
+          const data = await api("/api/upload", {
+            method: "POST",
+            body: JSON.stringify({
+              lessonId: selectedId,
+              post: els.post.value,
+              dryRun: true,
+            }),
+          });
+          log("Dry run OK", data);
+        } catch (e) {
+          log("Dry run failed", e.data || { message: e.message });
+        }
+      });
+
+      els.uploadBtn.addEventListener("click", async () => {
+        els.uploadBtn.disabled = true;
+        log("Uploading via LangGraph upload_post…");
+        try {
+          const data = await api("/api/upload", {
+            method: "POST",
+            body: JSON.stringify({
+              lessonId: selectedId,
+              post: els.post.value,
+              wait: true,
+            }),
+          });
+          log("Upload result", data);
+          els.meta.textContent =
+            "Uploaded · thread " + (data.threadId || "n/a");
+        } catch (e) {
+          log("Upload failed", e.data || { message: e.message });
+        } finally {
+          els.uploadBtn.disabled = !els.post.value.trim();
+        }
+      });
+
+      els.post.addEventListener("input", () => {
+        const has = !!els.post.value.trim();
+        els.uploadBtn.disabled = !has && !selectedId;
+        els.dryRunBtn.disabled = !has && !selectedId;
+        els.meta.textContent = has
+          ? `${els.post.value.length} characters`
+          : "";
+      });
+
+      (async () => {
+        await refreshHealth();
+        await loadLessons();
+      })();
+    </script>
+  </body>
+</html>

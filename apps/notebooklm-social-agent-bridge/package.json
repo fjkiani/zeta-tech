@@ -1,0 +1,14 @@
+{
+  "name": "notebooklm-social-agent-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bridge Zeta Tech NotebookLM lesson artifacts to langchain-social-agent (LangGraph)",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

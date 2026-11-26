@@ -1,0 +1,180 @@
+[
+  {
+    "id": "ai-for-python-0OK8Iy",
+    "title": "Ai For Python 0Ok8Iy",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [],
+    "contextFile": "transcripts/ai-for-python-0OK8Iy.context.md"
+  },
+  {
+    "id": "blueprint-ai-HQ643s",
+    "title": "Blueprint Ai",
+    "hasTranscript": true,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json",
+      "slides.pdf"
+    ],
+    "excerpt": "# Blueprint Ai Okay. So, so yeah, like the humans like someone the humans need to ex like be in the place because they need to watch all of these technologies, you know, like the technologies need human supervision. But it's we're going to see a point where only only humans who understand and can supervise these technologies will have maybe jobs that exist. 00:29 uh humans who who who don't who who just don't have the skill set of supervising uh AI, they might not find all the all the jobs available to them because um like most of the jobs are just like you know could be leaned towards uh AI. So what is AI? Like let's just get this concept down you know like what does machine learning mean? the the simple definition, right? Like we we talked about Arthur Samuel. 01:03 Arthur Samuel taught computer how to play chess. Uh when he when the computer learned how to play chess, the computer lea",
+    "transcriptChars": 46197,
+    "transcriptFile": "transcripts/blueprint-ai-HQ643s.md",
+    "contextFile": "transcripts/blueprint-ai-HQ643s.context.md"
+  },
+  {
+    "id": "cml7i2dbssm7707lrx9g6m66q",
+    "title": "Cml7I2Dbssm7707Lrx9G6M66Q",
+    "hasTranscript": false,
+    "hasContext": false,
+    "artifacts": [
+      "audio.mp3",
+      "data.csv",
+      "flashcards.json",
+      "mindMap.json",
+      "quiz.json",
+      "slides.pdf"
+    ]
+  },
+  {
+    "id": "cmla3dptmkvui08lj6268oqgj",
+    "title": "Cmla3Dptmkvui08Lj6268Oqgj",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/cmla3dptmkvui08lj6268oqgj.context.md"
+  },
+  {
+    "id": "intro-to-python-J7DX6E",
+    "title": "Intro To Python",
+    "hasTranscript": true,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json",
+      "slides.pdf"
+    ],
+    "excerpt": "# Intro To Python Yes. All right.   >> So, so we're past like the week you we   can say like week uh.5.   Uh the week the first week is it's kind   of meant to to really help us uh   navigate this coding environment.   But uh the overall objective of the   class isn't to really make you learn   Python but it's really how we can solve   really hard problems with AI   including how we can use Python and how   we can uh apply it to medicine and and   so much more. So today today's agenda   what we're going to do is we're going to   um we're going to do four different   things. We're going to just warm up with   like a brief quiz. Uh going to review   the Google Classroom just making sure   everyone is is able to get um the   assignments and and if everyone is able   to see everything. Um and then you know   you can like raise any concerns uh raise   anything on your mind. And then we're   g",
+    "transcriptChars": 26578,
+    "transcriptFile": "transcripts/intro-to-python-J7DX6E.md",
+    "contextFile": "transcripts/intro-to-python-J7DX6E.context.md"
+  },
+  {
+    "id": "python-intro-w6Aqjn",
+    "title": "Python Intro",
+    "hasTranscript": true,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json",
+      "slides.pdf"
+    ],
+    "excerpt": "# Python Intro Okay. So, so yeah, like the humans like   someone the humans need to ex like be in   the place because they need to watch all   of these technologies, you know, like   the technologies need human supervision.   But it's we're going to see a point   where only only humans who understand   and can supervise these technologies   will have maybe jobs that exist. uh   humans who who who don't who who just   don't have the skill set of supervising   uh AI, they might not find all the all   the jobs available to them because   um like most of the jobs are just like   you know could be leaned towards   uh AI.   So what is AI? Like let's just get this   concept down you know like what does   machine learning mean?   the the simple definition, right? Like   we we talked about Arthur Samuel. Arthur   Samuel taught computer how to play   chess. Uh when he when the computer   learned h",
+    "transcriptChars": 20672,
+    "transcriptFile": "transcripts/python-intro-w6Aqjn.md",
+    "contextFile": "transcripts/python-intro-w6Aqjn.context.md"
+  },
+  {
+    "id": "python-variables-BD6rGY",
+    "title": "Python Variables",
+    "hasTranscript": true,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json",
+      "slides.pdf"
+    ],
+    "excerpt": "# Python Variables Um,   who's in who's into who's logged into   Python anywhere? Give me like a plus one   or   tell me it's not working if it's not   working.   Good. Good. Thanks, Angel.   Okay. So,   um   let's do let's kind of like do some   let's do some warm-up exercises. So, I   I'll I'll start I'll start us off. Um I   I'll do I'll do a few just to kind of   um just to give us like an idea of what   we have been doing so far. Um so so far   like we have just kind of worked on   variables. We did some of it yesterday   where we were able to print things out   um on our console like I think we did   something like this where we hardcoded   it   um and then we pressed enter we got a   hello and then after that I think we   worked on creating variables where now   instead of directly passing in hello we   can say uh this variable Okay. Uh the   value of this equals hello. And rememb",
+    "transcriptChars": 19301,
+    "transcriptFile": "transcripts/python-variables-BD6rGY.md",
+    "contextFile": "transcripts/python-variables-BD6rGY.context.md"
+  },
+  {
+    "id": "python-variables-g4xwG_",
+    "title": "Python Variables G4Xwg_",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/python-variables-g4xwG_.context.md"
+  },
+  {
+    "id": "recording--N5RGA",
+    "title": "Recording  N5Rga",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/recording--N5RGA.context.md"
+  },
+  {
+    "id": "recording-G3rLVh",
+    "title": "Recording G3Rlvh",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/recording-G3rLVh.context.md"
+  },
+  {
+    "id": "recording-KKra-c",
+    "title": "Recording Kkra C",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/recording-KKra-c.context.md"
+  },
+  {
+    "id": "recording-PEWIdb",
+    "title": "Recording Pewidb",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/recording-PEWIdb.context.md"
+  },
+  {
+    "id": "recording-d7QzYw",
+    "title": "Recording D7Qzyw",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/recording-d7QzYw.context.md"
+  },
+  {
+    "id": "sandbox-python-EljqJ0",
+    "title": "Sandbox Python Eljqj0",
+    "hasTranscript": false,
+    "hasContext": true,
+    "artifacts": [
+      "quiz.json"
+    ],
+    "contextFile": "transcripts/sandbox-python-EljqJ0.context.md"
+  },
+  {
+    "id": "supervised-learning-warmup-ZWJ_9O",
+    "title": "Supervised Learning Warmup",
+    "hasTranscript": true,
+    "hasContext": true,
+    "artifacts": [
+      "flashcards.json",
+      "quiz.json",
+      "slides.pdf"
+    ],
+    "excerpt": "# Supervised Learning Warmup Uh it's just meant to be that anything   we work on, it's not just to do an   assignment, but it's really to do a   project where you can see it visually   that hey, this is what AI is really   doing and I'm not just trying to, you   know, um just take a quiz or just submit   an assignment.   But for this project, we want to have a   team. So, whoever you worked with   yesterday, maybe add another third or   fourth person with you, but try to find   uh try to build like your group that you   can work with. Um, and all the   instructions are here, but I'll cover   them again uh later as well too. This is   what we really do in this project is   we're applying a classification   technique to it. So, we're going to   teach the AI to classify between two   different types of things, like a   notebook and a pencil. We're going to   give the AI like 50 images of a ",
+    "transcriptChars": 26454,
+    "transcriptFile": "transcripts/supervised-learning-warmup-ZWJ_9O.md",
+    "contextFile": "transcripts/supervised-learning-warmup-ZWJ_9O.context.md"
+  }
+]
