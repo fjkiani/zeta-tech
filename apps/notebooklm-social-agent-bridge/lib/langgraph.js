@@ -148,6 +148,13 @@ function buildConfigurable(options = {}) {
     options.linkedInOrganizationId || cfg.linkedInOrganizationId || null;
   if (orgId) configurable.linkedInOrganizationId = String(orgId);
 
+  // Platform allowlist (handoff §6 extension, implemented in langchain-social-agent
+  // upload_post): e.g. ["linkedin"] posts only to LinkedIn — a Twitter failure can
+  // never mask a LinkedIn success. Unset = both platforms (backwards compatible).
+  if (Array.isArray(options.platforms) && options.platforms.length > 0) {
+    configurable.platforms = options.platforms.map((p) => String(p).toLowerCase());
+  }
+
   return configurable;
 }
 
@@ -174,7 +181,7 @@ function buildImageInput(options = {}) {
 /**
  * Upload a post via LangGraph upload_post.
  * @param {string} post
- * @param {{ wait?: boolean, postToLinkedInOrganization?: boolean, linkedInOrganizationId?: string, videoUrl?: string, imageUrl?: string, mimeType?: string, textOnly?: boolean }} [options]
+ * @param {{ wait?: boolean, postToLinkedInOrganization?: boolean, linkedInOrganizationId?: string, videoUrl?: string, imageUrl?: string, mimeType?: string, textOnly?: boolean, platforms?: string[] }} [options]
  */
 export async function uploadPost(post, options = {}) {
   const threadId = await createThread();

@@ -42,6 +42,9 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 | `LINKEDIN_ORG_VANITY` | `crispro` | Display/metadata only |
 | `LINKEDIN_ORG_NAME` | `CrisPRO.ai` | Display/metadata only |
 | `LINKEDIN_USER_ID` / `ARCADE_USER_ID` | unset | Surfaced in `/api/health` config only; **posting uses the LangGraph process `.env`** |
+| `BRIDGE_API_KEY` | unset (open) | When set: live `/api/upload` + approval actions require `x-bridge-key` header (or `?key=`); 401 without. GETs and no-side-effect dry-runs stay open |
+| `HYGRAPH_URL` / `NEXT_PUBLIC_HYGRAPH_URL` | unset | Content API endpoint; when set, `/api/lessons?source=auto\|hygraph` reads published VIDEO `MediaItem`s live |
+| `HYGRAPH_TOKEN` / `NEXT_PUBLIC_HYGRAPH_TOKEN` | unset | Only needed for non-public reads; public PUBLISHED stage needs none |
 
 **Do not put Arcade/LinkedIn tokens in the bridge env.** Put them in `langchain-social-agent/.env`.
 
@@ -51,11 +54,15 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 
 | Method | Path | Behavior |
 |--------|------|----------|
-| `GET` | `/api/health` | Bridge OK + LangGraph `/assistants/search` probe + config snapshot |
-| `GET` | `/api/lessons` | Index from `data/lessons.json` (no transcript bodies) |
+| `GET` | `/api/health` | Bridge OK + LangGraph `/assistants/search` probe + config snapshot + `auth` mode + `hygraph` status + `auditRows` |
+| `GET` | `/api/lessons?source=auto\|static\|hygraph` | `static` = `data/lessons.json`; `hygraph` = live Content API (503 `HYGRAPH_UNAVAILABLE` when unconfigured); `auto` = hygraph when configured, static fallback |
 | `GET` | `/api/lessons/:id` | Lesson + optional `transcript` / `context` file contents |
-| `POST` | `/api/draft` | `{ lessonId, platform? }` → `{ post, chars }` |
-| `POST` | `/api/upload` | Drafts if needed, then `upload_post` (or `dryRun`) |
+| `GET` | `/api/approvals` | HITL queue (`data/approvals.json`) |
+| `GET` | `/api/calendar?source=` | Deterministic 2-week ranked post calendar (GTM Strategist v0; no LLM) |
+| `POST` | `/api/draft` | `{ lessonId, platform? }` → `{ post, chars, rid }` |
+| `POST` | `/api/upload` | Drafts if needed, then `upload_post` (or `dryRun`, or `requireApproval` parking). Auth-gated except dry-run. Fail-closed media HEAD check; `platforms` allowlist passthrough; per-platform `results` array in response |
+| `POST` | `/api/approvals/:id/approve` | **Dry-run receipt only** — never posts live. Auth-gated |
+| `POST` | `/api/approvals/:id/reject` | Mark rejected. Auth-gated |
 
 ### `POST /api/upload` body (as implemented in `server.js`)
 

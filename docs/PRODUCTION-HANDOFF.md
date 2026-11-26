@@ -103,12 +103,12 @@ Every claim above was re-tested against live systems, not copied forward:
 | Org vs member tokens | Personal posts work; company 403 | Missing `w_organization_social` | Same authorize script; admin of CrisPRO | P0 |
 | No public lesson mp4s | Video field empty; only glassbox fallback usable | YouTube/Drive/NotebookLM URLs ≠ binary mp4 | Upload mp4 to Hygraph Asset / CDN; store `videoFile`; sync into bridge lessons | P0 |
 | LinkedIn asset poll 400 | Scary logs; may look failed | Legacy assets API quirk | Treat ugcPost URN as success; improve poll endpoint later (social-agent) | P1 |
-| Bridge unauthenticated | Anyone with URL can post | No Clerk/identity on `:4317` | Gate with Clerk (reuse portal) or Cursor private publish + allowlist | P0 |
-| Static `lessons.json` drift | Portal has newer lessons; bridge stale | Manual dump, not Hygraph live | Bridge `loadLessons` → Hygraph client | P1 |
+| Bridge unauthenticated | Anyone with URL can post | No Clerk/identity on `:4317` | **Fixed on this branch**: `BRIDGE_API_KEY` gate on uploads/approvals (401; GETs + no-side-effect dry-runs open). Clerk optional next step | ~~P0~~ FIXED (smoke-proven) |
+| Static `lessons.json` drift | Portal has newer lessons; bridge stale | Manual dump, not Hygraph live | **Fixed on this branch**: `?source=hygraph\|static\|auto` + `scripts/sync-hygraph.js` (ran once: `+1 glassbox-ai`, 16 lessons, 1 usable mp4). Content gap remains: CMS has only 1 published VIDEO item with a mp4 | ~~P1~~ CODE FIXED (content gap open) |
 | Portal `FIELDS_SAFE` schema drift | `fetchLessons` silently returns `[]` (GraphQL errors swallowed) | Queried `pdfDeck`/`onePager`; live schema has `pdfFile`, neither other field | **Fixed on this branch** (`pdfDeck: pdfFile` alias, `onePager` dropped); audit future schema edits against live introspection | ~~P0~~ FIXED |
 | Hygraph `videoUrl` vs `videoFile` | Portal embeds YouTube; LinkedIn needs bytes | Sync script wrote watch URLs into `videoUrl` | Prefer `videoFile.url` for social; keep `videoUrl` for LMS player | P0 |
 | School schema incomplete | `lessonDate`/`schools` migration pending | `FIELDS_SAFE` omits new fields | Finish `HYGRAPH-SCHEMA-MIGRATION.md`; update `hygraph.js` | P1 |
-| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | Route through `generate_post` interrupt or bridge approval queue | P1 |
+| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | **Fixed on this branch**: `requireApproval:true` parks posts in `data/approvals.json`; `POST /api/approvals/:id/approve` returns a **dry-run receipt only** (bridge never posts live); reject + list endpoints; auth-gated | ~~P1~~ FIXED (smoke-proven) |
 | Secrets in wrong place | Bridge publish lists `LINKEDIN_USER_ID` but tokens must be on agent | Confusion between processes | Document: Arcade secrets only on LangGraph host | P0 |
 | Rate limits | Burst uploads fail intermittently | LinkedIn/Twitter quotas | Scheduler + backoff in agent; FE show cooldown | P2 |
 | fahadkiani mirror | Broken Vercel | Nested app under Vite repo | Keep zeta as canonical; no remirror | P2 |
@@ -119,11 +119,11 @@ Every claim above was re-tested against live systems, not copied forward:
 
 ### Frontend (portal + bridge)
 
-- [ ] Bridge behind auth (Clerk session or private publish)
-- [ ] Calendar / schedule UI (none today — only immediate upload)
-- [ ] Show LangGraph `threadId` / `runId` / LinkedIn URN in UI after upload (partial: returned in JSON, weak UI)
+- [x] Bridge behind auth — **done on this branch**: `BRIDGE_API_KEY` gate (x-bridge-key / ?key=) on live uploads + approval actions; 401 without key (smoke-proven). Clerk session auth remains an optional upgrade
+- [ ] Calendar / schedule UI (backend v0 shipped: `GET /api/calendar` deterministic 2-week ranked JSON; UI still open)
+- [ ] Show LangGraph `threadId` / `runId` / LinkedIn URN in UI after upload (partial: returned in JSON + per-platform `results` array; weak UI)
 - [ ] CrisPRO vs personal selector (exists) + school filter (missing)
-- [ ] Media preview of `videoUrl` HEAD check (`content-type: video/mp4`) before upload
+- [x] Media preview of `videoUrl` HEAD check (`content-type: video/mp4`) before upload — **done on this branch**: server-side fail-closed check (HEAD → ranged-GET fallback), rejects non-video/image with 400 (`MEDIA_REJECTED`); smoke-proven
 - [ ] Error states for Arcade pending vs LangGraph down vs LinkedIn 403
 
 ### Backend / content
@@ -131,7 +131,7 @@ Every claim above was re-tested against live systems, not copied forward:
 - [ ] Hosted LangGraph with durable store (not only `langgraph:in_mem:up`)
 - [ ] Hygraph `SocialAsset` / `videoFile` absolute CDN URLs for every lesson used socially
 - [ ] Webhook Hygraph publish → enqueue draft (not built)
-- [ ] Audit log table (who posted what URN) — not built on zeta side
+- [x] Audit log table (who posted what URN) — **bridge side done on this branch**: append-only `data/audit.log` (`upload`, `upload_failed`, `upload_rejected_media`, `upload_queued_approval`, `approval_*` events, JSON lines). Per-URN rows land when the hosted LangGraph path posts for real
 
 ### Auth
 
@@ -141,13 +141,13 @@ Every claim above was re-tested against live systems, not copied forward:
 
 ### Observability
 
-- [ ] Structured logs with request id (bridge is console-only)
+- [x] Structured logs with request id — **done on this branch**: every request logged as `{"evt":"request","rid",method,path,status,ms}`; `rid` echoed in API responses (smoke-proven)
 - [ ] Slack failure channel already partial on agent (`SLACK_CHANNEL_ID`)
 - [ ] LangSmith tracing on agent (`LANGCHAIN_TRACING_V2`)
 
 ### CI/CD
 
-- [ ] zeta-tech: no automated bridge tests yet — add smoke `GET /api/health` in CI
+- [x] zeta-tech: automated bridge tests — **done on this branch**: `.github/workflows/bridge-smoke.yml` runs `scripts/smoke.sh` (12 assertions: syntax, health, lessons+source param, lesson detail, draft, dry-run contract, media HEAD rejection, API-key gate, HITL queue, calendar, audit trail) on push/PR touching the bridge (smoke-proven locally, exit 0)
 - [ ] social-agent: format/build flaky vs main (see PR #2 notes); fix or isolate
 - [ ] Do not deploy fahadkiani as bridge host
 
@@ -181,6 +181,8 @@ Bridge today short-circuits Curator → Poster. Production path should be: **GTM
 
 **Role:** Turn NotebookLM/Hygraph classroom inventory into a multi-week social calendar for CrisPRO (and later school-specific channels).
 
+**v0 shipped on this branch (deterministic, no LLM):** `GET /api/calendar` on the bridge — ranks lessons (video availability 2pts, artifact richness 0.5pt/artifact capped at 3, freshness 3→0 over 3 weeks), returns a 14-day ranked JSON calendar alternating linkedin/twitter (smoke-proven). LLM-driven calendar generation stays future work.
+
 **Prompt location pattern (proposed):**
 
 - `portal/app/lib/agents/gtm-strategist/prompts.ts` (FE/server actions) **or**
@@ -213,11 +215,13 @@ Reuse school tone from `doctorines/zeta.mdc` (VIPER/ORACLE/CADUCEUS/MAVERICK).
 | TikTok | draft string only | PR #1 `TikTokClient` when configured | Login Kit `/auth/tiktok` | verified domain URL; `SELF_ONLY` until audit | `TIKTOK_*` env |
 | Instagram | **none** | **none** | N/A | N/A | Feature flag stub only — do not ship fake |
 
-**`upload_post` extension plan (zeta requests):**
+**`upload_post` extension plan (zeta requests) — SHIPPED on this pair of branches (2026-11-26):**
 
-1. Bridge body `platforms: ["linkedin","twitter","tiktok"]` → configurable allowlist.
-2. Agent skips unconfigured destinations without swallowing LinkedIn success (today errors are logged + Slack, state still `{}`).
-3. Return per-platform results to bridge for UI.
+1. ✅ Bridge body `platforms: ["linkedin","twitter","tiktok"]` → configurable allowlist (bridge `lib/langgraph.js` `buildConfigurable` → agent `PLATFORMS` configurable).
+2. ✅ Agent skips unconfigured destinations without swallowing LinkedIn success — each platform wrapped independently, `results` array in graph state (`UploadPostAnnotation.results`), failures still logged + Slack.
+3. ✅ Return per-platform results to bridge for UI — `uploadPost` returns `{ results: Array<{ platform, attempted, ok, urn?, error? }> }`; URN captured from `createTextPost`/`createVideoPost`/`createImagePost`; bridge spreads it into the `/api/upload` response. Verified: LSA tsc clean, CI unit tests 29/29, prettier/eslint clean; bridge smoke asserts the result contract on dry-run.
+
+**Note:** live per-platform URN capture still requires the hosted-LangGraph path (P0 above); unit + contract verification done without live posting (no live posts made).
 
 ---
 

@@ -176,5 +176,21 @@
     "transcriptChars": 26454,
     "transcriptFile": "transcripts/supervised-learning-warmup-ZWJ_9O.md",
     "contextFile": "transcripts/supervised-learning-warmup-ZWJ_9O.context.md"
+  },
+  {
+    "id": "glassbox-ai",
+    "hygraphId": "cmkrjdlw7dxqx07n25hfpo7m9",
+    "title": "The Glass Box of Precision Oncology",
+    "excerpt": "",
+    "videoUrl": "https://us-west-2.graphassets.com/cm65gc2pl00vr08gs2em34vmw/cmkrjbuftdycb07lpstjklcss",
+    "videoFileUrl": "https://us-west-2.graphassets.com/cm65gc2pl00vr08gs2em34vmw/cmkrjbuftdycb07lpstjklcss",
+    "tags": [
+      "glass-box-ai"
+    ],
+    "artifacts": [
+      "https://us-west-2.graphassets.com/cm65gc2pl00vr08gs2em34vmw/cmkrjajpddy1i07lpclp8v37n",
+      "https://us-west-2.graphassets.com/cm65gc2pl00vr08gs2em34vmw/cmkrj3zo5dw6u07lpsgow9qcd"
+    ],
+    "source": "hygraph"
   }
 ]
