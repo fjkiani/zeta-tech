@@ -28,7 +28,12 @@ if (typeof process !== 'undefined') {
 const HYGRAPH_URL = process.env.NEXT_PUBLIC_HYGRAPH_URL;
 const HYGRAPH_TOKEN = process.env.NEXT_PUBLIC_HYGRAPH_TOKEN;
 
-/** Safe fields: no lessonDate/schools (schema migration pending). */
+/** Safe fields: no lessonDate/schools (schema migration pending).
+ *  Live master schema (verified 2026-11-26 via introspection): the PDF asset
+ *  field is `pdfFile` — `pdfDeck`/`onePager` do NOT exist on MediaItem. The
+ *  `pdfDeck` alias keeps every downstream consumer (lesson page, cockpit,
+ *  generate route) working; `onePager` is omitted (components already treat
+ *  it as optional). */
 const FIELDS_SAFE = `
   id
   title
@@ -37,8 +42,7 @@ const FIELDS_SAFE = `
   videoUrl
   tags
   description { raw }
-  pdfDeck { url fileName }
-  onePager { url fileName }
+  pdfDeck: pdfFile { url fileName }
   videoFile { url fileName }
 `;
 

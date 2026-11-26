@@ -135,6 +135,9 @@ VIDEO_URL='https://us-west-2.graphassets.com/…/…' yarn tsx scripts/post-cris
 | CrisPRO video (`Reasoning_Biology.mp4` via Hygraph graphassets) | `urn:li:ugcPost:7531543923190833152` |
 | Org | `107412290` / vanity `crispro` |
 | Arcade org scopes | `w_member_social` + `w_organization_social` → `ORG_AUTH_OK` for configured `LINKEDIN_USER_ID` |
+| Bridge smoke test (this branch, fresh sandbox) | `/api/health` OK with correct config snapshot; `/api/lessons` → 15 lessons; `POST /api/draft` → post + char count; `POST /api/upload` `dryRun:true` → org defaults + `videoUrl` passthrough all correct |
+| graphassets CDN mp4 | `HTTP 206`, `content-type: video/mp4` on the documented URL — public and LinkedIn-usable |
+| Hygraph live schema | Introspected: `pdfFile` (not `pdfDeck`), no `onePager`/`lessonDate`/`schools`; exactly 1 published VIDEO MediaItem (`glassbox-ai`) with `videoFile` = the mp4 above |
 
 ### Known quirks that affect bridge UX
 

@@ -64,6 +64,22 @@ Ownership split: **this doc** = portal frontend, Hygraph content model, bridge p
 - Portal lesson list/detail from Hygraph `MediaItem` (`portal/app/lib/hygraph.js`)
 - NotebookLM artifact generate path (quiz/flashcards/slides) via portal APIs
 
+### Verified live — independent re-check (2026-11-26, this branch)
+
+Every claim above was re-tested against live systems, not copied forward:
+
+| Check | Method | Result |
+|-------|--------|--------|
+| Hygraph Content API reachable + public read | Live GraphQL POST to `…/v2/cm65g7pxd09kx07my82376f33/master` | **200 OK, no token needed for PUBLISHED stage** |
+| `MediaItem` schema | Live introspection (`__type`) | Fields: `title, slug, description, excerpt, tags, videoUrl, videoFile, pdfFile, thumbnail, featuredImage, category, type, deckId, deckSlug, order, isPublished, …` — **no `pdfDeck`, no `onePager`, no `lessonDate`, no `schools`** |
+| Published video lessons | Corrected query (`stage: PUBLISHED, type: VIDEO`) | Exactly **1**: `glassbox-ai` ("The Glass Box of Precision Oncology"), `videoFile.url` = the `Reasoning_Biology.mp4` graphassets URL below |
+| graphassets CDN mp4 public | `HEAD`/range GET on the URL | **HTTP 206, `content-type: video/mp4`** — usable for LinkedIn `registerAndUploadMedia` |
+| Bridge process | `node server.js` + curl smoke on `:4317` | `/api/health` OK (LangGraph probe correctly reports `LANGGRAPH_UNREACHABLE` when no agent host); `/api/lessons` → 15 lessons; `POST /api/draft` → 131-char post; `POST /api/upload` `dryRun:true` → correct CrisPRO org defaults (`107412290`, `crispro`, `CrisPRO.ai`) + `videoUrl` passthrough |
+| Social-agent env surface | `.env.full.example` on PR branch | Matches this doc (Arcade, `LINKEDIN_ORGANIZATION_ID=107412290`, `POST_TO_LINKEDIN_ORGANIZATION`, optional Hygraph for video resolve) |
+| CI | GitHub checks API on both PR heads | zeta-tech: GitGuardian success, Netlify checks neutral. langchain-social-agent: **7/7 success** (unit tests 18.x/20.x, spelling, formatting, README, linting) |
+
+**P0 found and fixed on this branch:** portal `FIELDS_SAFE` queried `pdfDeck` and `onePager`, which do not exist in the live schema — every `fetchLessons()` call was erroring into `return []`, i.e. the portal lesson list was **silently empty** against live Hygraph. Fixed via GraphQL alias (`pdfDeck: pdfFile`) and dropping `onePager`; corrected query verified live (returns the glassbox-ai item). Any `onePager` UI stays functional (field is optional everywhere).
+
 ### What does not work / not implemented
 
 | Item | Reality |
@@ -89,6 +105,7 @@ Ownership split: **this doc** = portal frontend, Hygraph content model, bridge p
 | LinkedIn asset poll 400 | Scary logs; may look failed | Legacy assets API quirk | Treat ugcPost URN as success; improve poll endpoint later (social-agent) | P1 |
 | Bridge unauthenticated | Anyone with URL can post | No Clerk/identity on `:4317` | Gate with Clerk (reuse portal) or Cursor private publish + allowlist | P0 |
 | Static `lessons.json` drift | Portal has newer lessons; bridge stale | Manual dump, not Hygraph live | Bridge `loadLessons` → Hygraph client | P1 |
+| Portal `FIELDS_SAFE` schema drift | `fetchLessons` silently returns `[]` (GraphQL errors swallowed) | Queried `pdfDeck`/`onePager`; live schema has `pdfFile`, neither other field | **Fixed on this branch** (`pdfDeck: pdfFile` alias, `onePager` dropped); audit future schema edits against live introspection | ~~P0~~ FIXED |
 | Hygraph `videoUrl` vs `videoFile` | Portal embeds YouTube; LinkedIn needs bytes | Sync script wrote watch URLs into `videoUrl` | Prefer `videoFile.url` for social; keep `videoUrl` for LMS player | P0 |
 | School schema incomplete | `lessonDate`/`schools` migration pending | `FIELDS_SAFE` omits new fields | Finish `HYGRAPH-SCHEMA-MIGRATION.md`; update `hygraph.js` | P1 |
 | HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | Route through `generate_post` interrupt or bridge approval queue | P1 |
@@ -177,7 +194,7 @@ Reuse school tone from `doctorines/zeta.mdc` (VIPER/ORACLE/CADUCEUS/MAVERICK).
 
 **Propose calendars:**
 
-1. Query Hygraph `mediaItems` (`portal/app/lib/hygraph.js` fields: `title`, `slug`, `excerpt`, `videoFile`, `pdfDeck`, `onePager`, tags/schools).
+1. Query Hygraph `mediaItems` (`portal/app/lib/hygraph.js` fields: `title`, `slug`, `excerpt`, `videoFile`, `pdfDeck` (aliased from live-schema `pdfFile`), tags).
 2. Score freshness (`lessonDate` after migration) + artifact richness (has mp4 > pdf > transcript-only).
 3. Emit calendar rows: `{ lessonId, platform, scheduledAt, angle, videoUrl?, ctaUrl }`.
 4. Handoff: each approved row → `generate_post` (URL = portal lesson or graphassets) **or** bridge `POST /api/draft` then `upload_post`.
@@ -206,7 +223,7 @@ Reuse school tone from `doctorines/zeta.mdc` (VIPER/ORACLE/CADUCEUS/MAVERICK).
 
 ## 7. Hygraph extension
 
-**Current model (used):** `MediaItem` with `videoUrl`, `videoFile { url fileName }`, `pdfDeck`, `onePager`, `tags`, optional `lessonPlan` — see `portal/app/lib/hygraph.js` `FIELDS_SAFE`.
+**Current model (verified live 2026-11-26 via introspection):** `MediaItem` with `videoUrl`, `videoFile { url fileName }`, `pdfFile { url fileName }` (surfaces as `pdfDeck` via GraphQL alias in `hygraph.js`), `thumbnail`, `tags`, `type`, `category`, `description { raw }`, `excerpt` — see `portal/app/lib/hygraph.js` `FIELDS_SAFE`. There is **no** `onePager`, `lessonDate`, or `schools` field on MediaItem today (school filtering is tag-based until the migration lands).
 
 **Proposed social fields** (add via Hygraph MCP / Studio; do not invent live API ids until migrated):
 
@@ -224,14 +241,14 @@ Reuse school tone from `doctorines/zeta.mdc` (VIPER/ORACLE/CADUCEUS/MAVERICK).
 
 `https://us-west-2.graphassets.com/cm65gc2pl00vr08gs2em34vmw/cmkrjbuftdycb07lpstjklcss` (`Reasoning_Biology.mp4`).
 
-**PDF pipeline:** NotebookLM slides already land as `slides.pdf` artifacts / Hygraph `pdfDeck`. LinkedIn document posts are **not** implemented — either upload PDF to a public URL and link in caption, or add LinkedIn document UGC later (UNKNOWN API readiness).
+**PDF pipeline:** NotebookLM slides land as `slides.pdf` sidecar artifacts / Hygraph `pdfFile` assets (`pdfDeck` alias). LinkedIn document posts are **not** implemented — either upload PDF to a public URL and link in caption, or add LinkedIn document UGC later (UNKNOWN API readiness).
 
 **Lesson → artifact → social mapping:**
 
 ```
 MediaItem (Hygraph)
   ├─ videoFile.url → LinkedIn/TikTok video
-  ├─ pdfDeck.url → link-in-bio / future document post
+  ├─ pdfFile.url (pdfDeck alias) → link-in-bio / future document post
   ├─ portal sidecar quiz/flashcards → not for social body (internal LMS)
   └─ transcript (NotebookLM) → caption source (bridge draft)
 ```
