@@ -1,0 +1,233 @@
+{
+  "title": "Python Quiz",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Consider the following Python code snippet:\n```python\nuser_age = input(\"Enter your age: \")\nnext_year = user_age + 1\n```\nWhat occurs when this code is executed?",
+      "answerOptions": [
+        {
+          "text": "A TypeError occurs because input() returns a string, which cannot be added to an integer with the + operator.",
+          "isCorrect": true,
+          "rationale": "The input() function always yields data as a string type, and Python cannot implicitly add an integer to a text string without explicit conversion."
+        },
+        {
+          "text": "A SyntaxError occurs because the variable assignment uses an invalid arithmetic expression.",
+          "isCorrect": false,
+          "rationale": "The syntax of the assignment expression is structurally correct; the failure occurs at runtime due to incompatible operand types."
+        },
+        {
+          "text": "A ValueError occurs because Python cannot parse numeric characters stored inside quotes.",
+          "isCorrect": false,
+          "rationale": "Python can handle numeric characters in strings fine; the error is a type mismatch during addition rather than a value parsing issue."
+        },
+        {
+          "text": "The code runs successfully because Python automatically converts numeric user input into an integer.",
+          "isCorrect": false,
+          "rationale": "Python uses type inference for literal assignments, but input() explicitly returns a string regardless of the user's typed input."
+        }
+      ],
+      "hint": "Consider the default data type produced by the input() function and how Python handles mixing text and numbers in addition."
+    },
+    {
+      "type": "fill_in_the_blank",
+      "question": "In Python, the integer division operator used to divide two numbers and discard the decimal portion (such as calculating full decades from an age) is ___.",
+      "bestAnswer": "//",
+      "acceptableAnswers": [
+        "//",
+        "floor division",
+        "integer division"
+      ],
+      "rationale": "The double slash `//` operator performs integer division, rounding down to the nearest whole integer and discarding any remainder.",
+      "hint": "Think of the operator that performs division while keeping only the whole integer result."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Analyze the following Python snippet:\n```python\nval1 = \"5\"\nval2 = \"5\"\nprint(val1 + val2)\n```\nWhat output will be printed to the screen?",
+      "answerOptions": [
+        {
+          "text": "55",
+          "isCorrect": true,
+          "rationale": "When the + operator is used between two string types, Python performs string concatenation (gluing text together) rather than numerical addition."
+        },
+        {
+          "text": "10",
+          "isCorrect": false,
+          "rationale": "The values are enclosed in quotes, making them string data types rather than integers, so standard arithmetic addition does not occur."
+        },
+        {
+          "text": "5 + 5",
+          "isCorrect": false,
+          "rationale": "The print() function evaluates the concatenation expression before displaying the result rather than printing the literal code expression."
+        },
+        {
+          "text": "TypeError",
+          "isCorrect": false,
+          "rationale": "Concatenation of two string types is a valid Python operation and will not cause a type mismatch error."
+        }
+      ],
+      "hint": "Pay attention to the quotes surrounding the numbers and how the addition operator behaves with text strings."
+    },
+    {
+      "type": "multiple_select",
+      "question": "Which of the following statements correctly describe Python's primitive data types and arithmetic behaviors?",
+      "answerOptions": [
+        {
+          "text": "Whole numbers without decimal places are represented by the int data type.",
+          "isCorrect": true,
+          "rationale": "The int type specifically handles intact, whole numerical values without fractions or decimal components."
+        },
+        {
+          "text": "Division performed with a single slash / always returns a float type.",
+          "isCorrect": true,
+          "rationale": "Standard division in Python 3 automatically yields a floating-point number even if the quotient is a whole number."
+        },
+        {
+          "text": "The input() function automatically converts numeric input into an int or float.",
+          "isCorrect": false,
+          "rationale": "Regardless of whether a user types numbers or letters, input() always returns data wrapped as a string type."
+        },
+        {
+          "text": "Python uses type inference to determine a variable's data type automatically upon assignment.",
+          "isCorrect": true,
+          "rationale": "Type inference allows programmers to assign values without explicitly declaring data type names beforehand."
+        }
+      ],
+      "hint": "Recall the characteristics of integers, standard division outputs, user input defaults, and variable assignment rules.",
+      "hasAllOfTheAbove": false,
+      "hasNoneOfTheAbove": false
+    },
+    {
+      "type": "fill_in_the_blank",
+      "question": "To find the leftover years when converting an age to decades, Python uses the modulo operator `$\\%$`. For an age of $17$, the expression `$17 \\% 10$` evaluates to the integer ___.",
+      "bestAnswer": "7",
+      "acceptableAnswers": [
+        "7"
+      ],
+      "rationale": "The modulo operator calculates the remainder after dividing $17$ by $10$, which leaves a remainder of $7$.",
+      "hint": "Focus on finding the remainder that remains after dividing the first number by the second."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Examine the program below:\n```python\ndecades = 2\nyears = 3\nprint(\"You are \" + decades + \" decades and \" + years + \" year(s) old.\")\n```\nWhy does this code throw a TypeError?",
+      "answerOptions": [
+        {
+          "text": "The variables decades and years are integers and must be converted to strings using str() before concatenating with text.",
+          "isCorrect": true,
+          "rationale": "Python cannot concatenate string literals and numeric data types directly with +; numbers must first be converted into strings."
+        },
+        {
+          "text": "The print() function cannot accept string literals and variables within the same statement.",
+          "isCorrect": false,
+          "rationale": "The print() function can evaluate combined expressions as long as all operands are converted to compatible types."
+        },
+        {
+          "text": "The + operator is exclusively reserved for arithmetic addition of numbers.",
+          "isCorrect": false,
+          "rationale": "The + operator is overloaded in Python to perform concatenation when both operands are strings."
+        },
+        {
+          "text": "The string literals are formatted incorrectly and require single quotes around variables.",
+          "isCorrect": false,
+          "rationale": "Quotes define fixed string literals; variable names are placed outside quotes, but type matching rules still apply."
+        }
+      ],
+      "hint": "Look at the data types of the variables being combined with the + symbol inside the print function."
+    },
+    {
+      "type": "short_answer",
+      "question": "In 1999, NASA lost the $125 million Mars Climate Orbiter due to a unit calculation discrepancy. How does this real-world scenario illustrate the critical importance of data types in computer programming?",
+      "grading": {
+        "modelAnswer": "The NASA orbiter disaster occurred because one system used metric units while another used imperial units, creating a data mismatch where software expected one type of value but received another. This illustrates that computers require explicit, compatible data formats to process information accurately, and data type mismatches in code can lead to critical computational failures.",
+        "rationale": "Understanding data types ensures that programs process inputs using compatible, expected units and data formats, avoiding systemic system crashes or mathematical errors.",
+        "requiredAttributes": [
+          "Identifies the mismatch between unit systems (metric vs. imperial) or unexpected data formats.",
+          "Explains that computer programs require accurate, compatible data types to prevent software errors and real-world system failures."
+        ],
+        "errors": {
+          "misconceptions": [
+            "Attributing the loss to a simple syntax typo in Python syntax rather than a data type mismatch."
+          ],
+          "bluffs": [
+            "Giving general statements about space travel risks without connecting the scenario to data types or unit mismatches."
+          ]
+        }
+      },
+      "hint": "Connect the difference between expected data units to how computer programs handle inputs and types."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Consider the line of code below:\n```python\nstudent_name = 'Maya\"\n```\nWhat type of error will Python report when interpreting this statement?",
+      "answerOptions": [
+        {
+          "text": "SyntaxError, because the opening single quote does not match the closing double quote.",
+          "isCorrect": true,
+          "rationale": "Python requires string delimiters to match at both ends of a literal; mixing a single quote with a double quote violates syntax rules."
+        },
+        {
+          "text": "TypeError, because single quotes cannot be used for string data types.",
+          "isCorrect": false,
+          "rationale": "Python allows both single quotes and double quotes for strings, provided the starting and ending quotes match."
+        },
+        {
+          "text": "NameError, because Maya was not declared as an integer variable.",
+          "isCorrect": false,
+          "rationale": "Maya is intended as string text inside quotes, not a variable reference, so a NameError will not occur."
+        },
+        {
+          "text": "ValueError, because text values must always use capital letters.",
+          "isCorrect": false,
+          "rationale": "Capitalization of letters inside a string does not affect Python string syntax rules."
+        }
+      ],
+      "hint": "Check the quotation marks wrapping the string value."
+    },
+    {
+      "type": "multiple_select",
+      "question": "Which of the following type conversion operations will run successfully in Python without throwing a runtime error?",
+      "answerOptions": [
+        {
+          "text": "int(\"17\")",
+          "isCorrect": true,
+          "rationale": "Converting a string containing purely numeric digits into an integer is valid."
+        },
+        {
+          "text": "str(9.99)",
+          "isCorrect": true,
+          "rationale": "Any float or integer number can be converted into its string representation using str()."
+        },
+        {
+          "text": "\"10\" + str(5)",
+          "isCorrect": true,
+          "rationale": "Converting the integer 5 to a string yields \"5\", allowing valid concatenation with \"10\" to produce \"105\"."
+        },
+        {
+          "text": "int(\"seventeen\")",
+          "isCorrect": false,
+          "rationale": "The int() function cannot parse English words into numbers and will raise a ValueError."
+        }
+      ],
+      "hint": "Identify which strings contain valid numerical digits that Python can convert into numbers."
+    },
+    {
+      "type": "short_answer",
+      "question": "Explain the required steps in a Python program to follow the standard Input $\\rightarrow$ Process $\\rightarrow$ Output workflow for converting a user's age in years into decades.",
+      "grading": {
+        "modelAnswer": "First, receive the age from the user using input(), which yields a string. Second, convert the string to an integer using int(). Third, process the integer by dividing it by 10 using integer division // to find the number of decades. Finally, convert the decades integer back into a string using str() and display the output using print().",
+        "rationale": "A complete program must receive string input, cast it to a numeric type for arithmetic processing, and cast the calculated result back to text for output.",
+        "requiredAttributes": [
+          "Mentions capturing user input via input() and converting it to a number via int().",
+          "Mentions processing the calculation (e.g., using integer division //) and outputting the result using print() after converting back to a string."
+        ],
+        "errors": {
+          "misconceptions": [
+            "Assuming input() automatically produces a number ready for direct mathematical division."
+          ],
+          "bluffs": [
+            "Describing general age math without referencing specific Python functions like input(), int(), or print()."
+          ]
+        }
+      },
+      "hint": "Walk through the sequence of functions needed to collect input, change data types, perform math, and display text."
+    }
+  ]
+}

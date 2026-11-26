@@ -1,0 +1,165 @@
+{
+  "name": "Python Data Types & I/O",
+  "children": [
+    {
+      "name": "Core Workflow",
+      "children": [
+        {
+          "name": "Input"
+        },
+        {
+          "name": "Process"
+        },
+        {
+          "name": "Output"
+        }
+      ]
+    },
+    {
+      "name": "Variables",
+      "children": [
+        {
+          "name": "Concept: Labeled Storage Boxes"
+        },
+        {
+          "name": "Feature: Stores Memory Values"
+        },
+        {
+          "name": "Feature: Type Inference"
+        }
+      ]
+    },
+    {
+      "name": "Primitive Data Types",
+      "children": [
+        {
+          "name": "Integer (int)",
+          "children": [
+            {
+              "name": "Whole Numbers"
+            },
+            {
+              "name": "Example: age = 17"
+            }
+          ]
+        },
+        {
+          "name": "Float (float)",
+          "children": [
+            {
+              "name": "Decimal Numbers"
+            },
+            {
+              "name": "Example: price = 9.99"
+            }
+          ]
+        },
+        {
+          "name": "String (str)",
+          "children": [
+            {
+              "name": "Text in Quotes"
+            },
+            {
+              "name": "Concatenation (+)"
+            },
+            {
+              "name": "Example: name = \"Maya\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Input & Output",
+      "children": [
+        {
+          "name": "print()",
+          "children": [
+            {
+              "name": "Displays Output"
+            },
+            {
+              "name": "Variables vs Literals"
+            }
+          ]
+        },
+        {
+          "name": "input()",
+          "children": [
+            {
+              "name": "Gets User Input"
+            },
+            {
+              "name": "Always Returns String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Type Conversion",
+      "children": [
+        {
+          "name": "int(x): String/Float to Int"
+        },
+        {
+          "name": "float(x): String/Int to Float"
+        },
+        {
+          "name": "str(x): Number to String"
+        }
+      ]
+    },
+    {
+      "name": "Arithmetic Operators",
+      "children": [
+        {
+          "name": "Standard (+, -, *)"
+        },
+        {
+          "name": "/ (Float Division)"
+        },
+        {
+          "name": "// (Integer Division)"
+        },
+        {
+          "name": "% (Modulo / Remainder)"
+        }
+      ]
+    },
+    {
+      "name": "Debugging & Errors",
+      "children": [
+        {
+          "name": "TypeError: String + Number"
+        },
+        {
+          "name": "Division Error: String / Int"
+        },
+        {
+          "name": "SyntaxError: Mismatched Quotes"
+        }
+      ]
+    },
+    {
+      "name": "Practical Application",
+      "children": [
+        {
+          "name": "Real-World Hook: NASA Data Mismatch"
+        },
+        {
+          "name": "Age Calculator Project",
+          "children": [
+            {
+              "name": "Decades: age // 10"
+            },
+            {
+              "name": "Years: age % 10"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
