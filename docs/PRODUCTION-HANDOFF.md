@@ -103,12 +103,12 @@ Every claim above was re-tested against live systems, not copied forward:
 | Org vs member tokens | Personal posts work; company 403 | Missing `w_organization_social` | Same authorize script; admin of CrisPRO | P0 |
 | No public lesson mp4s | Video field empty; only glassbox fallback usable | YouTube/Drive/NotebookLM URLs ≠ binary mp4 | Upload mp4 to Hygraph Asset / CDN; store `videoFile`; sync into bridge lessons | P0 |
 | LinkedIn asset poll 400 | Scary logs; may look failed | Legacy assets API quirk | Treat ugcPost URN as success; improve poll endpoint later (social-agent) | P1 |
-| Bridge unauthenticated | Anyone with URL can post | No Clerk/identity on `:4317` | **Fixed on this branch**: `BRIDGE_API_KEY` gate on uploads/approvals (401; GETs + no-side-effect dry-runs open). Clerk optional next step | ~~P0~~ FIXED (smoke-proven) |
-| Static `lessons.json` drift | Portal has newer lessons; bridge stale | Manual dump, not Hygraph live | **Fixed on this branch**: `?source=hygraph\|static\|auto` + `scripts/sync-hygraph.js` (ran once: `+1 glassbox-ai`, 16 lessons, 1 usable mp4). Content gap remains: CMS has only 1 published VIDEO item with a mp4 | ~~P1~~ CODE FIXED (content gap open) |
+| Bridge unauthenticated | Anyone with URL can post | No Clerk/identity on `:4317` | **Backend+console fixed**: `BRIDGE_API_KEY` gate on uploads/approvals (401; GETs + no-side-effect dry-runs open); key entry shipped in the bridge console (sessionStorage, `x-bridge-key`). Clerk session auth remains open | ~~P0~~ BACKEND FIXED — Clerk/open identity still open |
+| Static `lessons.json` drift | Portal has newer lessons; bridge stale | Manual dump, not Hygraph live | **Backend fixed**: `?source=hygraph\|static\|auto` (source badge in console) + `scripts/sync-hygraph.js` (ran once: `+1 glassbox-ai`, 16 lessons, 1 usable mp4). Sync is a CLI script — no scheduled/auto sync UI. Content gap remains: CMS has only 1 published VIDEO item with a mp4 | ~~P1~~ BACKEND FIXED — auto-sync + content gap open |
 | Portal `FIELDS_SAFE` schema drift | `fetchLessons` silently returns `[]` (GraphQL errors swallowed) | Queried `pdfDeck`/`onePager`; live schema has `pdfFile`, neither other field | **Fixed on this branch** (`pdfDeck: pdfFile` alias, `onePager` dropped); audit future schema edits against live introspection | ~~P0~~ FIXED |
 | Hygraph `videoUrl` vs `videoFile` | Portal embeds YouTube; LinkedIn needs bytes | Sync script wrote watch URLs into `videoUrl` | Prefer `videoFile.url` for social; keep `videoUrl` for LMS player | P0 |
 | School schema incomplete | `lessonDate`/`schools` migration pending | `FIELDS_SAFE` omits new fields | Finish `HYGRAPH-SCHEMA-MIGRATION.md`; update `hygraph.js` | P1 |
-| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | **Fixed on this branch**: `requireApproval:true` parks posts in `data/approvals.json`; `POST /api/approvals/:id/approve` returns a **dry-run receipt only** (bridge never posts live); reject + list endpoints; auth-gated | ~~P1~~ FIXED (smoke-proven) |
+| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | **Backend + console fixed**: `requireApproval:true` parks posts in `data/approvals.json`; `POST /api/approvals/:id/approve` returns a **dry-run receipt only** (bridge never posts live); reject + list endpoints; auth-gated; approvals panel rendered in the bridge console. Portal Agent-Inbox integration (§4 design) still open | ~~P1~~ BACKEND+CONSOLE FIXED — portal Inbox open |
 | Secrets in wrong place | Bridge publish lists `LINKEDIN_USER_ID` but tokens must be on agent | Confusion between processes | Document: Arcade secrets only on LangGraph host | P0 |
 | Rate limits | Burst uploads fail intermittently | LinkedIn/Twitter quotas | Scheduler + backoff in agent; FE show cooldown | P2 |
 | fahadkiani mirror | Broken Vercel | Nested app under Vite repo | Keep zeta as canonical; no remirror | P2 |
@@ -120,8 +120,8 @@ Every claim above was re-tested against live systems, not copied forward:
 ### Frontend (portal + bridge)
 
 - [x] Bridge behind auth — **done on this branch**: `BRIDGE_API_KEY` gate (x-bridge-key / ?key=) on live uploads + approval actions; 401 without key (smoke-proven). Clerk session auth remains an optional upgrade
-- [ ] Calendar / schedule UI (backend v0 shipped: `GET /api/calendar` deterministic 2-week ranked JSON; UI still open)
-- [ ] Show LangGraph `threadId` / `runId` / LinkedIn URN in UI after upload (partial: returned in JSON + per-platform `results` array; weak UI)
+- [x] Calendar view — **bridge console panel shipped** (renders `GET /api/calendar` ranked 2-week JSON). Still open: schedule/queue a post for a future date (LangGraph schedule API) and the portal-cockpit calendar
+- [x] Show per-platform results in UI — **bridge console renders the `results` array** (platform / attempted / ok / urn / error) returned by `upload_post`. Still open: deep links from URNs to the LinkedIn post, and this UI in the portal cockpit
 - [ ] CrisPRO vs personal selector (exists) + school filter (missing)
 - [x] Media preview of `videoUrl` HEAD check (`content-type: video/mp4`) before upload — **done on this branch**: server-side fail-closed check (HEAD → ranged-GET fallback), rejects non-video/image with 400 (`MEDIA_REJECTED`); smoke-proven
 - [ ] Error states for Arcade pending vs LangGraph down vs LinkedIn 403
@@ -131,7 +131,7 @@ Every claim above was re-tested against live systems, not copied forward:
 - [ ] Hosted LangGraph with durable store (not only `langgraph:in_mem:up`)
 - [ ] Hygraph `SocialAsset` / `videoFile` absolute CDN URLs for every lesson used socially
 - [ ] Webhook Hygraph publish → enqueue draft (not built)
-- [x] Audit log table (who posted what URN) — **bridge side done on this branch**: append-only `data/audit.log` (`upload`, `upload_failed`, `upload_rejected_media`, `upload_queued_approval`, `approval_*` events, JSON lines). Per-URN rows land when the hosted LangGraph path posts for real
+- [x] Audit log table (who posted what URN) — **bridge side done + console viewer shipped** (`GET /api/audit` tail rendered in the audit panel): append-only `data/audit.log` (`upload`, `upload_failed`, `upload_rejected_media`, `upload_queued_approval`, `approval_*` events, JSON lines). Per-URN rows land when the hosted LangGraph path posts for real
 
 ### Auth
 

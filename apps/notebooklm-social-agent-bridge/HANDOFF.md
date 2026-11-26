@@ -59,6 +59,7 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 | `GET` | `/api/lessons/:id` | Lesson + optional `transcript` / `context` file contents |
 | `GET` | `/api/approvals` | HITL queue (`data/approvals.json`) |
 | `GET` | `/api/calendar?source=` | Deterministic 2-week ranked post calendar (GTM Strategist v0; no LLM) |
+| `GET` | `/api/audit?limit=50` | Read-only tail of `data/audit.log` for the console audit viewer |
 | `POST` | `/api/draft` | `{ lessonId, platform? }` → `{ post, chars, rid }` |
 | `POST` | `/api/upload` | Drafts if needed, then `upload_post` (or `dryRun`, or `requireApproval` parking). Auth-gated except dry-run. Fail-closed media HEAD check; `platforms` allowlist passthrough; per-platform `results` array in response |
 | `POST` | `/api/approvals/:id/approve` | **Dry-run receipt only** — never posts live. Auth-gated |
@@ -190,7 +191,7 @@ To attach video today:
 | New draft voice / platform | `server.js` → `draftFromLesson` |
 | Extra upload fields (schedule, platforms[]) | `server.js` `/api/upload` + `lib/langgraph.js` `buildConfigurable` / input |
 | Live Hygraph lessons | Replace `loadLessons()` with portal `app/lib/hygraph.js` pattern (`NEXT_PUBLIC_HYGRAPH_URL` / token) |
-| Scheduling UI | New routes + LangGraph `generate_post` schedule or SDK `runs.create(…, { afterSeconds })` — not in bridge today |
+| Scheduling UI (delayed runs) | New routes + LangGraph `generate_post` schedule or SDK `runs.create(…, { afterSeconds })` — not in bridge today. Console panels for approvals / calendar / audit / per-platform results / key entry ARE shipped (`public/index.html`) |
 | Multi-school filter | Tag lessons in JSON or query Hygraph `schools` enum (migration in `HYGRAPH-SCHEMA-MIGRATION.md`) |
 
 ---

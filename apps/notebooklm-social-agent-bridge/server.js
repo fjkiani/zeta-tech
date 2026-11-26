@@ -358,6 +358,24 @@ const server = http.createServer(async (req, res) => {
       return finish(200, { count: readApprovals().length, approvals: readApprovals() });
     }
 
+    if (req.method === "GET" && pathname === "/api/audit") {
+      // Read-only tail for the console's audit viewer (last 50 events).
+      const limit = Math.min(Number(url.searchParams.get("limit")) || 50, 200);
+      try {
+        const lines = fs.readFileSync(AUDIT_LOG, "utf8").split("\n").filter(Boolean);
+        const events = lines.slice(-limit).map((l) => {
+          try {
+            return JSON.parse(l);
+          } catch {
+            return { evt: "unparsable", raw: l };
+          }
+        });
+        return finish(200, { count: events.length, total: lines.length, events });
+      } catch {
+        return finish(200, { count: 0, total: 0, events: [] });
+      }
+    }
+
     if (req.method === "GET" && pathname === "/api/calendar") {
       const { lessons, source } = await loadLessons(url.searchParams.get("source") || "auto");
       return finish(200, {

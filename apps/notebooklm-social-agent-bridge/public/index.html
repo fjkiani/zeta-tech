@@ -24,12 +24,24 @@
             <span class="dot" id="lgDot"></span>
             <span id="lgStatus">Checking LangGraph…</span>
           </div>
+          <div class="pill" id="authPill" title="BRIDGE_API_KEY mode reported by /api/health">
+            <span id="authStatus">auth…</span>
+          </div>
+        </div>
+        <div class="key-row">
+          <input
+            id="apiKey"
+            type="password"
+            placeholder="BRIDGE_API_KEY (stored in this browser only)"
+            autocomplete="off"
+          />
+          <button class="ghost" id="saveKeyBtn" type="button">Save key</button>
         </div>
       </header>
 
       <main class="layout">
         <section class="panel">
-          <h2>Lessons</h2>
+          <h2>Lessons <span class="badge" id="sourceBadge">…</span></h2>
           <p class="hint">
             Sourced from zeta-tech NotebookLM lesson transcripts and artifacts.
           </p>
@@ -61,15 +73,49 @@
             placeholder="Draft appears here…"
             spellcheck="true"
           ></textarea>
+          <div class="field-row">
+            <span class="field-inline"><input type="checkbox" id="pLinkedin" checked /> LinkedIn</span>
+            <span class="field-inline"><input type="checkbox" id="pTwitter" /> Twitter/X</span>
+            <span class="field-inline">
+              <input type="checkbox" id="requireApproval" />
+              Hold for approval (dry-run approve)
+            </span>
+          </div>
           <div class="actions">
             <button class="ghost" id="draftBtn" disabled>Draft from lesson</button>
             <button class="ghost" id="dryRunBtn" disabled>Dry run</button>
             <button class="primary" id="uploadBtn" disabled>Upload to CrisPRO</button>
           </div>
           <div class="meta" id="meta"></div>
+          <div id="resultsBox" class="results" hidden></div>
           <pre class="log" id="log">Ready.</pre>
         </section>
       </main>
+
+      <section class="layout ops">
+        <section class="panel" id="approvalsPanel">
+          <h2>Approvals <button class="ghost small" id="approvalsRefresh" type="button">Refresh</button></h2>
+          <p class="hint">
+            Posts parked with “Hold for approval”. Approve returns a
+            <strong>dry-run receipt only</strong> — the bridge never posts live.
+          </p>
+          <div class="queue" id="approvalsList"></div>
+        </section>
+
+        <section class="panel" id="calendarPanel">
+          <h2>2-week calendar <button class="ghost small" id="calendarRefresh" type="button">Refresh</button></h2>
+          <p class="hint">
+            Deterministic ranking (video, artifacts, freshness) — no LLM.
+          </p>
+          <div class="queue" id="calendarList"></div>
+        </section>
+
+        <section class="panel" id="auditPanel">
+          <h2>Audit trail <button class="ghost small" id="auditRefresh" type="button">Refresh</button></h2>
+          <p class="hint">Last 50 events from <code>data/audit.log</code>.</p>
+          <pre class="log" id="auditLog">No events loaded.</pre>
+        </section>
+      </section>
     </div>
 
     <script>
@@ -88,16 +134,76 @@
         bridgeStatus: document.getElementById("bridgeStatus"),
         lgDot: document.getElementById("lgDot"),
         lgStatus: document.getElementById("lgStatus"),
+        authStatus: document.getElementById("authStatus"),
+        apiKey: document.getElementById("apiKey"),
+        saveKeyBtn: document.getElementById("saveKeyBtn"),
+        sourceBadge: document.getElementById("sourceBadge"),
+        pLinkedin: document.getElementById("pLinkedin"),
+        pTwitter: document.getElementById("pTwitter"),
+        requireApproval: document.getElementById("requireApproval"),
+        resultsBox: document.getElementById("resultsBox"),
+        approvalsList: document.getElementById("approvalsList"),
+        approvalsRefresh: document.getElementById("approvalsRefresh"),
+        calendarList: document.getElementById("calendarList"),
+        calendarRefresh: document.getElementById("calendarRefresh"),
+        auditLog: document.getElementById("auditLog"),
+        auditRefresh: document.getElementById("auditRefresh"),
       };
+
+      // API key: browser sessionStorage only, sent as x-bridge-key.
+      els.apiKey.value = sessionStorage.getItem("bridgeApiKey") || "";
+      els.saveKeyBtn.addEventListener("click", () => {
+        const key = els.apiKey.value.trim();
+        if (key) sessionStorage.setItem("bridgeApiKey", key);
+        else sessionStorage.removeItem("bridgeApiKey");
+        els.saveKeyBtn.textContent = key ? "Key saved ✓" : "Key cleared";
+        setTimeout(
+          () => (els.saveKeyBtn.textContent = "Save key"),
+          1500,
+        );
+      });
+
+      function selectedPlatforms() {
+        const platforms = [];
+        if (els.pLinkedin.checked) platforms.push("linkedin");
+        if (els.pTwitter.checked) platforms.push("twitter");
+        return platforms; // empty = agent default (both)
+      }
+
+      function renderResults(results) {
+        if (!Array.isArray(results) || results.length === 0) {
+          els.resultsBox.hidden = true;
+          return;
+        }
+        els.resultsBox.innerHTML =
+          "<strong>Per-platform results</strong>" +
+          results
+            .map((r) => {
+              const cls = r.ok ? "ok" : r.attempted ? "bad" : "skip";
+              const detail = r.ok
+                ? r.urn
+                  ? r.urn
+                  : "posted"
+                : r.error || "";
+              return `<div class="result-line ${cls}"><span>${r.platform}</span><span>${
+                r.attempted ? (r.ok ? "✓" : "✗") : "— skipped"
+              }</span><code>${detail}</code></div>`;
+            })
+            .join("");
+        els.resultsBox.hidden = false;
+      }
 
       function uploadPayload(extra = {}) {
         const toOrg = els.targetSelect.value === "organization";
+        const platforms = selectedPlatforms();
         return {
           lessonId: selectedId,
           post: els.post.value,
           postToLinkedInOrganization: toOrg,
           linkedInOrganizationId: toOrg ? "107412290" : undefined,
           videoUrl: (els.videoUrl.value || "").trim() || undefined,
+          ...(platforms.length ? { platforms } : {}),
+          ...(els.requireApproval.checked ? { requireApproval: true } : {}),
           ...extra,
         };
       }
@@ -127,9 +233,13 @@
         els.uploadBtn.disabled = !els.post.value.trim() && !id;
       }
 
-      async function api(path, opts) {
+      async function api(path, opts = {}) {
+        const key = sessionStorage.getItem("bridgeApiKey");
         const res = await fetch(path, {
-          headers: { "content-type": "application/json" },
+          headers: {
+            "content-type": "application/json",
+            ...(key ? { "x-bridge-key": key } : {}),
+          },
           ...opts,
         });
         const data = await res.json().catch(() => ({}));
@@ -147,6 +257,8 @@
           const h = await api("/api/health");
           els.bridgeDot.className = "dot ok";
           els.bridgeStatus.textContent = "Bridge online";
+          els.authStatus.textContent =
+            h.auth === "api_key" ? "auth: API key" : "auth: open";
           if (h.langgraph?.ok) {
             els.lgDot.className = "dot ok";
             const target =
@@ -173,6 +285,8 @@
       async function loadLessons() {
         const data = await api("/api/lessons");
         lessons = data.lessons || [];
+        els.sourceBadge.textContent =
+          (data.source || "static") + " · " + lessons.length;
         els.list.innerHTML = "";
         for (const lesson of lessons) {
           const btn = document.createElement("button");
@@ -222,18 +336,29 @@
 
       els.uploadBtn.addEventListener("click", async () => {
         els.uploadBtn.disabled = true;
+        els.resultsBox.hidden = true;
         const toOrg = els.targetSelect.value === "organization";
+        const hold = els.requireApproval.checked;
         log(
-          toOrg
-            ? "Uploading to CrisPRO company page via LangGraph upload_post…"
-            : "Uploading to personal LinkedIn via LangGraph upload_post…",
+          hold
+            ? "Parking post for approval (HITL)…"
+            : toOrg
+              ? "Uploading to CrisPRO company page via LangGraph upload_post…"
+              : "Uploading to personal LinkedIn via LangGraph upload_post…",
         );
         try {
           const data = await api("/api/upload", {
             method: "POST",
             body: JSON.stringify(uploadPayload({ wait: true })),
           });
-          log("Upload result", data);
+          log(hold ? "Parked for approval" : "Upload result", data);
+          if (data.queued) {
+            els.meta.textContent =
+              "Parked · approval " + data.approvalId + " · dry-run approve only";
+            loadApprovals();
+            return;
+          }
+          renderResults(data.results);
           const targetLabel = data.target?.vanity || data.target?.organizationId || "linkedin";
           els.meta.textContent =
             "Uploaded · " + targetLabel + " · thread " + (data.threadId || "n/a");
@@ -243,6 +368,91 @@
           els.uploadBtn.disabled = !els.post.value.trim();
         }
       });
+
+      // --- Ops panels -----------------------------------------------------
+
+      async function loadApprovals() {
+        try {
+          const data = await api("/api/approvals");
+          const items = data.approvals || [];
+          if (!items.length) {
+            els.approvalsList.innerHTML =
+              '<p class="hint">No parked posts.</p>';
+            return;
+          }
+          els.approvalsList.innerHTML = items
+            .slice()
+            .reverse()
+            .map(
+              (a) => `<div class="queue-item ${a.status}">
+                <div><strong>${a.id}</strong> · ${a.status} · ${a.ts || ""}</div>
+                <div class="queue-post">${(a.post || "").slice(0, 160)}</div>
+                ${
+                  a.approvalReceipt
+                    ? `<div class="receipt">dry-run receipt · target ${a.approvalReceipt.target?.vanity || a.approvalReceipt.target?.organizationId || "?"} · media ${a.approvalReceipt.media?.videoUrl || "none"}</div>`
+                    : a.status === "pending"
+                      ? `<div class="receipt actions"><button class="ghost small" data-approve="${a.id}" type="button">Approve (dry-run)</button><button class="ghost small" data-reject="${a.id}" type="button">Reject</button></div>`
+                      : ""
+                }
+              </div>`,
+            )
+            .join("");
+          for (const btn of els.approvalsList.querySelectorAll("[data-approve]")) {
+            btn.addEventListener("click", () => resolveApproval(btn.dataset.approve, "approve"));
+          }
+          for (const btn of els.approvalsList.querySelectorAll("[data-reject]")) {
+            btn.addEventListener("click", () => resolveApproval(btn.dataset.reject, "reject"));
+          }
+        } catch (e) {
+          els.approvalsList.innerHTML = `<p class="hint">Failed to load approvals: ${e.message}</p>`;
+        }
+      }
+
+      async function resolveApproval(id, action) {
+        try {
+          const data = await api(`/api/approvals/${id}/${action}`, { method: "POST" });
+          log(`Approval ${id} → ${action}`, data);
+          loadApprovals();
+        } catch (e) {
+          log(`Approval ${action} failed`, e.data || { message: e.message });
+        }
+      }
+
+      async function loadCalendar() {
+        try {
+          const data = await api("/api/calendar");
+          els.calendarList.innerHTML = (data.items || [])
+            .map(
+              (i) => `<div class="queue-item scheduled">
+                <div><strong>${i.date}</strong> · ${i.platform} · score ${i.score}</div>
+                <div class="queue-post">${i.title} <small>(${i.lessonId})</small></div>
+              </div>`,
+            )
+            .join("") || '<p class="hint">No ranked items.</p>';
+        } catch (e) {
+          els.calendarList.innerHTML = `<p class="hint">Failed to load calendar: ${e.message}</p>`;
+        }
+      }
+
+      async function loadAudit() {
+        try {
+          const data = await api("/api/audit");
+          const events = data.events || [];
+          els.auditLog.textContent = events.length
+            ? events
+                .slice()
+                .reverse()
+                .map((e) => `${e.ts} ${e.evt} ${e.rid || ""} ${e.path || e.approvalId || ""}`)
+                .join("\n")
+            : "No events yet.";
+        } catch (e) {
+          els.auditLog.textContent = "Failed to load audit: " + e.message;
+        }
+      }
+
+      els.approvalsRefresh.addEventListener("click", loadApprovals);
+      els.calendarRefresh.addEventListener("click", loadCalendar);
+      els.auditRefresh.addEventListener("click", loadAudit);
 
       els.post.addEventListener("input", () => {
         const has = !!els.post.value.trim();
@@ -256,6 +466,9 @@
       (async () => {
         await refreshHealth();
         await loadLessons();
+        loadApprovals();
+        loadCalendar();
+        loadAudit();
       })();
     </script>
   </body>

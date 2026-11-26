@@ -1,0 +1,59 @@
+[
+  {
+    "id": "f9fce3bf",
+    "ts": "2026-11-26T06:54:09.526Z",
+    "rid": "aa76263e6a55",
+    "status": "approved",
+    "post": "hitl smoke post",
+    "platforms": [
+      "linkedin"
+    ],
+    "target": {
+      "organization": true,
+      "organizationId": "107412290"
+    },
+    "media": {
+      "videoUrl": null,
+      "imageUrl": null
+    },
+    "resolvedAt": "2026-11-26T06:54:09.672Z",
+    "approvalReceipt": {
+      "mode": "dry_run",
+      "post": "hitl smoke post",
+      "platforms": [
+        "linkedin"
+      ],
+      "target": {
+        "organization": true,
+        "organizationId": "107412290",
+        "vanity": "crispro",
+        "name": "CrisPRO.ai"
+      },
+      "media": {
+        "videoUrl": null,
+        "imageUrl": null
+      },
+      "note": "Dry-run receipt. To publish, re-POST /api/upload with this approvalId and requireApproval omitted — an upstream decision."
+    }
+  },
+  {
+    "id": "5c19162d",
+    "ts": "2026-11-26T06:54:09.708Z",
+    "rid": "cd29434061a8",
+    "status": "rejected",
+    "post": "hitl reject",
+    "platforms": [
+      "linkedin",
+      "twitter"
+    ],
+    "target": {
+      "organization": true,
+      "organizationId": "107412290"
+    },
+    "media": {
+      "videoUrl": null,
+      "imageUrl": null
+    },
+    "resolvedAt": "2026-11-26T06:54:09.817Z"
+  }
+]

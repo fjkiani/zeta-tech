@@ -116,4 +116,22 @@ echo "PASS /api/calendar (deterministic, 14-day, ranked)"
 tail -1 data/audit.log | grep -q '"evt"' || fail "audit log events"
 echo "PASS audit trail (data/audit.log events appended)"
 
+# 11. audit viewer endpoint
+AUDIT=$(curl -sf "$BASE/api/audit?limit=50")
+jgrep "$AUDIT" '"events":\[' || fail "audit endpoint events array"
+node -e "const a=JSON.parse(process.argv[1]); if(!a.total) process.exit(1); if(a.events.length>a.total) process.exit(1)" "$AUDIT" \
+  || fail "audit endpoint counts"
+echo "PASS /api/audit (tail of data/audit.log)"
+
+# 12. console FE serves the ops panels (approvals, calendar, audit, key, results)
+HTML=$(curl -sf "$BASE/")
+for id in approvalsPanel calendarPanel auditPanel apiKey resultsBox pLinkedin requireApproval sourceBadge; do
+  echo "$HTML" | grep -q "id=\"$id\"" || fail "console HTML missing id=$id"
+done
+node -e "const h=require('fs').writeFileSync; void h; const s=process.argv[1]; new (class{constructor(){}});
+// crude syntax gate: the inline script must parse as a script element body
+const m=s.match(/<script>([\s\S]*)<\/script>/); if(!m) process.exit(1); new Function(m[1].replace(/await /g,'')) " "$HTML" \
+  || fail "console inline script does not parse"
+echo "PASS console FE (ops panels + key entry + results box present, script parses)"
+
 echo "ALL BRIDGE SMOKE TESTS PASSED"
