@@ -9,7 +9,7 @@ BASE="http://127.0.0.1:${PORT_TEST}"
 export BRIDGE_API_KEY=smoke-test-key
 
 # deterministic start: clear prior approval-queue state from earlier runs
-rm -f data/approvals.json
+rm -f data/approvals.json data/scheduled.json
 
 node --check server.js
 node --check lib/hygraph.js
@@ -57,15 +57,27 @@ DRAFT=$(curl -sf -X POST "$BASE/api/draft" -H 'content-type: application/json' \
 jgrep "$DRAFT" '"chars"' || fail "draft chars"
 echo "PASS /api/draft"
 
-# 5. dry-run upload: CrisPRO defaults + platforms passthrough + per-platform contract
+# 5. dry-run upload: CrisPRO defaults + platforms passthrough + HARD results[] assert
 DRY=$(curl -sf -X POST "$BASE/api/upload" -H 'content-type: application/json' \
   -d '{"post":"smoke test post","dryRun":true,"platforms":["linkedin","twitter"]}') \
   || fail "dry-run unreachable"
 jgrep "$DRY" '"dryRun":true' || fail "dryRun true"
 jgrep "$DRY" '"organizationId":"107412290"' || fail "CrisPRO org default"
 jgrep "$DRY" '"platforms":\["linkedin","twitter"\]' || fail "platforms passthrough"
-jgrep "$DRY" '"resultContract"' || fail "per-platform results contract documented"
-echo "PASS /api/upload dryRun (org=107412290, platforms echo, Track-A result contract)"
+# HARD ASSERT: results[] present, each item exactly the upload_post shape.
+node -e '
+const d = JSON.parse(process.argv[1]);
+if (!Array.isArray(d.results) || d.results.length === 0) throw new Error("results[] missing/empty");
+for (const r of d.results) {
+  if (typeof r.platform !== "string" || !r.platform) throw new Error("platform not string");
+  if (typeof r.attempted !== "boolean") throw new Error("attempted not boolean");
+  if (typeof r.ok !== "boolean") throw new Error("ok not boolean");
+  if (r.urn !== undefined && typeof r.urn !== "string") throw new Error("urn not string|undefined");
+  if (r.error !== undefined && typeof r.error !== "string") throw new Error("error not string|undefined");
+}
+console.log("results[] typed OK:", d.results.map(r => r.platform + "/att=" + r.attempted + "/ok=" + r.ok).join(" "));
+' "$DRY" || fail "results[] hard assert"
+echo "PASS /api/upload dryRun (org=107412290, platforms echo, HARD results[] type assert)"
 
 # 6. fail-closed media HEAD check: non-video URL → 400
 CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$BASE/api/upload" \
@@ -100,9 +112,48 @@ REJ=$(curl -sf -X POST "$BASE/api/upload" -H 'content-type: application/json' \
 RID2=$(node -e "console.log(JSON.parse(process.argv[1]).approvalId)" "$REJ")
 REJECTED=$(curl -sf -X POST "$BASE/api/approvals/$RID2/reject" -H "x-bridge-key: smoke-test-key")
 jgrep "$REJECTED" '"status":"rejected"' || fail "reject status"
+# 8b. publish-on-approve WITHOUT LIVE=1 must still be DRY-RUN (P1-6 default-off gate)
+Q3=$(curl -sf -X POST "$BASE/api/upload" -H 'content-type: application/json' \
+  -H "x-bridge-key: smoke-test-key" \
+  -d '{"post":"publish-on-approve smoke","requireApproval":true,"publishOnApprove":true}')
+AID3=$(node -e "console.log(JSON.parse(process.argv[1]).approvalId)" "$Q3")
+APPROVE3=$(curl -sf -X POST "$BASE/api/approvals/$AID3/approve" -H "x-bridge-key: smoke-test-key")
+jgrep "$APPROVE3" '"mode":"dry_run"' || fail "approve with publishOnApprove but no LIVE=1 must stay dry-run"
+jgrep "$APPROVE3" '"status":"approved"' || fail "approve3 status"
 APPROVALS=$(curl -sf "$BASE/api/approvals")
-jgrep "$APPROVALS" '"count":2' || fail "approvals list count=2"
-echo "PASS HITL queue (park → approve=dry-run → reject → list)"
+echo "$APPROVALS" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const a=JSON.parse(d);if(a.count!==3) process.exit(1)})" \
+  || fail "approvals list count=3"
+echo "PASS HITL queue (park → approve=dry-run → reject → list; publishOnApprove WITHOUT LIVE=1 stays dry-run)"
+
+# 8c. scheduler: park future → listed; past → 400; cancel works (P1-3)
+FUTURE=$(node -e "console.log(new Date(Date.now()+3600e3).toISOString())")
+SCH=$(curl -sf -X POST "$BASE/api/schedule" -H 'content-type: application/json' \
+  -H "x-bridge-key: smoke-test-key" \
+  -d "{\"post\":\"scheduled smoke post\",\"scheduledFor\":\"$FUTURE\",\"platforms\":[\"linkedin\"]}")
+jgrep "$SCH" '"status":"scheduled"' || fail "schedule parked"
+SID=$(node -e "console.log(JSON.parse(process.argv[1]).scheduleId)" "$SCH")
+SCHEDLIST=$(curl -sf "$BASE/api/schedule")
+jgrep "$SCHEDLIST" '"autoPost":false' || fail "scheduler autoPost=false documented"
+jgrep "$SCHEDLIST" "\"id\":\"$SID\"" || fail "scheduled item listed"
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$BASE/api/schedule" \
+  -H 'content-type: application/json' -H "x-bridge-key: smoke-test-key" \
+  -d "{\"post\":\"past\",\"scheduledFor\":\"2020-01-01T00:00:00Z\"}")
+[ "$CODE" = "400" ] || fail "past scheduledFor must 400, got $CODE"
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$BASE/api/schedule" \
+  -H 'content-type: application/json' \
+  -d "{\"post\":\"no key\",\"scheduledFor\":\"$FUTURE\"}")
+[ "$CODE" = "401" ] || fail "schedule without key must 401, got $CODE"
+CANCEL=$(curl -sf -X POST "$BASE/api/schedule/$SID/cancel" -H "x-bridge-key: smoke-test-key")
+jgrep "$CANCEL" '"status":"cancelled"' || fail "schedule cancel"
+echo "PASS /api/schedule (park future → list, autoPost:false, past→400, no-key→401, cancel)"
+
+# 8d. media check endpoint (P1-4 backend)
+MC_OK=$(curl -sf "$BASE/api/media-check?url=https%3A%2F%2Fus-west-2.graphassets.com%2Fcm65gc2pl00vr08gs2em34vmw%2Fcmkrjbuftdycb07lpstjklcss")
+jgrep "$MC_OK" '"ok":true' || fail "media-check ok for real mp4"
+jgrep "$MC_OK" 'video/mp4' || fail "media-check content-type"
+MC_BAD=$(curl -s -o /dev/null -w '%{http_code}' "$BASE/api/media-check?url=https%3A%2F%2Fexample.com%2Fnot-a-video")
+[ "$MC_BAD" = "400" ] || fail "media-check must 400 on non-video, got $MC_BAD"
+echo "PASS /api/media-check (live mp4 → ok video/mp4; non-video → 400)"
 
 # 9. deterministic calendar (Track D)
 CAL=$(curl -sf "$BASE/api/calendar?source=static")
@@ -111,6 +162,19 @@ jgrep "$CAL" '"horizonDays":14' || fail "calendar horizon"
 node -e "const c=JSON.parse(process.argv[1]); if(!c.items.length) process.exit(1); c.items.forEach(i=>{if(!['linkedin','twitter'].includes(i.platform)) process.exit(1)})" "$CAL" \
   || fail "calendar items platforms"
 echo "PASS /api/calendar (deterministic, 14-day, ranked)"
+
+# 9b. GTM suggest stub (P2-9): prompts present, no LLM called, hard type check
+SUG=$(curl -sf "$BASE/api/calendar/suggest?source=static")
+jgrep "$SUG" '"llm":"not' || fail "suggest llm not called"
+node -e "
+const s = JSON.parse(process.argv[1]);
+const sug = s.suggestion || {};
+if (typeof sug.systemPrompt !== 'string' || !sug.systemPrompt.length) process.exit(1);
+if (typeof sug.userPrompt !== 'string' || !sug.userPrompt.length) process.exit(1);
+if (!Array.isArray(s.items) || !s.items.length) process.exit(1);
+if (typeof s.deterministic !== 'boolean' || !s.deterministic) process.exit(1);
+" "$SUG" || fail "suggest prompts/types"
+echo "PASS /api/calendar/suggest (GTM prompts stub, llm=not called, types OK)"
 
 # 10. audit trail rows grew
 tail -1 data/audit.log | grep -q '"evt"' || fail "audit log events"
@@ -125,7 +189,7 @@ echo "PASS /api/audit (tail of data/audit.log)"
 
 # 12. console FE serves the ops panels (approvals, calendar, audit, key, results)
 HTML=$(curl -sf "$BASE/")
-for id in approvalsPanel calendarPanel auditPanel apiKey resultsBox pLinkedin requireApproval sourceBadge; do
+for id in approvalsPanel calendarPanel auditPanel scheduledPanel apiKey resultsBox pLinkedin requireApproval publishOnApprove mediaPreview scheduleAt sourceBadge; do
   echo "$HTML" | grep -q "id=\"$id\"" || fail "console HTML missing id=$id"
 done
 node -e "const h=require('fs').writeFileSync; void h; const s=process.argv[1]; new (class{constructor(){}});

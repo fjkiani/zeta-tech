@@ -1,47 +1,10 @@
 [
   {
-    "id": "f9fce3bf",
-    "ts": "2026-11-26T06:54:09.526Z",
-    "rid": "aa76263e6a55",
-    "status": "approved",
-    "post": "hitl smoke post",
-    "platforms": [
-      "linkedin"
-    ],
-    "target": {
-      "organization": true,
-      "organizationId": "107412290"
-    },
-    "media": {
-      "videoUrl": null,
-      "imageUrl": null
-    },
-    "resolvedAt": "2026-11-26T06:54:09.672Z",
-    "approvalReceipt": {
-      "mode": "dry_run",
-      "post": "hitl smoke post",
-      "platforms": [
-        "linkedin"
-      ],
-      "target": {
-        "organization": true,
-        "organizationId": "107412290",
-        "vanity": "crispro",
-        "name": "CrisPRO.ai"
-      },
-      "media": {
-        "videoUrl": null,
-        "imageUrl": null
-      },
-      "note": "Dry-run receipt. To publish, re-POST /api/upload with this approvalId and requireApproval omitted — an upstream decision."
-    }
-  },
-  {
-    "id": "5c19162d",
-    "ts": "2026-11-26T06:54:09.708Z",
-    "rid": "cd29434061a8",
-    "status": "rejected",
-    "post": "hitl reject",
+    "id": "e06b05c4",
+    "ts": "2026-11-26T07:36:38.458Z",
+    "rid": "d57bb56c4c1f",
+    "status": "pending",
+    "post": "From today's Zeta Tech session: Ai For Python 0Ok8Iy\n\n…\n\nBuilt with NotebookLM artifacts → social agent bridge.\n\n(2026-11-26 07:36)",
     "platforms": [
       "linkedin",
       "twitter"
@@ -54,6 +17,26 @@
       "videoUrl": null,
       "imageUrl": null
     },
-    "resolvedAt": "2026-11-26T06:54:09.817Z"
+    "publishOnApprove": false
+  },
+  {
+    "id": "490af8f1",
+    "ts": "2026-11-26T07:36:38.462Z",
+    "rid": "e6dfaeb688a3",
+    "status": "pending",
+    "post": "From today's Zeta Tech session: Blueprint Ai\n\n# Blueprint Ai Okay. So, so yeah, like the humans like someone the humans need to ex like be in the place because they need to watch all of these technologies, you know, like the technologies need human supervision. But it's we're going to see a point where only only humans who understand and can supervise these technologies will have maybe jobs that exist. 00:29 uh humans who who who don't who who just don't have th…\n\nBuilt with NotebookLM artifacts → social agent bridge.\n\n(2026-11-26 07:36)",
+    "platforms": [
+      "linkedin",
+      "twitter"
+    ],
+    "target": {
+      "organization": true,
+      "organizationId": "107412290"
+    },
+    "media": {
+      "videoUrl": null,
+      "imageUrl": null
+    },
+    "publishOnApprove": true
   }
 ]

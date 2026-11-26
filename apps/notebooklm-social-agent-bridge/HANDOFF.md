@@ -59,11 +59,16 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 | `GET` | `/api/lessons/:id` | Lesson + optional `transcript` / `context` file contents |
 | `GET` | `/api/approvals` | HITL queue (`data/approvals.json`) |
 | `GET` | `/api/calendar?source=` | Deterministic 2-week ranked post calendar (GTM Strategist v0; no LLM) |
+| `GET` | `/api/calendar/suggest?source=` | GTM suggest stub (P2-9): calendar + system/user prompts for a future GTM LLM agent. `llm:"not called"` — no LLM call, deterministic |
 | `GET` | `/api/audit?limit=50` | Read-only tail of `data/audit.log` for the console audit viewer |
 | `POST` | `/api/draft` | `{ lessonId, platform? }` → `{ post, chars, rid }` |
 | `POST` | `/api/upload` | Drafts if needed, then `upload_post` (or `dryRun`, or `requireApproval` parking). Auth-gated except dry-run. Fail-closed media HEAD check; `platforms` allowlist passthrough; per-platform `results` array in response |
-| `POST` | `/api/approvals/:id/approve` | **Dry-run receipt only** — never posts live. Auth-gated |
+| `POST` | `/api/approvals/:id/approve` | **Dry-run receipt only — does NOT live-publish.** Phase-1 default. Live publish requires BOTH `LIVE=1` env AND the post's `publishOnApprove:true` (both default off). Reject path: `POST .../reject`. Auth-gated |
 | `POST` | `/api/approvals/:id/reject` | Mark rejected. Auth-gated |
+| `POST` | `/api/schedule` | Park a post for a future ISO time (`scheduledFor` must be future). Auth-gated. **Scheduler never auto-posts** — due items flip to `status:"due"` and release via Approvals |
+| `GET` | `/api/schedule` | Scheduled items (`autoPost:false` documented in response) |
+| `POST` | `/api/schedule/:id/cancel` | Cancel a scheduled/due item. Auth-gated |
+| `GET` | `/api/media-check?url=` | HEAD/ranged check of a video/image URL (`ok`, `contentType`); 400 on non-media |
 
 ### `POST /api/upload` body (as implemented in `server.js`)
 

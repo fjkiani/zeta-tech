@@ -68,6 +68,20 @@
               placeholder="https://…/lesson.mp4 — NotebookLM video or hosted file"
             />
           </label>
+          <div class="media-preview" id="mediaPreview" hidden></div>
+          <div class="field-row">
+            <span class="field-inline">
+              <input type="checkbox" id="publishOnApprove" />
+              Publish on approve <small>(needs LIVE=1; default dry-run)</small>
+            </span>
+          </div>
+          <div class="field">
+            <span>Schedule for later (optional)</span>
+            <div class="schedule-row">
+              <input id="scheduleAt" type="datetime-local" />
+              <button class="ghost" id="scheduleBtn" type="button" disabled>Schedule</button>
+            </div>
+          </div>
           <textarea
             id="postText"
             placeholder="Draft appears here…"
@@ -93,11 +107,21 @@
       </main>
 
       <section class="layout ops">
+        <section class="panel" id="scheduledPanel">
+          <h2>Scheduled <button class="ghost small" id="scheduledRefresh" type="button">Refresh</button></h2>
+          <p class="hint">
+            The scheduler <strong>never posts by itself</strong>: due items flip
+            to <code>due</code> and release through Approvals.
+          </p>
+          <div class="queue" id="scheduledList"></div>
+        </section>
+
         <section class="panel" id="approvalsPanel">
           <h2>Approvals <button class="ghost small" id="approvalsRefresh" type="button">Refresh</button></h2>
           <p class="hint">
             Posts parked with “Hold for approval”. Approve returns a
-            <strong>dry-run receipt only</strong> — the bridge never posts live.
+            <strong>dry-run receipt only</strong> (Phase-1: does NOT live-publish
+            unless LIVE=1 and the post opted into publish-on-approve).
           </p>
           <div class="queue" id="approvalsList"></div>
         </section>
@@ -142,6 +166,12 @@
         pTwitter: document.getElementById("pTwitter"),
         requireApproval: document.getElementById("requireApproval"),
         resultsBox: document.getElementById("resultsBox"),
+        mediaPreview: document.getElementById("mediaPreview"),
+        publishOnApprove: document.getElementById("publishOnApprove"),
+        scheduleAt: document.getElementById("scheduleAt"),
+        scheduleBtn: document.getElementById("scheduleBtn"),
+        scheduledList: document.getElementById("scheduledList"),
+        scheduledRefresh: document.getElementById("scheduledRefresh"),
         approvalsList: document.getElementById("approvalsList"),
         approvalsRefresh: document.getElementById("approvalsRefresh"),
         calendarList: document.getElementById("calendarList"),
@@ -204,9 +234,48 @@
           videoUrl: (els.videoUrl.value || "").trim() || undefined,
           ...(platforms.length ? { platforms } : {}),
           ...(els.requireApproval.checked ? { requireApproval: true } : {}),
+          ...(els.requireApproval.checked && els.publishOnApprove.checked
+            ? { publishOnApprove: true }
+            : {}),
           ...extra,
         };
       }
+
+      // Media preview: server-side HEAD check (browser can't HEAD cross-origin),
+      // then inline player/thumbnail or an explicit fail state.
+      let mediaCheckTimer = null;
+      async function refreshMediaPreview() {
+        const mediaUrl = (els.videoUrl.value || "").trim();
+        if (!mediaUrl) {
+          els.mediaPreview.hidden = true;
+          els.mediaPreview.innerHTML = "";
+          return;
+        }
+        els.mediaPreview.hidden = false;
+        els.mediaPreview.innerHTML = '<span class="hint">Checking media…</span>';
+        try {
+          const info = await api("/api/media-check?url=" + encodeURIComponent(mediaUrl));
+          if ((info.contentType || "").startsWith("video/")) {
+            els.mediaPreview.innerHTML =
+              `<div class="preview-ok">✓ video · ${info.contentType}</div>` +
+              `<video src="${mediaUrl}" controls preload="metadata"></video>`;
+          } else if ((info.contentType || "").startsWith("image/")) {
+            els.mediaPreview.innerHTML =
+              `<div class="preview-ok">✓ image · ${info.contentType}</div>` +
+              `<img src="${mediaUrl}" alt="media preview" />`;
+          } else {
+            els.mediaPreview.innerHTML =
+              '<div class="preview-fail">✗ unexpected content-type</div>';
+          }
+        } catch (e) {
+          els.mediaPreview.innerHTML =
+            `<div class="preview-fail">✗ ${e.data?.error || "media_rejected"} — ${e.message}</div>`;
+        }
+      }
+      els.videoUrl.addEventListener("input", () => {
+        clearTimeout(mediaCheckTimer);
+        mediaCheckTimer = setTimeout(refreshMediaPreview, 600);
+      });
 
       let selectedId = null;
       let lessons = [];
@@ -371,6 +440,69 @@
 
       // --- Ops panels -----------------------------------------------------
 
+      // Schedule: pick a future time; the item parks server-side and flips to
+      // "due" at the scheduled time (releases via Approvals — never auto-posts).
+      els.scheduleAt.addEventListener("input", () => {
+        els.scheduleBtn.disabled = !els.scheduleAt.value || (!selectedId && !els.post.value.trim());
+      });
+      els.scheduleBtn.addEventListener("click", async () => {
+        els.scheduleBtn.disabled = true;
+        try {
+          const data = await api("/api/schedule", {
+            method: "POST",
+            body: JSON.stringify(
+              uploadPayload({
+                scheduledFor: new Date(els.scheduleAt.value).toISOString(),
+              }),
+            ),
+          });
+          log("Scheduled", data);
+          loadScheduled();
+        } catch (e) {
+          log("Schedule failed", e.data || { message: e.message });
+        } finally {
+          els.scheduleBtn.disabled = !els.scheduleAt.value;
+        }
+      });
+
+      async function loadScheduled() {
+        try {
+          const data = await api("/api/schedule");
+          const items = data.items || [];
+          els.scheduledList.innerHTML = !items.length
+            ? '<p class="hint">Nothing scheduled.</p>'
+            : items
+                .slice()
+                .reverse()
+                .map(
+                  (s) => `<div class="queue-item ${s.status}">
+                    <div><strong>${s.id}</strong> · ${s.status} · for ${s.scheduledFor} · ${(s.platforms || []).join("+")}</div>
+                    <div class="queue-post">${(s.post || "").slice(0, 140)}</div>
+                    ${
+                      s.status === "scheduled"
+                        ? `<div class="receipt actions"><button class="ghost small" data-cancel="${s.id}" type="button">Cancel</button></div>`
+                        : ""
+                    }
+                  </div>`,
+                )
+                .join("");
+          for (const btn of els.scheduledList.querySelectorAll("[data-cancel]")) {
+            btn.addEventListener("click", async () => {
+              try {
+                const res = await api(`/api/schedule/${btn.dataset.cancel}/cancel`, { method: "POST" });
+                log(`Schedule ${btn.dataset.cancel} cancelled`, res);
+                loadScheduled();
+              } catch (e) {
+                log("Cancel failed", e.data || { message: e.message });
+              }
+            });
+          }
+        } catch (e) {
+          els.scheduledList.innerHTML = `<p class="hint">Failed to load schedule: ${e.message}</p>`;
+        }
+      }
+      els.scheduledRefresh.addEventListener("click", loadScheduled);
+
       async function loadApprovals() {
         try {
           const data = await api("/api/approvals");
@@ -391,7 +523,7 @@
                   a.approvalReceipt
                     ? `<div class="receipt">dry-run receipt · target ${a.approvalReceipt.target?.vanity || a.approvalReceipt.target?.organizationId || "?"} · media ${a.approvalReceipt.media?.videoUrl || "none"}</div>`
                     : a.status === "pending"
-                      ? `<div class="receipt actions"><button class="ghost small" data-approve="${a.id}" type="button">Approve (dry-run)</button><button class="ghost small" data-reject="${a.id}" type="button">Reject</button></div>`
+                      ? `<div class="receipt">publish-on-approve: ${a.publishOnApprove ? "ON (live only if server LIVE=1)" : "off (dry-run)"}</div><div class="receipt actions"><button class="ghost small" data-approve="${a.id}" type="button">Approve (dry-run)</button><button class="ghost small" data-reject="${a.id}" type="button">Reject</button></div>`
                       : ""
                 }
               </div>`,
@@ -469,6 +601,7 @@
         loadApprovals();
         loadCalendar();
         loadAudit();
+        loadScheduled();
       })();
     </script>
   </body>

@@ -43,3 +43,52 @@
 {"ts":"2026-11-26T06:54:09.672Z","evt":"approval_granted_dry_run","rid":"9626a6433ca3","approvalId":"f9fce3bf"}
 {"ts":"2026-11-26T06:54:09.708Z","evt":"upload_queued_approval","rid":"cd29434061a8","approvalId":"5c19162d"}
 {"ts":"2026-11-26T06:54:09.818Z","evt":"approval_rejected","rid":"265b45930116","approvalId":"5c19162d"}
+{"ts":"2026-11-26T07:33:02.666Z","evt":"upload_rejected_media","rid":"34f368460649","videoUrl":"https://example.com/not-a-video","error":"Media URL is not video/image (content-type: text/html; charset=utf-8). If this is intentional, pass skipMediaHeadCheck: true."}
+{"ts":"2026-11-26T07:33:02.683Z","evt":"upload_rejected_auth","rid":"ed38593ea642"}
+{"ts":"2026-11-26T07:33:02.717Z","evt":"upload_queued_approval","rid":"b0a5e1fb4e52","approvalId":"63c01b3d"}
+{"ts":"2026-11-26T07:33:02.858Z","evt":"approval_granted_dry_run","rid":"4db5d52b8dec","approvalId":"63c01b3d"}
+{"ts":"2026-11-26T07:33:02.891Z","evt":"upload_queued_approval","rid":"b8fea5078c0f","approvalId":"778e7c25"}
+{"ts":"2026-11-26T07:33:02.989Z","evt":"approval_rejected","rid":"2fb698516963","approvalId":"778e7c25"}
+{"ts":"2026-11-26T07:33:03.013Z","evt":"upload_queued_approval","rid":"7b45b523a212","approvalId":"da544003"}
+{"ts":"2026-11-26T07:33:03.111Z","evt":"approval_granted_dry_run","rid":"8a1d08bef900","approvalId":"da544003"}
+{"ts":"2026-11-26T07:33:03.348Z","evt":"schedule_created","rid":"76bd810ece9c","scheduleId":"4779859b","scheduledFor":"2026-11-26T08:33:03.319Z"}
+{"ts":"2026-11-26T07:33:03.521Z","evt":"schedule_cancelled","rid":"4927e2f6da05","scheduleId":"4779859b"}
+{"ts":"2026-11-26T07:34:09.759Z","evt":"upload_rejected_media","rid":"082a46ba3a0c","videoUrl":"https://example.com/not-a-video","error":"Media URL is not video/image (content-type: text/html; charset=utf-8). If this is intentional, pass skipMediaHeadCheck: true."}
+{"ts":"2026-11-26T07:34:09.778Z","evt":"upload_rejected_auth","rid":"391ecf025f72"}
+{"ts":"2026-11-26T07:34:09.812Z","evt":"upload_queued_approval","rid":"dc3ed4edcebf","approvalId":"41a0743e"}
+{"ts":"2026-11-26T07:34:09.954Z","evt":"approval_granted_dry_run","rid":"897aeb4e0219","approvalId":"41a0743e"}
+{"ts":"2026-11-26T07:34:09.988Z","evt":"upload_queued_approval","rid":"554beb635f1f","approvalId":"9f9e22f1"}
+{"ts":"2026-11-26T07:34:10.089Z","evt":"approval_rejected","rid":"1cc85ba45671","approvalId":"9f9e22f1"}
+{"ts":"2026-11-26T07:34:10.112Z","evt":"upload_queued_approval","rid":"251518dc701d","approvalId":"9175b3da"}
+{"ts":"2026-11-26T07:34:10.219Z","evt":"approval_granted_dry_run","rid":"27685a24a5c5","approvalId":"9175b3da"}
+{"ts":"2026-11-26T07:34:10.439Z","evt":"schedule_created","rid":"fe6a0b1b0a79","scheduleId":"731fbffa","scheduledFor":"2026-11-26T08:34:10.411Z"}
+{"ts":"2026-11-26T07:34:10.605Z","evt":"schedule_cancelled","rid":"0913ac91d0ce","scheduleId":"731fbffa"}
+{"ts":"2026-11-26T07:34:17.062Z","evt":"upload_rejected_media","rid":"d86d189a741c","videoUrl":"https://example.com/not-a-video","error":"Media URL is not video/image (content-type: text/html; charset=utf-8). If this is intentional, pass skipMediaHeadCheck: true."}
+{"ts":"2026-11-26T07:34:17.081Z","evt":"upload_rejected_auth","rid":"62b6c675b599"}
+{"ts":"2026-11-26T07:34:17.113Z","evt":"upload_queued_approval","rid":"494689f0318e","approvalId":"8927636b"}
+{"ts":"2026-11-26T07:34:17.248Z","evt":"approval_granted_dry_run","rid":"eec80928dab7","approvalId":"8927636b"}
+{"ts":"2026-11-26T07:34:17.281Z","evt":"upload_queued_approval","rid":"51cb8841ac69","approvalId":"f297be32"}
+{"ts":"2026-11-26T07:34:17.385Z","evt":"approval_rejected","rid":"2bb7b49b49c3","approvalId":"f297be32"}
+{"ts":"2026-11-26T07:34:17.409Z","evt":"upload_queued_approval","rid":"9ff8d859fd75","approvalId":"049a3a78"}
+{"ts":"2026-11-26T07:34:17.511Z","evt":"approval_granted_dry_run","rid":"acbd4bcc48c3","approvalId":"049a3a78"}
+{"ts":"2026-11-26T07:34:17.728Z","evt":"schedule_created","rid":"19f48c6031b2","scheduleId":"17201533","scheduledFor":"2026-11-26T08:34:17.699Z"}
+{"ts":"2026-11-26T07:34:17.897Z","evt":"schedule_cancelled","rid":"d8bb2ee4b7bf","scheduleId":"17201533"}
+{"ts":"2026-11-26T07:34:24.089Z","evt":"upload_rejected_media","rid":"e47c9d4ff97d","videoUrl":"https://example.com/not-a-video","error":"Media URL is not video/image (content-type: text/html; charset=utf-8). If this is intentional, pass skipMediaHeadCheck: true."}
+{"ts":"2026-11-26T07:34:24.107Z","evt":"upload_rejected_auth","rid":"9b31d3e60620"}
+{"ts":"2026-11-26T07:34:24.141Z","evt":"upload_queued_approval","rid":"8c490567a0d7","approvalId":"8621e458"}
+{"ts":"2026-11-26T07:34:24.273Z","evt":"approval_granted_dry_run","rid":"89d6fc327632","approvalId":"8621e458"}
+{"ts":"2026-11-26T07:34:24.306Z","evt":"upload_queued_approval","rid":"6556570d3a55","approvalId":"1a4aa482"}
+{"ts":"2026-11-26T07:34:24.401Z","evt":"approval_rejected","rid":"04c0d87e1127","approvalId":"1a4aa482"}
+{"ts":"2026-11-26T07:34:24.424Z","evt":"upload_queued_approval","rid":"1f849de8668a","approvalId":"c74a9786"}
+{"ts":"2026-11-26T07:34:24.525Z","evt":"approval_granted_dry_run","rid":"cff68da7ce3d","approvalId":"c74a9786"}
+{"ts":"2026-11-26T07:34:24.757Z","evt":"schedule_created","rid":"1801b26d41a3","scheduleId":"5a863f61","scheduledFor":"2026-11-26T08:34:24.726Z"}
+{"ts":"2026-11-26T07:34:24.932Z","evt":"schedule_cancelled","rid":"f3616e5f2437","scheduleId":"5a863f61"}
+{"ts":"2026-11-26T07:35:33.929Z","evt":"upload_queued_approval","rid":"6826e51a3a7b","approvalId":"b960506d"}
+{"ts":"2026-11-26T07:35:33.933Z","evt":"upload_queued_approval","rid":"04f92f579c03","approvalId":"999fbf17"}
+{"ts":"2026-11-26T07:35:33.936Z","evt":"schedule_created","rid":"b0b6128fc9f7","scheduleId":"7124dece","scheduledFor":"2026-11-29T07:35:33.934Z"}
+{"ts":"2026-11-26T07:35:48.674Z","evt":"upload_queued_approval","rid":"db1751ea9a54","approvalId":"9b81a319"}
+{"ts":"2026-11-26T07:35:48.678Z","evt":"upload_queued_approval","rid":"7cebe29e3bc5","approvalId":"00839fd3"}
+{"ts":"2026-11-26T07:35:48.681Z","evt":"schedule_created","rid":"13dd6ed38773","scheduleId":"9f672cb3","scheduledFor":"2026-11-29T07:35:48.679Z"}
+{"ts":"2026-11-26T07:36:38.459Z","evt":"upload_queued_approval","rid":"d57bb56c4c1f","approvalId":"e06b05c4"}
+{"ts":"2026-11-26T07:36:38.462Z","evt":"upload_queued_approval","rid":"e6dfaeb688a3","approvalId":"490af8f1"}
+{"ts":"2026-11-26T07:36:38.466Z","evt":"schedule_created","rid":"f90fe85c2985","scheduleId":"248a01fd","scheduledFor":"2026-11-29T07:36:38.463Z"}

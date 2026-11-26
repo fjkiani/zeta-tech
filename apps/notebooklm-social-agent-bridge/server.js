@@ -13,6 +13,7 @@ import {
   fetchHygraphLessons,
   isHygraphConfigured,
 } from "./lib/hygraph.js";
+import { buildSuggestion } from "./lib/gtm-prompts.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 4317);
@@ -20,6 +21,7 @@ const DATA_DIR = path.join(__dirname, "data");
 const PUBLIC_DIR = path.join(__dirname, "public");
 const AUDIT_LOG = path.join(DATA_DIR, "audit.log");
 const APPROVALS_FILE = path.join(DATA_DIR, "approvals.json");
+const SCHEDULED_FILE = path.join(DATA_DIR, "scheduled.json");
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -210,6 +212,40 @@ function writeApprovals(list) {
 }
 
 // ---------------------------------------------------------------------------
+// Scheduled posts (console product completeness). File-backed. The scheduler
+// NEVER posts by itself: due items flip to status:"due" and are released
+// through the approvals flow (approve = dry-run unless LIVE=1 + publishOnApprove).
+// ---------------------------------------------------------------------------
+
+function readScheduled() {
+  try {
+    return JSON.parse(fs.readFileSync(SCHEDULED_FILE, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
+function writeScheduled(list) {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(SCHEDULED_FILE, JSON.stringify(list, null, 2) + "\n");
+}
+
+function markDueScheduled() {
+  const items = readScheduled();
+  const now = Date.now();
+  let changed = false;
+  for (const item of items) {
+    if (item.status === "scheduled" && Date.parse(item.scheduledFor) <= now) {
+      item.status = "due";
+      item.dueAt = new Date().toISOString();
+      changed = true;
+      audit("schedule_due", { rid: "scheduler", scheduleId: item.id });
+    }
+  }
+  if (changed) writeScheduled(items);
+}
+
+// ---------------------------------------------------------------------------
 // GTM Strategist v0 (handoff §5): deterministic 2-week ranked calendar. No LLM.
 // ---------------------------------------------------------------------------
 
@@ -376,6 +412,107 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    if (req.method === "GET" && pathname === "/api/schedule") {
+      markDueScheduled();
+      const items = readScheduled();
+      return finish(200, {
+        count: items.length,
+        scheduler: {
+          autoPost: false,
+          note: "Due items are NEVER auto-posted; they flip to status:'due' and release via the approvals flow.",
+        },
+        items,
+      });
+    }
+
+    if (req.method === "POST" && pathname === "/api/schedule") {
+      const body = await readBody(req);
+      const authz = authorized(req, url, body);
+      if (!authz.ok) return finish(401, { error: "unauthorized" });
+
+      const when = Date.parse(body.scheduledFor || "");
+      if (!Number.isFinite(when)) {
+        return finish(400, { error: "invalid_scheduledFor", hint: "ISO datetime, e.g. 2026-11-27T14:00:00Z" });
+      }
+      if (when <= Date.now()) {
+        return finish(400, { error: "scheduledFor_must_be_future" });
+      }
+      const post = (body.post || "").trim();
+      let lesson = null;
+      if (!post && body.lessonId) {
+        lesson = await loadLesson(body.lessonId);
+        if (!lesson) return finish(404, { error: "lesson_not_found" });
+      } else if (body.lessonId) {
+        lesson = await loadLesson(body.lessonId);
+      }
+      if (!post && !lesson) {
+        return finish(400, { error: "missing_post", hint: "Provide post text or lessonId" });
+      }
+
+      const platforms = normalizePlatforms(body.platforms);
+      const items = readScheduled();
+      const id = crypto.randomUUID().slice(0, 8);
+      items.push({
+        id,
+        ts: new Date().toISOString(),
+        status: "scheduled",
+        scheduledFor: new Date(when).toISOString(),
+        post: post || draftFromLesson(lesson, { platform: body.platform }),
+        lessonId: body.lessonId || null,
+        platforms: platforms || ["linkedin", "twitter"],
+        publishOnApprove: body.publishOnApprove === true, // default false
+        media: {
+          videoUrl: body.videoUrl || lesson?.videoFileUrl || lesson?.videoUrl || null,
+          imageUrl: body.imageUrl || null,
+        },
+      });
+      writeScheduled(items);
+      audit("schedule_created", { rid, scheduleId: id, scheduledFor: items[items.length - 1].scheduledFor });
+      return finish(202, {
+        queued: true,
+        scheduleId: id,
+        status: "scheduled",
+        scheduledFor: items[items.length - 1].scheduledFor,
+        publishOnApprove: body.publishOnApprove === true,
+        rid,
+        note: "Parked. At due time the item flips to 'due' and releases via approvals — the scheduler never posts by itself.",
+      });
+    }
+
+    const cancelMatch = pathname.match(/^\/api\/schedule\/([^/]+)\/cancel$/);
+    if (req.method === "POST" && cancelMatch) {
+      const body = await readBody(req);
+      const authz = authorized(req, url, body);
+      if (!authz.ok) return finish(401, { error: "unauthorized" });
+      const items = readScheduled();
+      const item = items.find((s) => s.id === cancelMatch[1]);
+      if (!item) return finish(404, { error: "schedule_not_found" });
+      if (item.status !== "scheduled" && item.status !== "due") {
+        return finish(409, { error: "already_resolved", status: item.status });
+      }
+      item.status = "cancelled";
+      item.resolvedAt = new Date().toISOString();
+      writeScheduled(items);
+      audit("schedule_cancelled", { rid, scheduleId: item.id });
+      return finish(200, { scheduleId: item.id, status: "cancelled", rid });
+    }
+
+    if (req.method === "GET" && pathname === "/api/media-check") {
+      const mediaUrl = url.searchParams.get("url");
+      if (!mediaUrl) return finish(400, { error: "missing_url" });
+      try {
+        const info = await checkMediaUrl(mediaUrl);
+        return finish(200, { ok: true, url: mediaUrl, ...info });
+      } catch (err) {
+        return finish(400, {
+          ok: false,
+          url: mediaUrl,
+          error: err.code || "media_rejected",
+          message: err.message,
+        });
+      }
+    }
+
     if (req.method === "GET" && pathname === "/api/calendar") {
       const { lessons, source } = await loadLessons(url.searchParams.get("source") || "auto");
       return finish(200, {
@@ -383,6 +520,21 @@ const server = http.createServer(async (req, res) => {
         lessonsSource: source,
         deterministic: true,
         ...buildCalendar(lessons),
+      });
+    }
+
+    // GTM "suggest" stub (P2-9): returns the deterministic calendar plus the
+    // system+user prompts a future GTM LLM agent would receive. No LLM is
+    // called — suggestion is generated locally from the calendar.
+    if (req.method === "GET" && pathname === "/api/calendar/suggest") {
+      const { lessons, source } = await loadLessons(url.searchParams.get("source") || "auto");
+      const calendar = buildCalendar(lessons);
+      return finish(200, {
+        generatedAt: new Date().toISOString(),
+        lessonsSource: source,
+        deterministic: true,
+        ...calendar,
+        suggestion: { llm: "not called", ...buildSuggestion(calendar) },
       });
     }
 
@@ -471,15 +623,22 @@ const server = http.createServer(async (req, res) => {
       }
 
       if (isDryRun) {
+        const effectivePlatforms = platforms || ["linkedin", "twitter"];
         return finish(200, {
           dryRun: true,
           rid,
           post,
           chars: post.length,
-          platforms: platforms || ["linkedin", "twitter"],
-          // Contract of upload_post results (langchain-social-agent Track A):
-          // Array<{ platform, attempted, ok, urn?, error? }>
-          resultContract: { platform: "linkedin|twitter|tiktok", attempted: "boolean", ok: "boolean", urn: "string?", error: "string?" },
+          platforms: effectivePlatforms,
+          // Same shape upload_post returns live (langchain-social-agent Track A):
+          // Array<{ platform, attempted, ok, urn?, error? }>. A dry-run attempts
+          // nothing and posts nothing — attempted:false, ok:false by design.
+          results: effectivePlatforms.map((p) => ({
+            platform: p,
+            attempted: false,
+            ok: false,
+            error: "dry-run: no post made",
+          })),
           target: {
             organization: postToOrg,
             organizationId: orgId,
@@ -504,6 +663,7 @@ const server = http.createServer(async (req, res) => {
           platforms: platforms || ["linkedin", "twitter"],
           target: { organization: postToOrg, organizationId: orgId },
           media: { videoUrl, imageUrl },
+          publishOnApprove: body.publishOnApprove === true, // default false; live only with LIVE=1
         });
         writeApprovals(approvals);
         audit("upload_queued_approval", { rid, approvalId });
@@ -511,8 +671,10 @@ const server = http.createServer(async (req, res) => {
           queued: true,
           approvalId,
           status: "pending",
+          publishOnApprove: body.publishOnApprove === true,
+          liveEnabled: process.env.LIVE === "1",
           rid,
-          note: "Post parked. Approve via POST /api/approvals/:id/approve (dry-run receipt) — never posted live by the bridge.",
+          note: "Post parked. Approve = dry-run receipt by default; live publish only when LIVE=1 AND publishOnApprove.",
         });
       }
 
@@ -564,7 +726,43 @@ const server = http.createServer(async (req, res) => {
         return finish(200, { approvalId, status: "rejected", rid });
       }
 
-      // APPROVE = DRY-RUN ONLY (LIVE=1 off by design; the bridge never posts live)
+      // LIVE publish path: only when BOTH the env gate (LIVE=1) and the per-post
+      // flag (publishOnApprove) are set. Default for both is off → dry-run.
+      if (process.env.LIVE === "1" && item.publishOnApprove === true) {
+        try {
+          const result = await uploadPost(item.post, {
+            wait: true,
+            postToLinkedInOrganization: item.target?.organization,
+            linkedInOrganizationId: item.target?.organizationId,
+            videoUrl: item.media?.videoUrl || undefined,
+            imageUrl: item.media?.imageUrl || undefined,
+            platforms: item.platforms,
+          });
+          item.status = "published";
+          item.resolvedAt = new Date().toISOString();
+          item.publishReceipt = { mode: "live", results: result.results || null, threadId: result.threadId || null };
+          writeApprovals(approvals);
+          audit("approval_published_live", { rid, approvalId, results: result.results || null });
+          return finish(200, {
+            approvalId,
+            status: "published",
+            mode: "live",
+            rid,
+            ...result,
+          });
+        } catch (err) {
+          item.status = "publish_failed";
+          item.resolvedAt = new Date().toISOString();
+          item.publishReceipt = { mode: "live", error: err.message };
+          writeApprovals(approvals);
+          audit("approval_publish_failed", { rid, approvalId, error: err.message });
+          return finish(502, { approvalId, status: "publish_failed", rid, error: err.message });
+        }
+      }
+
+      // APPROVE = DRY-RUN ONLY (Phase-1 default; LIVE=1 off by design; the
+      // bridge never posts live unless LIVE=1 AND the post opted into
+      // publishOnApprove).
       const cfg = getLangGraphConfig();
       item.status = "approved";
       item.resolvedAt = new Date().toISOString();
@@ -604,5 +802,9 @@ server.listen(PORT, "0.0.0.0", () => {
     port: PORT,
     langgraph: getLangGraphConfig().apiUrl,
     auth: process.env.BRIDGE_API_KEY ? "api_key" : "open",
+    live: process.env.LIVE === "1",
   });
 });
+
+// Scheduler tick: flip due items to "due" (never posts — see markDueScheduled).
+setInterval(markDueScheduled, 60_000).unref();

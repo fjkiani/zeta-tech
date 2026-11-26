@@ -108,7 +108,7 @@ Every claim above was re-tested against live systems, not copied forward:
 | Portal `FIELDS_SAFE` schema drift | `fetchLessons` silently returns `[]` (GraphQL errors swallowed) | Queried `pdfDeck`/`onePager`; live schema has `pdfFile`, neither other field | **Fixed on this branch** (`pdfDeck: pdfFile` alias, `onePager` dropped); audit future schema edits against live introspection | ~~P0~~ FIXED |
 | Hygraph `videoUrl` vs `videoFile` | Portal embeds YouTube; LinkedIn needs bytes | Sync script wrote watch URLs into `videoUrl` | Prefer `videoFile.url` for social; keep `videoUrl` for LMS player | P0 |
 | School schema incomplete | `lessonDate`/`schools` migration pending | `FIELDS_SAFE` omits new fields | Finish `HYGRAPH-SCHEMA-MIGRATION.md`; update `hygraph.js` | P1 |
-| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | **Backend + console fixed**: `requireApproval:true` parks posts in `data/approvals.json`; `POST /api/approvals/:id/approve` returns a **dry-run receipt only** (bridge never posts live); reject + list endpoints; auth-gated; approvals panel rendered in the bridge console. Portal Agent-Inbox integration (§4 design) still open | ~~P1~~ BACKEND+CONSOLE FIXED — portal Inbox open |
+| HITL not in bridge | No approve step before upload | Bridge calls `upload_post` directly | **Backend + console fixed**: `requireApproval:true` parks posts in `data/approvals.json`; `POST /api/approvals/:id/approve` returns a **dry-run receipt only** (bridge never posts live); reject + list endpoints; auth-gated; approvals panel rendered in the bridge console. **HITL approve = dry-run Phase-1 only — does NOT live-publish** (live release exists only behind `LIVE=1` AND per-post `publishOnApprove`, both default off). Portal Agent-Inbox integration (§4 design) still open | ~~P1~~ BACKEND+CONSOLE FIXED — portal Inbox open |
 | Secrets in wrong place | Bridge publish lists `LINKEDIN_USER_ID` but tokens must be on agent | Confusion between processes | Document: Arcade secrets only on LangGraph host | P0 |
 | Rate limits | Burst uploads fail intermittently | LinkedIn/Twitter quotas | Scheduler + backoff in agent; FE show cooldown | P2 |
 | fahadkiani mirror | Broken Vercel | Nested app under Vite repo | Keep zeta as canonical; no remirror | P2 |
@@ -120,6 +120,7 @@ Every claim above was re-tested against live systems, not copied forward:
 ### Frontend (portal + bridge)
 
 - [x] Bridge behind auth — **done on this branch**: `BRIDGE_API_KEY` gate (x-bridge-key / ?key=) on live uploads + approval actions; 401 without key (smoke-proven). Clerk session auth remains an optional upgrade
+- [x] HITL release path — approve is **dry-run Phase-1 only** by default (does NOT live-publish); live publish gated behind `LIVE=1` env AND per-post `publishOnApprove` flag (smoke-asserted). Reject path documented in bridge HANDOFF
 - [x] Calendar view — **bridge console panel shipped** (renders `GET /api/calendar` ranked 2-week JSON). Still open: schedule/queue a post for a future date (LangGraph schedule API) and the portal-cockpit calendar
 - [x] Show per-platform results in UI — **bridge console renders the `results` array** (platform / attempted / ok / urn / error) returned by `upload_post`. Still open: deep links from URNs to the LinkedIn post, and this UI in the portal cockpit
 - [ ] CrisPRO vs personal selector (exists) + school filter (missing)
@@ -378,3 +379,33 @@ yarn start:auth                             # /auth/tiktok
 | “fahadkiani hosts the bridge” | Explicitly false — zeta-tech is canonical |
 
 **Known temptation:** paste a YouTube watch URL into bridge `videoUrl`. LinkedIn download will fail or fetch HTML. Use graphassets mp4 only.
+
+---
+
+## 15. OPEN tickets (deferred P2 items — owner + acceptance, 2026-11-26 product pass)
+
+Status of this pass: P0-1, P0-2, P1-3, P1-4, P1-6 **shipped** on `cursor/notebooklm-social-bridge-0411`.
+P2 disposition: **stubbed** — portal `/social` stub route (7), GTM prompts + `/api/calendar/suggest` stub (9), SocialPost docs-only sketch already in §7 (10). **Deferred** — identity (8) below. No live social posts were made; no Hygraph migration was run.
+
+### OPEN-1 — Bridge identity: Clerk / open identity (P2-8, DEFERRED)
+- **Why deferred:** the bridge is single-key (`BRIDGE_API_KEY`) by design for Phase-1; wiring a full identity provider is a security-surface change that must not ride along with a feature pass.
+- **Threat model note (current state):** the console at :4317 is reachable by anyone who can reach the port; GETs (lessons, calendar, audit, approvals list) are unauthenticated by design, and every mutating route (`/api/schedule`, cancel, approve, reject, live upload) requires the shared bearer-style key passed as `x-bridge-key` header or `?key=`. Risk: key sharing/no per-user attribution, no rate limiting, no session expiry; mitigations: keep the port loopback/tailnet-only until this ticket closes, rotate `BRIDGE_API_KEY`, audit log already records per-call events (no request-id scheme — out of scope per §14 bans).
+- **Owner:** Fahad Kiani
+- **Acceptance:** either (a) session auth live on :4317 (key→session exchange, mutating routes reject anonymous), or (b) a written threat-model sign-off explicitly accepting the shared-key posture for Phase-1.
+
+### OPEN-2 — Portal /social: MissionConsole social tools (P2-7 stub shipped; full surface deferred)
+- **Shipped:** `portal/app/social/page.jsx` — stub page linking to the bridge console (`NEXT_PUBLIC_BRIDGE_URL`, default `http://localhost:4317`) with the Phase-1 dry-run disclaimer. Additive; not exercised by a portal build in this pass.
+- **Deferred:** MissionConsole social tool cards (draft/schedule/approve deep-links).
+- **Owner:** Fahad Kiani
+- **Acceptance:** MissionConsole renders social tools wired to live bridge endpoints (lessons/calendar/approvals), behind portal auth, with a portal build passing.
+
+### OPEN-3 — GTM LLM agent run (P2-9 stub shipped; LLM path deferred)
+- **Shipped:** `lib/gtm-prompts.js` (`buildGtmSystemPrompt`, `buildGtmUserPrompt`, `buildSuggestion`) + `GET /api/calendar/suggest` returning `{llm:"not called", systemPrompt, userPrompt}` over the deterministic calendar. Smoke-asserted.
+- **Deferred:** an actual LLM call producing per-item captions; captions must land in Approvals (dry-run) — never auto-post.
+- **Owner:** Fahad Kiani
+- **Acceptance:** a GTM agent run writes drafts to the Approvals queue (dry-run default), each caption traceable to lesson content, no invented clinical claims (per system-prompt rules), smoke stays green with the agent disabled by default.
+
+### OPEN-4 — Hygraph `SocialPost` migration (P2-10, docs-only this pass)
+- **Shipped:** §7 docs-only schema sketch (fields + `SocialPost` relation). **No migration was run** (hard ban this pass).
+- **Owner:** Fahad Kiani
+- **Acceptance:** migration applied via Hygraph MCP/Studio; bridge `hygraph.js` extended only after live introspection confirms the new fields; smoke stays green in both configured and unconfigured Hygraph modes.
