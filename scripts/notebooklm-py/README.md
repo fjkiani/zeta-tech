@@ -22,15 +22,23 @@ python3 -m venv .venv-notebooklm
 
 ### Authenticate (Pro account)
 
-**Preferred for Cloud Agents / CI** — set env/secret (never commit):
+**Preferred for Cloud Agents / CI — durable master token** (never commit):
+
+`NOTEBOOKLM_AUTH_JSON` / `storage_state.json` is often **>4096 chars** and
+**cannot** be saved as a Cursor secret. Use master token instead:
 
 ```bash
+# Laptop (one-time):
+pip install 'notebooklm-py[headless,browser]'
+notebooklm login --master-token --account fjkiani1@gmail.com
+# Set Cloud Agent secret NOTEBOOKLM_MASTER_TOKEN_JSON = master_token.json contents
+# Restart agent so process env receives it, then:
 export NOTEBOOKLM_ACCOUNT_EMAIL=fjkiani1@gmail.com
-export NOTEBOOKLM_AUTH_JSON="$(cat ~/.notebooklm/profiles/default/storage_state.json)"
-./scripts/notebooklm-py/auth-bootstrap.sh
+export NOTEBOOKLM_PROFILE=agent-cloud
+./scripts/notebooklm-py/bootstrap-master-token.sh
 ```
 
-**Local one-time browser login:**
+**Local one-time browser login (cookies):**
 
 ```bash
 ./scripts/notebooklm-py/notebooklm.sh login
@@ -39,19 +47,20 @@ export NOTEBOOKLM_AUTH_JSON="$(cat ~/.notebooklm/profiles/default/storage_state.
 ./scripts/notebooklm-py/notebooklm.sh usage --json
 ```
 
-Cookies land in `~/.notebooklm/profiles/<profile>/storage_state.json`.
-**Never commit** that file.
+Master token → `~/.notebooklm/profiles/agent-cloud/master_token.json` (mode 0600).  
+Cookies mint to sibling `storage_state.json` via `auth refresh`.  
+**Never commit** those files.
 
 ### Keep cookies fresh (unattended)
 
 ```bash
-# When using file-based auth (not NOTEBOOKLM_AUTH_JSON):
 ./scripts/notebooklm-py/notebooklm.sh auth refresh --verify
 # Cadence: every 15–20 minutes via cron/systemd
+# Sibling master_token.json can remint expired cookies
 ```
 
-Portal `ensureAuth()` calls `auth refresh --verify` automatically before generate
-when cookies exist but look stale.
+Portal `ensureAuth()` materializes `NOTEBOOKLM_MASTER_TOKEN_JSON` when set, else
+refreshes on-disk master token / cookies before generate.
 
 ---
 
@@ -85,7 +94,8 @@ from school/lesson context and **rejects stub downloads** (< ~1KB audio).
 | Var | Purpose |
 |---|---|
 | `NOTEBOOKLM_ACCOUNT_EMAIL` | Expected Google account (default `fjkiani1@gmail.com`) |
-| `NOTEBOOKLM_AUTH_JSON` | Inline Playwright `storage_state` / cookie JSON |
-| `NOTEBOOKLM_PROFILE` | Named profile when using on-disk cookies |
+| `NOTEBOOKLM_MASTER_TOKEN_JSON` | Durable headless auth (write to profile `master_token.json`) |
+| `NOTEBOOKLM_PROFILE` | Named profile (`agent-cloud` for master-token path) |
+| `NOTEBOOKLM_AUTH_JSON` | Short-lived cookie JSON — **skip in Cursor** (4096 limit) |
 | `NOTEBOOKLM_HL` | Output language |
 | `NOTEBOOKLM_BACKEND` | `web` (default) or `android` |

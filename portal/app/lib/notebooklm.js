@@ -1,20 +1,34 @@
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 import { getSchoolConfig } from './schools.js';
 
 const PROJECT_ROOT = path.resolve(process.cwd(), '..');
 const NOTEBOOKLM_SH = path.join(PROJECT_ROOT, 'scripts', 'notebooklm-py', 'notebooklm.sh');
+const BOOTSTRAP_MASTER_SH = path.join(
+  PROJECT_ROOT,
+  'scripts',
+  'notebooklm-py',
+  'bootstrap-master-token.sh',
+);
 
 /** Gemini Pro account used for NotebookLM Studio generation. */
 export const NOTEBOOKLM_ACCOUNT_EMAIL =
   process.env.NOTEBOOKLM_ACCOUNT_EMAIL || 'fjkiani1@gmail.com';
 
-/** Profile name derived from email local-part (notebooklm-py convention). */
+/**
+ * Durable headless profile. Prefer agent-cloud when master-token auth is used
+ * (NOTEBOOKLM_AUTH_JSON exceeds Cursor's 4096 secret limit).
+ */
 export const NOTEBOOKLM_PROFILE =
   process.env.NOTEBOOKLM_PROFILE ||
-  NOTEBOOKLM_ACCOUNT_EMAIL.split('@')[0].replace(/[^a-zA-Z0-9._-]/g, '-') ||
-  'default';
+  (process.env.NOTEBOOKLM_MASTER_TOKEN_JSON ||
+  fs.existsSync(
+    path.join(os.homedir(), '.notebooklm', 'profiles', 'agent-cloud', 'master_token.json'),
+  )
+    ? 'agent-cloud'
+    : NOTEBOOKLM_ACCOUNT_EMAIL.split('@')[0].replace(/[^a-zA-Z0-9._-]/g, '-') || 'default');
 
 const MIN_ARTIFACT_BYTES = {
   audio: 1024,
@@ -42,8 +56,8 @@ function run(...args) {
       stdio: ['ignore', 'pipe', 'pipe'],
       env: {
         ...process.env,
-        // Prefer explicit Pro account identity when CLI supports it.
         NOTEBOOKLM_ACCOUNT_EMAIL,
+        NOTEBOOKLM_PROFILE,
       },
     });
     let stdout = '';
@@ -81,19 +95,84 @@ function authHandoffMessage(detail) {
   return [
     `NotebookLM auth required for Gemini Pro account ${NOTEBOOKLM_ACCOUNT_EMAIL}.`,
     detail,
-    'Fix options:',
-    `1) Set secret/env NOTEBOOKLM_AUTH_JSON to Playwright storage_state (or cookie JSON) for ${NOTEBOOKLM_ACCOUNT_EMAIL}`,
-    '2) Or run: ./scripts/notebooklm-py/notebooklm.sh login  (sign in as that Google account)',
-    '3) Then: ./scripts/notebooklm-py/notebooklm.sh auth check --test && ./scripts/notebooklm-py/notebooklm.sh usage --json',
+    'Fix options (skip NOTEBOOKLM_AUTH_JSON — Cursor secret max length 4096):',
+    '1) Set Cloud Agent secret NOTEBOOKLM_MASTER_TOKEN_JSON = master_token.json contents',
+    '2) Restart agent so the secret injects into process env',
+    '3) Run: ./scripts/notebooklm-py/bootstrap-master-token.sh',
+    `4) Or on a laptop: notebooklm login --master-token --account ${NOTEBOOKLM_ACCOUNT_EMAIL}`,
     'See /opt/cursor/artifacts/NOTEBOOKLM-AUTH-BLOCKER.md',
   ].join('\n');
 }
 
+function masterTokenPath() {
+  return path.join(
+    os.homedir(),
+    '.notebooklm',
+    'profiles',
+    NOTEBOOKLM_PROFILE,
+    'master_token.json',
+  );
+}
+
 /**
- * Ensure NotebookLM CLI can authenticate. Tries non-interactive refresh when
- * cookies exist but may be stale. Never assumes free-tier quotas.
+ * Materialize NOTEBOOKLM_MASTER_TOKEN_JSON → profile master_token.json (0600),
+ * then mint storage_state via auth refresh. Secret-transport only — package
+ * does not read the env var directly.
+ */
+export async function materializeMasterToken() {
+  const json = process.env.NOTEBOOKLM_MASTER_TOKEN_JSON;
+  if (!json) return { materialized: false };
+
+  return new Promise((resolve, reject) => {
+    const child = spawn(BOOTSTRAP_MASTER_SH, [], {
+      cwd: PROJECT_ROOT,
+      shell: false,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        NOTEBOOKLM_ACCOUNT_EMAIL,
+        NOTEBOOKLM_PROFILE,
+        NOTEBOOKLM_MASTER_TOKEN_JSON: json,
+      },
+    });
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (d) => { stdout += d.toString(); });
+    child.stderr.on('data', (d) => { stderr += d.toString(); });
+    child.on('error', reject);
+    child.on('close', (code) => {
+      if (code !== 0) reject(new Error(stderr || stdout || `bootstrap exit ${code}`));
+      else resolve({ materialized: true, stdout, path: masterTokenPath() });
+    });
+  });
+}
+
+/**
+ * Ensure NotebookLM CLI can authenticate. Prefers durable master-token
+ * bootstrap; falls back to cookie refresh. Never assumes free-tier quotas.
  */
 export async function ensureAuth({ refresh = true } = {}) {
+  // Prefer durable master-token materialization when secret is present.
+  if (process.env.NOTEBOOKLM_MASTER_TOKEN_JSON) {
+    try {
+      await materializeMasterToken();
+      return { ok: true, accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL, via: 'master-token' };
+    } catch (bootErr) {
+      throw new Error(authHandoffMessage(`master-token bootstrap failed: ${bootErr.message}`));
+    }
+  }
+
+  // If master_token.json already on disk for agent-cloud, refresh to mint cookies.
+  if (refresh && fs.existsSync(masterTokenPath())) {
+    try {
+      await run('auth', 'refresh');
+      await run('auth', 'check', '--test', '--json');
+      return { ok: true, accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL, via: 'master-token-file' };
+    } catch (err) {
+      console.warn(`[NotebookLM] master_token.json refresh failed: ${err.message}`);
+    }
+  }
+
   try {
     const { stdout } = await run('auth', 'check', '--json');
     const parsed = tryParseJson(stdout);
@@ -112,7 +191,6 @@ export async function ensureAuth({ refresh = true } = {}) {
           ),
         );
       }
-      // Re-check after refresh
       try {
         await run('auth', 'check', '--json');
       } catch (recheckErr) {
@@ -123,7 +201,6 @@ export async function ensureAuth({ refresh = true } = {}) {
     }
   }
 
-  // Optional network confirmation — non-fatal if offline probe fails after local ok.
   try {
     await run('auth', 'check', '--test', '--passive', '--json');
   } catch (probeErr) {
@@ -132,7 +209,6 @@ export async function ensureAuth({ refresh = true } = {}) {
 
   return { ok: true, accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL };
 }
-
 /**
  * Live usage / quota snapshot for logging. Pro accounts are not gated by
  * hard-coded free-tier caps in this portal — we only surface server numbers.
