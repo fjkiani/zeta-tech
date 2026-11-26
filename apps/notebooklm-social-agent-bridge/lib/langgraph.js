@@ -12,12 +12,23 @@ function baseUrl() {
   return raw.replace(/\/$/, "");
 }
 
+function envFlag(name, defaultValue = false) {
+  const raw = process.env[name];
+  if (raw === undefined || raw === null || raw === "") return defaultValue;
+  return ["1", "true", "yes", "on"].includes(String(raw).toLowerCase());
+}
+
 export function getLangGraphConfig() {
   return {
     apiUrl: baseUrl(),
     linkedInUserId:
       process.env.LINKEDIN_USER_ID || process.env.ARCADE_USER_ID || null,
     textOnly: process.env.TEXT_ONLY_MODE !== "false",
+    postToLinkedInOrganization: envFlag("POST_TO_LINKEDIN_ORGANIZATION", true),
+    linkedInOrganizationId:
+      process.env.LINKEDIN_ORGANIZATION_ID || "107412290",
+    linkedInOrgVanity: process.env.LINKEDIN_ORG_VANITY || "crispro",
+    linkedInOrgName: process.env.LINKEDIN_ORG_NAME || "CrisPRO.ai",
   };
 }
 
@@ -119,30 +130,98 @@ export async function createAndJoinRun(threadId, graphId, input, configurable = 
   return { runId, joined, state };
 }
 
-export async function uploadPost(post, { wait = true } = {}) {
-  const threadId = await createThread();
+function buildConfigurable(options = {}) {
+  const cfg = getLangGraphConfig();
   const configurable = {};
-  if (getLangGraphConfig().textOnly) {
-    configurable.textOnlyMode = true;
+
+  const textOnly =
+    options.textOnly !== undefined ? options.textOnly : cfg.textOnly;
+  if (textOnly) configurable.textOnlyMode = true;
+
+  const postToOrg =
+    options.postToLinkedInOrganization !== undefined
+      ? options.postToLinkedInOrganization
+      : cfg.postToLinkedInOrganization;
+  configurable.postToLinkedInOrganization = Boolean(postToOrg);
+
+  const orgId =
+    options.linkedInOrganizationId || cfg.linkedInOrganizationId || null;
+  if (orgId) configurable.linkedInOrganizationId = String(orgId);
+
+  return configurable;
+}
+
+function buildImageInput(options = {}) {
+  const videoUrl = options.videoUrl || options.video_url || null;
+  const imageUrl = options.imageUrl || options.image_url || null;
+  const mimeType = options.mimeType || options.mime_type || null;
+
+  if (videoUrl) {
+    return {
+      imageUrl: videoUrl,
+      mimeType: mimeType || "video/mp4",
+    };
+  }
+  if (imageUrl) {
+    return {
+      imageUrl,
+      mimeType: mimeType || "image/jpeg",
+    };
+  }
+  return null;
+}
+
+/**
+ * Upload a post via LangGraph upload_post.
+ * @param {string} post
+ * @param {{ wait?: boolean, postToLinkedInOrganization?: boolean, linkedInOrganizationId?: string, videoUrl?: string, imageUrl?: string, mimeType?: string, textOnly?: boolean }} [options]
+ */
+export async function uploadPost(post, options = {}) {
+  const threadId = await createThread();
+  const configurable = buildConfigurable(options);
+  const image = buildImageInput(options);
+  // If media is provided, force textOnlyMode off so LinkedIn media path runs
+  if (image) {
+    configurable.textOnlyMode = false;
   }
 
-  if (!wait) {
+  const input = { post, image };
+
+  if (options.wait === false) {
     const { data: run } = await request(`/threads/${threadId}/runs`, {
       method: "POST",
       body: {
         assistant_id: "upload_post",
-        input: { post, image: null },
+        input,
         config: { configurable },
       },
     });
-    return { threadId, runId: run.run_id, status: "started" };
+    return {
+      threadId,
+      runId: run.run_id,
+      status: "started",
+      target: {
+        organization: configurable.postToLinkedInOrganization,
+        organizationId: configurable.linkedInOrganizationId || null,
+        vanity: getLangGraphConfig().linkedInOrgVanity,
+      },
+    };
   }
 
   const result = await createAndJoinRun(
     threadId,
     "upload_post",
-    { post, image: null },
+    input,
     configurable,
   );
-  return { threadId, ...result };
+  return {
+    threadId,
+    ...result,
+    target: {
+      organization: configurable.postToLinkedInOrganization,
+      organizationId: configurable.linkedInOrganizationId || null,
+      vanity: getLangGraphConfig().linkedInOrgVanity,
+      name: getLangGraphConfig().linkedInOrgName,
+    },
+  };
 }

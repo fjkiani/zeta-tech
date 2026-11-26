@@ -156,10 +156,13 @@ const server = http.createServer(async (req, res) => {
     if (req.method === "POST" && pathname === "/api/upload") {
       const body = await readBody(req);
       let post = (body.post || "").trim();
+      let lesson = null;
       if (!post && body.lessonId) {
-        const lesson = loadLesson(body.lessonId);
+        lesson = loadLesson(body.lessonId);
         if (!lesson) return send(res, 404, { error: "lesson_not_found" });
         post = draftFromLesson(lesson, { platform: body.platform });
+      } else if (body.lessonId) {
+        lesson = loadLesson(body.lessonId);
       }
       if (!post) {
         return send(res, 400, {
@@ -168,18 +171,55 @@ const server = http.createServer(async (req, res) => {
         });
       }
 
+      const cfg = getLangGraphConfig();
+      const postToOrg =
+        body.postToLinkedInOrganization !== undefined
+          ? Boolean(body.postToLinkedInOrganization)
+          : body.target === "personal"
+            ? false
+            : cfg.postToLinkedInOrganization;
+      const orgId =
+        body.linkedInOrganizationId ||
+        body.organizationId ||
+        cfg.linkedInOrganizationId;
+      // Prefer explicit videoUrl; else lesson.videoUrl / artifacts video
+      const videoUrl =
+        body.videoUrl ||
+        body.video_url ||
+        lesson?.videoUrl ||
+        lesson?.artifacts?.find?.(
+          (a) => typeof a === "string" && /\.(mp4|webm|mov)(\?|$)/i.test(a),
+        ) ||
+        null;
+      const imageUrl = body.imageUrl || body.image_url || null;
+
       const dryRun = body.dryRun === true || body.dry_run === true;
       if (dryRun) {
         return send(res, 200, {
           dryRun: true,
           post,
           chars: post.length,
-          langgraph: getLangGraphConfig(),
+          target: {
+            organization: postToOrg,
+            organizationId: orgId,
+            vanity: cfg.linkedInOrgVanity,
+            name: cfg.linkedInOrgName,
+          },
+          media: { videoUrl, imageUrl },
+          langgraph: cfg,
         });
       }
 
       try {
-        const result = await uploadPost(post, { wait: body.wait !== false });
+        const result = await uploadPost(post, {
+          wait: body.wait !== false,
+          postToLinkedInOrganization: postToOrg,
+          linkedInOrganizationId: orgId,
+          videoUrl,
+          imageUrl,
+          mimeType: body.mimeType || body.mime_type,
+          textOnly: videoUrl || imageUrl ? false : undefined,
+        });
         return send(res, 200, {
           ok: true,
           post,

@@ -11,8 +11,9 @@
       <header class="hero">
         <h1 class="brand">Zeta <span>Tech</span></h1>
         <p class="lede">
-          NotebookLM classroom artifacts → LinkedIn via the social agent.
-          Pick a lesson, draft the post, push it through LangGraph.
+          NotebookLM classroom artifacts → LinkedIn
+          <strong>CrisPRO.ai</strong> company page via the social agent.
+          Pick a lesson, draft the post, optionally attach a public video URL.
         </p>
         <div class="status-row">
           <div class="pill">
@@ -38,6 +39,23 @@
         <section class="panel">
           <h2>Post</h2>
           <p class="hint" id="selectedHint">Select a lesson to draft a post.</p>
+          <label class="field">
+            <span>Target</span>
+            <select id="targetSelect">
+              <option value="organization" selected>
+                CrisPRO.ai company page (org 107412290)
+              </option>
+              <option value="personal">Personal profile</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Public video URL (optional)</span>
+            <input
+              id="videoUrl"
+              type="url"
+              placeholder="https://…/lesson.mp4 — NotebookLM video or hosted file"
+            />
+          </label>
           <textarea
             id="postText"
             placeholder="Draft appears here…"
@@ -46,7 +64,7 @@
           <div class="actions">
             <button class="ghost" id="draftBtn" disabled>Draft from lesson</button>
             <button class="ghost" id="dryRunBtn" disabled>Dry run</button>
-            <button class="primary" id="uploadBtn" disabled>Upload to LinkedIn</button>
+            <button class="primary" id="uploadBtn" disabled>Upload to CrisPRO</button>
           </div>
           <div class="meta" id="meta"></div>
           <pre class="log" id="log">Ready.</pre>
@@ -58,6 +76,8 @@
       const els = {
         list: document.getElementById("lessonList"),
         post: document.getElementById("postText"),
+        videoUrl: document.getElementById("videoUrl"),
+        targetSelect: document.getElementById("targetSelect"),
         draftBtn: document.getElementById("draftBtn"),
         dryRunBtn: document.getElementById("dryRunBtn"),
         uploadBtn: document.getElementById("uploadBtn"),
@@ -69,6 +89,18 @@
         lgDot: document.getElementById("lgDot"),
         lgStatus: document.getElementById("lgStatus"),
       };
+
+      function uploadPayload(extra = {}) {
+        const toOrg = els.targetSelect.value === "organization";
+        return {
+          lessonId: selectedId,
+          post: els.post.value,
+          postToLinkedInOrganization: toOrg,
+          linkedInOrganizationId: toOrg ? "107412290" : undefined,
+          videoUrl: (els.videoUrl.value || "").trim() || undefined,
+          ...extra,
+        };
+      }
 
       let selectedId = null;
       let lessons = [];
@@ -117,8 +149,12 @@
           els.bridgeStatus.textContent = "Bridge online";
           if (h.langgraph?.ok) {
             els.lgDot.className = "dot ok";
+            const target =
+              h.config?.linkedInOrgVanity ||
+              h.config?.linkedInOrganizationId ||
+              "linkedin";
             els.lgStatus.textContent =
-              "LangGraph · " + (h.langgraph.apiUrl || "connected");
+              "LangGraph · target " + target;
           } else {
             els.lgDot.className = "dot bad";
             els.lgStatus.textContent =
@@ -176,11 +212,7 @@
         try {
           const data = await api("/api/upload", {
             method: "POST",
-            body: JSON.stringify({
-              lessonId: selectedId,
-              post: els.post.value,
-              dryRun: true,
-            }),
+            body: JSON.stringify(uploadPayload({ dryRun: true })),
           });
           log("Dry run OK", data);
         } catch (e) {
@@ -190,19 +222,21 @@
 
       els.uploadBtn.addEventListener("click", async () => {
         els.uploadBtn.disabled = true;
-        log("Uploading via LangGraph upload_post…");
+        const toOrg = els.targetSelect.value === "organization";
+        log(
+          toOrg
+            ? "Uploading to CrisPRO company page via LangGraph upload_post…"
+            : "Uploading to personal LinkedIn via LangGraph upload_post…",
+        );
         try {
           const data = await api("/api/upload", {
             method: "POST",
-            body: JSON.stringify({
-              lessonId: selectedId,
-              post: els.post.value,
-              wait: true,
-            }),
+            body: JSON.stringify(uploadPayload({ wait: true })),
           });
           log("Upload result", data);
+          const targetLabel = data.target?.vanity || data.target?.organizationId || "linkedin";
           els.meta.textContent =
-            "Uploaded · thread " + (data.threadId || "n/a");
+            "Uploaded · " + targetLabel + " · thread " + (data.threadId || "n/a");
         } catch (e) {
           log("Upload failed", e.data || { message: e.message });
         } finally {
