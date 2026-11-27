@@ -21,6 +21,8 @@
 | Doc | Purpose |
 |-----|---------|
 | **HANDOFF.md** (this file) | Entry point for any agent; run instructions, layout, next steps |
+| **docs/PRODUCTION-HANDOFF.md** | Production path: bridge + Hygraph + portal social ops + agentic roadmap (cross-links langchain-social-agent) |
+| **apps/notebooklm-social-agent-bridge/HANDOFF.md** | Bridge process ops: ports, env, upload API, CrisPRO verify URNs |
 | **doctorines/zeta.mdc** | Mission doctrine: school profiles (VIPER/Bushwick, ORACLE/Brooklyn Law, CADUCEUS/Bronx Medical, MAVERICK/Aviation), tactics, tone. Read for content/curriculum work. |
 | **UNIFIED-LMS-PLAN.md** | Architecture: portal + Hygraph + notebooklm-py; progressive delivery |
 | **DELIVERABLES-10-PLAN.md** | First 10 deliverables (D1–D10): sidecar, Hygraph client, NotebookLM orchestrator, API routes, lesson page, quiz, flashcards |

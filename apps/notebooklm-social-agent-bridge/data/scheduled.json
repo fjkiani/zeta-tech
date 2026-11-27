@@ -1,0 +1,18 @@
+[
+  {
+    "id": "248a01fd",
+    "ts": "2026-11-26T07:36:38.465Z",
+    "status": "scheduled",
+    "scheduledFor": "2026-11-29T07:36:38.463Z",
+    "post": "From today's Zeta Tech session: Ai For Python 0Ok8Iy\n\n…\n\nBuilt with NotebookLM artifacts → social agent bridge.\n\n(2026-11-26 07:36)",
+    "lessonId": "ai-for-python-0OK8Iy",
+    "platforms": [
+      "linkedin"
+    ],
+    "publishOnApprove": false,
+    "media": {
+      "videoUrl": null,
+      "imageUrl": null
+    }
+  }
+]
