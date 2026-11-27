@@ -15,6 +15,10 @@ import {
 } from "./lib/hygraph.js";
 import { buildSuggestion } from "./lib/gtm-prompts.js";
 import {
+  buildLessonContextPack,
+  groundedDryRunCaption,
+} from "./lib/lesson-context.js";
+import {
   getClerkConfig,
   verifyClerkToken,
   bearerFromRequest,
@@ -328,19 +332,11 @@ function markDueScheduled() {
 
 /** Short grounded excerpt for GTM captions (Hygraph excerpt or local transcript/context). */
 function lessonExcerpt(lesson, maxChars = 420) {
-  const inline = (lesson.excerpt || lesson.description || "").toString().trim();
-  if (inline) return inline.replace(/\s+/g, " ").slice(0, maxChars);
-  for (const rel of [lesson.transcriptFile, lesson.contextFile]) {
-    if (!rel) continue;
-    const p = path.join(DATA_DIR, rel);
-    if (!fs.existsSync(p)) continue;
-    const raw = fs.readFileSync(p, "utf8").replace(/\s+/g, " ").trim();
-    if (raw) return raw.slice(0, maxChars);
-  }
-  if (lesson.transcript) {
-    return String(lesson.transcript).replace(/\s+/g, " ").trim().slice(0, maxChars);
-  }
-  return "";
+  const pack = buildLessonContextPack(lesson, {
+    dataDir: DATA_DIR,
+    transcriptChars: maxChars,
+  });
+  return pack.excerpt || pack.transcriptExcerpt || "";
 }
 
 function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
@@ -348,7 +344,9 @@ function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
   const scored = lessons.map((l) => {
     const artifacts = Array.isArray(l.artifacts) ? l.artifacts.length : 0;
     const hasVideo = Boolean(l.videoUrl || l.videoFileUrl);
-    const excerpt = lessonExcerpt(l);
+    const contextPack = buildLessonContextPack(l, { dataDir: DATA_DIR });
+    const excerpt =
+      contextPack.excerpt || contextPack.transcriptExcerpt || "";
     const created = Date.parse(l.createdAt || l.publishedAt || "") || NaN;
     const ageDays = Number.isFinite(created)
       ? Math.max(0, (now - created) / 86400000)
@@ -359,7 +357,7 @@ function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
       Math.min(3, artifacts) * 0.5 +
       freshness +
       (excerpt ? 1 : 0);
-    return { lesson: l, score, hasVideo, artifacts, excerpt };
+    return { lesson: l, score, hasVideo, artifacts, excerpt, contextPack };
   });
   scored.sort((a, b) => b.score - a.score);
 
@@ -376,10 +374,13 @@ function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
       platform: platforms[n % platforms.length],
       score: Number(s.score.toFixed(2)),
       excerpt: s.excerpt || "",
+      videoUrl: s.contextPack?.media?.videoUrl || null,
+      contextPack: s.contextPack,
       reasons: {
         video: s.hasVideo,
         artifacts: s.artifacts,
         hasExcerpt: Boolean(s.excerpt),
+        hasVideoUrl: Boolean(s.contextPack?.media?.videoUrl),
         ageDays: Number.isFinite(s.lesson.createdAt)
           ? Math.round((now - Date.parse(s.lesson.createdAt)) / 86400000)
           : null,
@@ -509,6 +510,27 @@ const server = http.createServer(async (req, res) => {
         const status = err.code === "HYGRAPH_UNAVAILABLE" ? 503 : 502;
         return finish(status, { error: err.code || "lessons_failed", message: err.message });
       }
+    }
+
+    // Read-only context pack for captions (no Hygraph writes).
+    const contextMatch = pathname.match(/^\/api\/lessons\/([^/]+)\/context$/);
+    if (req.method === "GET" && contextMatch) {
+      const source = url.searchParams.get("source") || "auto";
+      const lesson = await loadLesson(
+        decodeURIComponent(contextMatch[1]),
+        source,
+      );
+      if (!lesson) return finish(404, { error: "lesson_not_found" });
+      const contextPack = buildLessonContextPack(lesson, { dataDir: DATA_DIR });
+      return finish(200, {
+        lessonId: lesson.id,
+        source,
+        readOnly: true,
+        contextPack,
+        dryRunCaption: groundedDryRunCaption(contextPack, {
+          platform: url.searchParams.get("platform") || "linkedin",
+        }),
+      });
     }
 
     const lessonMatch = pathname.match(/^\/api\/lessons\/([^/]+)$/);
@@ -724,13 +746,20 @@ const server = http.createServer(async (req, res) => {
       const body = await readBody(req);
       const lesson = await loadLesson(body.lessonId);
       if (!lesson) return finish(404, { error: "lesson_not_found" });
-      const post = draftFromLesson(lesson, { platform: body.platform });
+      const platform = body.platform || "linkedin";
+      const contextPack = buildLessonContextPack(lesson, { dataDir: DATA_DIR });
+      const post =
+        body.useContextPack === true || body.grounded === true
+          ? groundedDryRunCaption(contextPack, { platform })
+          : draftFromLesson(lesson, { platform });
       return finish(200, {
         lessonId: lesson.id,
         title: lesson.title,
-        platform: body.platform || "linkedin",
+        platform,
         post,
         chars: post.length,
+        videoUrl: contextPack.media?.videoUrl || null,
+        contextPack,
         rid,
       });
     }
