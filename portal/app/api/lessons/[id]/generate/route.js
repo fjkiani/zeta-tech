@@ -27,6 +27,7 @@ const TYPE_MAP = {
   audio: 'audio',
   mindMap: 'mindMap',
   dataTable: 'dataTable',
+  report: 'report',
 };
 
 export async function POST(request, { params }) {

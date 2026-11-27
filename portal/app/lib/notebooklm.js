@@ -37,6 +37,8 @@ const MIN_ARTIFACT_BYTES = {
   flashcards: 64,
   mindMap: 32,
   dataTable: 16,
+  report: 64,
+  faq: 32,
 };
 
 const TYPE_TO_CLI = {
@@ -46,6 +48,7 @@ const TYPE_TO_CLI = {
   audio: 'audio',
   mindMap: 'mind-map',
   dataTable: 'data-table',
+  report: 'report',
 };
 
 function run(...args) {
@@ -296,6 +299,22 @@ export function buildArtifactPrompt(type, context = {}) {
         theme,
       ].filter(Boolean).join(' ');
 
+    case 'report':
+      return [
+        `Write a clear blog-style lesson article for "${title}" aimed at ${audience}.`,
+        'Use H2/H3 sections, concrete examples, and an exit-ticket takeaway.',
+        'No hype. Ground claims in the notebook sources. Keep code blocks short.',
+        theme,
+      ].filter(Boolean).join(' ');
+
+    case 'faq':
+      return [
+        `For the lesson "${title}" (${audience}), answer with ONLY valid JSON:`,
+        '{"items":[{"question":"...","answer":"..."}]}',
+        'Include 6–10 FAQ items covering misconceptions from the sources. No markdown fences.',
+        theme,
+      ].filter(Boolean).join(' ');
+
     default:
       return `Generate ${type} for "${title}" for ${audience}. ${theme}`.trim();
   }
@@ -366,6 +385,8 @@ export async function generateArtifact(notebookId, type, options = {}) {
   } else if (type === 'slideDeck') {
     args.push('--format', options.slideFormat || 'detailed');
     args.push('--length', options.slideLength || 'default');
+  } else if (type === 'report') {
+    args.push('--format', options.reportFormat || 'blog-post');
   }
 
   // Longer timeout for audio (CLI default 1200s) — keep wait; no free-tier gates.
@@ -395,6 +416,8 @@ export async function downloadArtifact(notebookId, type, outputPath) {
   } else if (type === 'slideDeck') {
     // PDF + force latest
     args.push('--latest', '--force');
+  } else if (type === 'report') {
+    // markdown report download
   }
 
   args.push(outputPath);
@@ -421,6 +444,43 @@ export async function downloadArtifact(notebookId, type, outputPath) {
   }
 
   return { path: outputPath, bytes: size };
+}
+
+/**
+ * FAQ via `notebooklm ask --json` (not a Studio generate type).
+ * Writes `{ items: [{ question, answer }] }` to outputPath.
+ */
+export async function generateFaqJson(notebookId, outputPath, options = {}) {
+  await run('use', notebookId);
+  const prompt = options.prompt || buildArtifactPrompt('faq', options.context || {});
+  const { stdout } = await run('ask', prompt, '--json');
+  const parsed = tryParseJson(stdout);
+  const answer = parsed?.answer || parsed?.text || stdout;
+  let faq = null;
+  if (typeof answer === 'string') {
+    const cleaned = answer.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+    faq = tryParseJson(cleaned);
+  } else if (answer && typeof answer === 'object') {
+    faq = answer;
+  }
+  if (!faq?.items && Array.isArray(faq)) {
+    faq = { items: faq };
+  }
+  if (!faq?.items?.length) {
+    // Soft fallback: wrap free-text as one FAQ item
+    faq = {
+      items: [
+        {
+          question: 'What should I know from this lesson?',
+          answer: typeof answer === 'string' ? answer.slice(0, 2000) : JSON.stringify(answer).slice(0, 2000),
+        },
+      ],
+    };
+  }
+  const dir = path.dirname(outputPath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify(faq, null, 2));
+  return { path: outputPath, bytes: fs.statSync(outputPath).size, items: faq.items.length };
 }
 
 export function getDefaultSourcePath() {
