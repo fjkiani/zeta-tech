@@ -18,10 +18,13 @@ export function buildGtmSystemPrompt() {
 }
 
 export function buildGtmUserPrompt(calendar) {
-  const lines = (calendar.items || []).map(
-    (i) =>
-      `- ${i.date} [${i.platform}] lesson=${i.lessonId} title="${i.title}" score=${i.score} artifacts=${i.reasons?.artifacts ?? 0} video=${i.reasons?.video}`,
-  );
+  const lines = (calendar.items || []).map((i) => {
+    const excerpt = (i.excerpt || "").toString().replace(/\s+/g, " ").trim();
+    const excerptBit = excerpt
+      ? ` excerpt="${excerpt.slice(0, 280)}${excerpt.length > 280 ? "…" : ""}"`
+      : " excerpt=(none)";
+    return `- ${i.date} [${i.platform}] lesson=${i.lessonId} title="${i.title}" score=${i.score} artifacts=${i.reasons?.artifacts ?? 0} video=${i.reasons?.video}${excerptBit}`;
+  });
   return [
     "Ranked calendar (deterministic):",
     ...lines,
