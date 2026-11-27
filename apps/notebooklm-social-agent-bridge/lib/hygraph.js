@@ -47,12 +47,14 @@ const LESSONS_QUERY = `
       description { text }
       tags
       videoUrl
-      videoFile { url fileName }
+      videoFile { url fileName mimeType size }
       pdfFile { url fileName }
       thumbnail { url }
       featuredImage { url }
       createdAt
       publishedAt
+      type
+      category { id title slug }
     }
   }
 `;
@@ -82,19 +84,37 @@ export async function fetchHygraphLessons() {
   const { data, errors } = await res.json();
   if (errors?.length) throw new Error(`Hygraph GraphQL: ${errors[0].message}`);
 
-  return (data?.mediaItems || []).map((m) => ({
-    id: m.slug || m.id,
-    hygraphId: m.id,
-    title: m.title,
-    excerpt: m.excerpt || m.description?.text || "",
-    videoUrl: m.videoFile?.url || m.videoUrl || null,
-    videoFileUrl: m.videoFile?.url || null,
-    tags: Array.isArray(m.tags) ? m.tags : [],
-    artifacts: [
-      ...(m.pdfFile?.url ? [m.pdfFile.url] : []),
-      ...(m.thumbnail?.url ? [m.thumbnail.url] : []),
-      ...(m.featuredImage?.url ? [m.featuredImage.url] : []),
-    ],
-    source: "hygraph",
-  }));
+  return (data?.mediaItems || []).map((m) => {
+    const videoFileUrl = m.videoFile?.url || null;
+    const externalVideoUrl =
+      m.videoUrl && m.videoUrl !== videoFileUrl ? m.videoUrl : null;
+    return {
+      id: m.slug || m.id,
+      hygraphId: m.id,
+      title: m.title,
+      excerpt: m.excerpt || m.description?.text || "",
+      descriptionText: m.description?.text || "",
+      // Prefer CDN/binary mp4 for social; keep NotebookLM/external URL separate.
+      videoUrl: videoFileUrl || m.videoUrl || null,
+      videoFileUrl,
+      externalVideoUrl,
+      videoFileName: m.videoFile?.fileName || null,
+      videoMimeType: m.videoFile?.mimeType || null,
+      videoSize: m.videoFile?.size ?? null,
+      pdfUrl: m.pdfFile?.url || null,
+      thumbnailUrl: m.thumbnail?.url || null,
+      featuredImageUrl: m.featuredImage?.url || null,
+      tags: Array.isArray(m.tags) ? m.tags : [],
+      type: m.type || "VIDEO",
+      category: m.category?.title || m.category?.slug || null,
+      createdAt: m.createdAt || null,
+      publishedAt: m.publishedAt || null,
+      artifacts: [
+        ...(m.pdfFile?.url ? [m.pdfFile.url] : []),
+        ...(m.thumbnail?.url ? [m.thumbnail.url] : []),
+        ...(m.featuredImage?.url ? [m.featuredImage.url] : []),
+      ],
+      source: "hygraph",
+    };
+  });
 }

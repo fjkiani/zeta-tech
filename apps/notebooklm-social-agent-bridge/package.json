@@ -6,7 +6,8 @@
   "description": "Bridge Zeta Tech NotebookLM lesson artifacts to langchain-social-agent (LangGraph)",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "dry-run:video-context": "node scripts/dry-run-video-context-caption.js"
   },
   "engines": {
     "node": ">=20"
