@@ -14,8 +14,40 @@ import {
   isHygraphConfigured,
 } from "./lib/hygraph.js";
 import { buildSuggestion } from "./lib/gtm-prompts.js";
+import {
+  getClerkConfig,
+  verifyClerkToken,
+  bearerFromRequest,
+} from "./lib/clerk-auth.js";
+import { getLlmConfig, chatComplete, parseJsonContent } from "./lib/llm.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/** Minimal .env loader (no dotenv dep). Does not override existing process.env. */
+function loadDotEnv(filePath) {
+  try {
+    if (!fs.existsSync(filePath)) return;
+    for (const line of fs.readFileSync(filePath, "utf8").split("\n")) {
+      const t = line.trim();
+      if (!t || t.startsWith("#")) continue;
+      const i = t.indexOf("=");
+      if (i <= 0) continue;
+      const k = t.slice(0, i).trim();
+      let v = t.slice(i + 1).trim();
+      if (
+        (v.startsWith('"') && v.endsWith('"')) ||
+        (v.startsWith("'") && v.endsWith("'"))
+      ) {
+        v = v.slice(1, -1);
+      }
+      if (process.env[k] === undefined) process.env[k] = v;
+    }
+  } catch {
+    /* ignore */
+  }
+}
+loadDotEnv(path.join(__dirname, ".env"));
+
 const PORT = Number(process.env.PORT || 4317);
 const DATA_DIR = path.join(__dirname, "data");
 const PUBLIC_DIR = path.join(__dirname, "public");
@@ -66,19 +98,64 @@ function auditRows() {
 }
 
 // ---------------------------------------------------------------------------
-// Auth gate (handoff §3): BRIDGE_API_KEY protects mutating POSTs; GETs open.
+// Auth gate: BRIDGE_API_KEY and/or Clerk session JWT (OPEN-1).
+// Mutating POSTs require at least one configured gate to pass.
+// GETs + dry-runs stay open (no side effects).
 // ---------------------------------------------------------------------------
 
-function authorized(req, url, body = {}) {
-  const expected = process.env.BRIDGE_API_KEY;
-  if (!expected) return { ok: true, mode: "open" };
-  const provided =
-    req.headers["x-bridge-key"] ||
-    url.searchParams.get("key") ||
-    body.bridgeApiKey;
-  return provided === expected
-    ? { ok: true, mode: "api_key" }
-    : { ok: false, mode: "api_key" };
+function authModeLabel() {
+  const clerk = getClerkConfig().enabled;
+  const key = Boolean(process.env.BRIDGE_API_KEY);
+  if (clerk && key) return "clerk+api_key";
+  if (clerk) return "clerk";
+  if (key) return "api_key";
+  return "open";
+}
+
+async function authorized(req, url, body = {}) {
+  const clerkCfg = getClerkConfig();
+  const expectedKey = process.env.BRIDGE_API_KEY;
+  const gates = [];
+  if (clerkCfg.enabled) gates.push("clerk");
+  if (expectedKey) gates.push("api_key");
+
+  // No gates configured → open (Phase-0 / local). Prefer setting Clerk or key.
+  if (gates.length === 0) return { ok: true, mode: "open" };
+
+  if (expectedKey) {
+    const provided =
+      req.headers["x-bridge-key"] ||
+      url.searchParams.get("key") ||
+      body.bridgeApiKey;
+    if (provided === expectedKey) return { ok: true, mode: "api_key" };
+  }
+
+  if (clerkCfg.enabled) {
+    const token = bearerFromRequest(req) || body.clerkToken || null;
+    if (token) {
+      try {
+        const verified = await verifyClerkToken(token);
+        if (verified.ok) {
+          return {
+            ok: true,
+            mode: "clerk",
+            userId: verified.userId,
+            sessionId: verified.sessionId,
+          };
+        }
+      } catch (err) {
+        log({ evt: "clerk_verify_failed", error: String(err.message || err) });
+      }
+    }
+  }
+
+  return {
+    ok: false,
+    mode: authModeLabel(),
+    hint: clerkCfg.enabled
+      ? "Sign in with Clerk (Authorization: Bearer <session>) or pass x-bridge-key"
+      : "Pass BRIDGE_API_KEY as x-bridge-key header or ?key=",
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -365,9 +442,37 @@ const server = http.createServer(async (req, res) => {
         time: new Date().toISOString(),
         langgraph: lg,
         config: getLangGraphConfig(),
-        auth: process.env.BRIDGE_API_KEY ? "api_key" : "open",
+        auth: authModeLabel(),
+        clerk: {
+          enabled: getClerkConfig().enabled,
+          // publishable key is public by design — FE needs it to boot Clerk JS
+          publishableKey: getClerkConfig().publishableKey,
+          frontendApi: getClerkConfig().frontendApi,
+        },
+        llm: (() => {
+          const l = getLlmConfig();
+          return {
+            provider: l.provider,
+            configured: l.configured,
+            model: l.model,
+            baseUrl: l.baseUrl,
+          };
+        })(),
         hygraph: { configured: isHygraphConfigured(), url: getHygraphConfig().url },
         auditRows: auditRows(),
+      });
+    }
+
+    // Public auth bootstrap for the console (publishable key only — never secret).
+    if (req.method === "GET" && pathname === "/api/auth/config") {
+      const c = getClerkConfig();
+      return finish(200, {
+        auth: authModeLabel(),
+        clerk: {
+          enabled: c.enabled,
+          publishableKey: c.publishableKey,
+          frontendApi: c.frontendApi,
+        },
       });
     }
 
@@ -427,8 +532,8 @@ const server = http.createServer(async (req, res) => {
 
     if (req.method === "POST" && pathname === "/api/schedule") {
       const body = await readBody(req);
-      const authz = authorized(req, url, body);
-      if (!authz.ok) return finish(401, { error: "unauthorized" });
+      const authz = await authorized(req, url, body);
+      if (!authz.ok) return finish(401, { error: "unauthorized", hint: authz.hint });
 
       const when = Date.parse(body.scheduledFor || "");
       if (!Number.isFinite(when)) {
@@ -482,8 +587,8 @@ const server = http.createServer(async (req, res) => {
     const cancelMatch = pathname.match(/^\/api\/schedule\/([^/]+)\/cancel$/);
     if (req.method === "POST" && cancelMatch) {
       const body = await readBody(req);
-      const authz = authorized(req, url, body);
-      if (!authz.ok) return finish(401, { error: "unauthorized" });
+      const authz = await authorized(req, url, body);
+      if (!authz.ok) return finish(401, { error: "unauthorized", hint: authz.hint });
       const items = readScheduled();
       const item = items.find((s) => s.id === cancelMatch[1]);
       if (!item) return finish(404, { error: "schedule_not_found" });
@@ -523,19 +628,72 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
-    // GTM "suggest" stub (P2-9): returns the deterministic calendar plus the
-    // system+user prompts a future GTM LLM agent would receive. No LLM is
-    // called — suggestion is generated locally from the calendar.
+    // GTM suggest: stub by default; optional live LLM via ?runLlm=1 (OpenRouter / openai-compatible).
+    // Stub path always available — keeps prior deterministic behavior.
     if (req.method === "GET" && pathname === "/api/calendar/suggest") {
       const { lessons, source } = await loadLessons(url.searchParams.get("source") || "auto");
       const calendar = buildCalendar(lessons);
-      return finish(200, {
+      const base = {
         generatedAt: new Date().toISOString(),
         lessonsSource: source,
         deterministic: true,
         ...calendar,
         suggestion: { llm: "not called", ...buildSuggestion(calendar) },
-      });
+      };
+      const runLlm =
+        url.searchParams.get("runLlm") === "1" ||
+        url.searchParams.get("run") === "1";
+      if (!runLlm) return finish(200, base);
+
+      const llmCfg = getLlmConfig();
+      if (!llmCfg.configured) {
+        return finish(200, {
+          ...base,
+          suggestion: {
+            ...base.suggestion,
+            llm: "skipped — not configured",
+            provider: llmCfg.provider,
+            model: llmCfg.model,
+          },
+        });
+      }
+
+      try {
+        const prompts = buildSuggestion(calendar);
+        const completion = await chatComplete({
+          messages: [
+            { role: "system", content: prompts.systemPrompt },
+            { role: "user", content: prompts.userPrompt },
+          ],
+        });
+        const parsed = parseJsonContent(completion.content);
+        audit("gtm_llm_suggest", {
+          rid,
+          provider: completion.provider,
+          model: completion.model,
+          parsed: Boolean(parsed),
+        });
+        return finish(200, {
+          ...base,
+          suggestion: {
+            llm: "called",
+            provider: completion.provider,
+            model: completion.model,
+            usage: completion.usage,
+            systemPrompt: prompts.systemPrompt,
+            userPrompt: prompts.userPrompt,
+            raw: completion.content,
+            captions: parsed,
+          },
+        });
+      } catch (err) {
+        audit("gtm_llm_failed", { rid, error: err.message, code: err.code || null });
+        return finish(502, {
+          error: err.code || "llm_failed",
+          message: err.message,
+          suggestion: base.suggestion,
+        });
+      }
     }
 
     if (req.method === "POST" && pathname === "/api/draft") {
@@ -559,10 +717,13 @@ const server = http.createServer(async (req, res) => {
       // Dry-run performs no side effects — stays open like GETs.
       // Anything that can post or queue (live upload, HITL parking) is gated.
       if (!isDryRun) {
-        const authz = authorized(req, url, body);
+        const authz = await authorized(req, url, body);
         if (!authz.ok) {
-          audit("upload_rejected_auth", { rid });
-          return finish(401, { error: "unauthorized", hint: "Pass BRIDGE_API_KEY as x-bridge-key header or ?key=" });
+          audit("upload_rejected_auth", { rid, mode: authz.mode });
+          return finish(401, {
+            error: "unauthorized",
+            hint: authz.hint || "Pass Clerk Bearer token or x-bridge-key",
+          });
         }
       }
 
@@ -707,8 +868,8 @@ const server = http.createServer(async (req, res) => {
     const approveMatch = pathname.match(/^\/api\/approvals\/([^/]+)\/(approve|reject)$/);
     if (req.method === "POST" && approveMatch) {
       const body = await readBody(req);
-      const authz = authorized(req, url, body);
-      if (!authz.ok) return finish(401, { error: "unauthorized" });
+      const authz = await authorized(req, url, body);
+      if (!authz.ok) return finish(401, { error: "unauthorized", hint: authz.hint });
 
       const [, approvalId, action] = approveMatch;
       const approvals = readApprovals();
@@ -797,11 +958,14 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, "0.0.0.0", () => {
+  const llm = getLlmConfig();
   log({
     evt: "listening",
     port: PORT,
     langgraph: getLangGraphConfig().apiUrl,
-    auth: process.env.BRIDGE_API_KEY ? "api_key" : "open",
+    auth: authModeLabel(),
+    clerk: getClerkConfig().enabled,
+    llm: { provider: llm.provider, configured: llm.configured, model: llm.model },
     live: process.env.LIVE === "1",
   });
 });

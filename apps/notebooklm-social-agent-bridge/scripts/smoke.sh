@@ -14,6 +14,9 @@ rm -f data/approvals.json data/scheduled.json
 node --check server.js
 node --check lib/hygraph.js
 node --check lib/langgraph.js
+node --check lib/llm.js
+node --check lib/clerk-auth.js
+node --check lib/gtm-prompts.js
 node --check scripts/sync-hygraph.js
 echo "PASS syntax (server.js, lib/*.js, scripts/sync-hygraph.js)"
 
@@ -30,8 +33,9 @@ jgrep() { printf '%s' "$1" | tr -d ' \n' | grep -q "$2"; }
 HEALTH=$(curl -sf "$BASE/api/health") || fail "health unreachable"
 jgrep "$HEALTH" '"ok":true' || fail "health ok"
 jgrep "$HEALTH" 'notebooklm-social-agent-bridge' || fail "health service name"
-jgrep "$HEALTH" '"auth":"api_key"' || fail "health auth mode"
-echo "PASS /api/health (ok, service, auth=api_key)"
+node -e "const h=JSON.parse(process.argv[1]); const ok=['api_key','clerk','clerk+api_key'].includes(h.auth); if(!ok) process.exit(1)" "$HEALTH" \
+  || fail "health auth mode (expected api_key|clerk|clerk+api_key)"
+echo "PASS /api/health (ok, service, auth gated)"
 
 # 2. lessons
 LESSONS=$(curl -sf "$BASE/api/lessons?source=static") || fail "lessons unreachable"
@@ -163,7 +167,7 @@ node -e "const c=JSON.parse(process.argv[1]); if(!c.items.length) process.exit(1
   || fail "calendar items platforms"
 echo "PASS /api/calendar (deterministic, 14-day, ranked)"
 
-# 9b. GTM suggest stub (P2-9): prompts present, no LLM called, hard type check
+# 9b. GTM suggest stub (default): prompts present, no LLM called
 SUG=$(curl -sf "$BASE/api/calendar/suggest?source=static")
 jgrep "$SUG" '"llm":"not' || fail "suggest llm not called"
 node -e "
@@ -176,6 +180,24 @@ if (typeof s.deterministic !== 'boolean' || !s.deterministic) process.exit(1);
 " "$SUG" || fail "suggest prompts/types"
 echo "PASS /api/calendar/suggest (GTM prompts stub, llm=not called, types OK)"
 
+# 9c. auth config + health expose clerk/llm flags (no secrets beyond publishable)
+AUTHCFG=$(curl -sf "$BASE/api/auth/config")
+jgrep "$AUTHCFG" '"clerk":' || fail "auth/config missing clerk"
+HEALTH=$(curl -sf "$BASE/api/health")
+jgrep "$HEALTH" '"llm":' || fail "health missing llm"
+echo "PASS /api/auth/config + health clerk/llm surface"
+
+# 9d. optional live LLM — only when OPENROUTER_API_KEY/LLM_API_KEY present in env
+if [ -n "${OPENROUTER_API_KEY:-${LLM_API_KEY:-}}" ]; then
+  LLM_SUG=$(curl -sf "$BASE/api/calendar/suggest?source=static&runLlm=1") \
+    || fail "runLlm suggest failed"
+  jgrep "$LLM_SUG" '"llm":"called"' || jgrep "$LLM_SUG" '"llm":"skipped' \
+    || fail "runLlm must be called or skipped"
+  echo "PASS /api/calendar/suggest?runLlm=1 (optional live LLM path)"
+else
+  echo "SKIP live LLM smoke (no OPENROUTER_API_KEY/LLM_API_KEY in env)"
+fi
+
 # 10. audit trail rows grew
 tail -1 data/audit.log | grep -q '"evt"' || fail "audit log events"
 echo "PASS audit trail (data/audit.log events appended)"
@@ -187,15 +209,20 @@ node -e "const a=JSON.parse(process.argv[1]); if(!a.total) process.exit(1); if(a
   || fail "audit endpoint counts"
 echo "PASS /api/audit (tail of data/audit.log)"
 
-# 12. console FE serves the ops panels (approvals, calendar, audit, key, results)
-HTML=$(curl -sf "$BASE/")
-for id in approvalsPanel calendarPanel auditPanel scheduledPanel apiKey resultsBox pLinkedin requireApproval publishOnApprove mediaPreview scheduleAt sourceBadge; do
-  echo "$HTML" | grep -q "id=\"$id\"" || fail "console HTML missing id=$id"
+# 12. console FE serves the ops panels (approvals, calendar, audit, key, results, clerk, GTM)
+HTML_FILE=$(mktemp)
+curl -sf "$BASE/" >"$HTML_FILE" || fail "console HTML fetch"
+for id in approvalsPanel calendarPanel auditPanel scheduledPanel apiKey resultsBox pLinkedin requireApproval publishOnApprove mediaPreview scheduleAt sourceBadge clerkMount gtmSuggestBtn gtmLlmBtn; do
+  grep -q "id=\"$id\"" "$HTML_FILE" || fail "console HTML missing id=$id"
 done
-node -e "const h=require('fs').writeFileSync; void h; const s=process.argv[1]; new (class{constructor(){}});
-// crude syntax gate: the inline script must parse as a script element body
-const m=s.match(/<script>([\s\S]*)<\/script>/); if(!m) process.exit(1); new Function(m[1].replace(/await /g,'')) " "$HTML" \
-  || fail "console inline script does not parse"
+node -e "
+const fs=require('fs');
+const s=fs.readFileSync(process.argv[1],'utf8');
+const m=s.match(/<script>([\\s\\S]*)<\\/script>/);
+if(!m) process.exit(1);
+new Function(m[1].replace(/await /g,''));
+" "$HTML_FILE" || fail "console inline script does not parse"
+rm -f "$HTML_FILE"
 echo "PASS console FE (ops panels + key entry + results box present, script parses)"
 
 echo "ALL BRIDGE SMOKE TESTS PASSED"

@@ -32,11 +32,19 @@
           <input
             id="apiKey"
             type="password"
-            placeholder="BRIDGE_API_KEY (stored in this browser only)"
+            placeholder="BRIDGE_API_KEY (optional if signed in with Clerk)"
             autocomplete="off"
           />
           <button class="ghost" id="saveKeyBtn" type="button">Save key</button>
+          <div id="clerkMount" class="clerk-mount" hidden>
+            <div id="clerkUser"></div>
+            <button class="ghost" id="clerkSignInBtn" type="button" hidden>Sign in</button>
+            <button class="ghost" id="clerkSignOutBtn" type="button" hidden>Sign out</button>
+          </div>
         </div>
+        <p class="hint" id="authHint">
+          Mutating actions need Clerk session and/or BRIDGE_API_KEY. Dry-runs stay open.
+        </p>
       </header>
 
       <main class="layout">
@@ -127,7 +135,11 @@
         </section>
 
         <section class="panel" id="calendarPanel">
-          <h2>2-week calendar <button class="ghost small" id="calendarRefresh" type="button">Refresh</button></h2>
+          <h2>2-week calendar
+            <button class="ghost small" id="calendarRefresh" type="button">Refresh</button>
+            <button class="ghost small" id="gtmSuggestBtn" type="button" title="Deterministic stub prompts">GTM stub</button>
+            <button class="ghost small" id="gtmLlmBtn" type="button" title="Optional OpenRouter / openai-compatible run">GTM LLM</button>
+          </h2>
           <p class="hint">
             Deterministic ranking (video, artifacts, freshness) — no LLM.
           </p>
@@ -181,6 +193,10 @@
       };
 
       // API key: browser sessionStorage only, sent as x-bridge-key.
+      // Clerk session JWT (when enabled) sent as Authorization: Bearer.
+      let clerk = null;
+      let clerkToken = null;
+
       els.apiKey.value = sessionStorage.getItem("bridgeApiKey") || "";
       els.saveKeyBtn.addEventListener("click", () => {
         const key = els.apiKey.value.trim();
@@ -192,6 +208,62 @@
           1500,
         );
       });
+
+      async function refreshClerkToken() {
+        clerkToken = null;
+        if (!clerk?.session) return null;
+        try {
+          clerkToken = await clerk.session.getToken();
+        } catch {
+          clerkToken = null;
+        }
+        return clerkToken;
+      }
+
+      async function bootClerk(publishableKey) {
+        const mount = document.getElementById("clerkMount");
+        const signInBtn = document.getElementById("clerkSignInBtn");
+        const signOutBtn = document.getElementById("clerkSignOutBtn");
+        const userEl = document.getElementById("clerkUser");
+        if (!publishableKey || !mount) return;
+        mount.hidden = false;
+
+        if (!window.Clerk) {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement("script");
+            s.src = "https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js";
+            s.async = true;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        }
+        clerk = window.Clerk;
+        await clerk.load({ publishableKey });
+
+        const syncUi = async () => {
+          const signedIn = Boolean(clerk.user);
+          signInBtn.hidden = signedIn;
+          signOutBtn.hidden = !signedIn;
+          userEl.textContent = signedIn
+            ? clerk.user.primaryEmailAddress?.emailAddress || clerk.user.id
+            : "";
+          await refreshClerkToken();
+        };
+
+        signInBtn.addEventListener("click", () => {
+          clerk.openSignIn({ afterSignInUrl: window.location.href });
+        });
+        signOutBtn.addEventListener("click", async () => {
+          await clerk.signOut();
+          clerkToken = null;
+          await syncUi();
+        });
+        clerk.addListener(({ user }) => {
+          void syncUi();
+        });
+        await syncUi();
+      }
 
       function selectedPlatforms() {
         const platforms = [];
@@ -304,13 +376,15 @@
 
       async function api(path, opts = {}) {
         const key = sessionStorage.getItem("bridgeApiKey");
-        const res = await fetch(path, {
-          headers: {
-            "content-type": "application/json",
-            ...(key ? { "x-bridge-key": key } : {}),
-          },
-          ...opts,
-        });
+        if (clerk?.session) await refreshClerkToken();
+        const headers = {
+          "content-type": "application/json",
+          ...(key ? { "x-bridge-key": key } : {}),
+          ...(clerkToken ? { authorization: "Bearer " + clerkToken } : {}),
+          ...(opts.headers || {}),
+        };
+        const { headers: _drop, ...rest } = opts;
+        const res = await fetch(path, { ...rest, headers });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
           const err = new Error(data.error || data.message || res.statusText);
@@ -326,8 +400,29 @@
           const h = await api("/api/health");
           els.bridgeDot.className = "dot ok";
           els.bridgeStatus.textContent = "Bridge online";
-          els.authStatus.textContent =
-            h.auth === "api_key" ? "auth: API key" : "auth: open";
+          const authLabels = {
+            open: "auth: open",
+            api_key: "auth: API key",
+            clerk: "auth: Clerk",
+            "clerk+api_key": "auth: Clerk + key",
+          };
+          els.authStatus.textContent = authLabels[h.auth] || "auth: " + h.auth;
+          if (h.clerk?.enabled && h.clerk.publishableKey && !clerk) {
+            try {
+              await bootClerk(h.clerk.publishableKey);
+            } catch (e) {
+              log("Clerk boot failed", { message: e.message });
+            }
+          }
+          if (h.llm) {
+            const hint = document.getElementById("authHint");
+            if (hint) {
+              hint.textContent =
+                "Mutating actions need Clerk and/or BRIDGE_API_KEY. Dry-runs open. LLM: " +
+                h.llm.provider +
+                (h.llm.configured ? " · " + h.llm.model : " · stub only");
+            }
+          }
           if (h.langgraph?.ok) {
             els.lgDot.className = "dot ok";
             const target =
@@ -568,6 +663,20 @@
           els.calendarList.innerHTML = `<p class="hint">Failed to load calendar: ${e.message}</p>`;
         }
       }
+
+      async function runGtmSuggest(runLlm) {
+        try {
+          const q = runLlm
+            ? "/api/calendar/suggest?source=static&runLlm=1"
+            : "/api/calendar/suggest?source=static";
+          const data = await api(q);
+          log(runLlm ? "GTM LLM suggest" : "GTM stub suggest", data.suggestion || data);
+        } catch (e) {
+          log("GTM suggest failed", e.data || { message: e.message });
+        }
+      }
+      document.getElementById("gtmSuggestBtn")?.addEventListener("click", () => runGtmSuggest(false));
+      document.getElementById("gtmLlmBtn")?.addEventListener("click", () => runGtmSuggest(true));
 
       async function loadAudit() {
         try {

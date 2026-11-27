@@ -388,11 +388,11 @@ Status of this pass: P0-1, P0-2, P1-3, P1-4, **P1-5 visual proof**, P1-6 **shipp
 P1-5 durable screenshots (committed, not path claims): [`apps/notebooklm-social-agent-bridge/docs/proof/`](../apps/notebooklm-social-agent-bridge/docs/proof/) — `bridge-console-screenshot.png`, `bridge-console-calendar.png`, `bridge-console-approvals.png` (captured 2026-11-27, `LIVE=0`).
 P2 disposition: **stubbed** — portal `/social` stub route (7), GTM prompts + `/api/calendar/suggest` stub (9), SocialPost docs-only sketch already in §7 (10). **Deferred** — identity (8) below. No live social posts were made; no Hygraph migration was run.
 
-### OPEN-1 — Bridge identity: Clerk / open identity (P2-8, DEFERRED)
-- **Why deferred:** the bridge is single-key (`BRIDGE_API_KEY`) by design for Phase-1; wiring a full identity provider is a security-surface change that must not ride along with a feature pass.
-- **Threat model note (current state):** the console at :4317 is reachable by anyone who can reach the port; GETs (lessons, calendar, audit, approvals list) are unauthenticated by design, and every mutating route (`/api/schedule`, cancel, approve, reject, live upload) requires the shared bearer-style key passed as `x-bridge-key` header or `?key=`. Risk: key sharing/no per-user attribution, no rate limiting, no session expiry; mitigations: keep the port loopback/tailnet-only until this ticket closes, rotate `BRIDGE_API_KEY`, audit log already records per-call events (no request-id scheme — out of scope per §14 bans).
+### OPEN-1 — Bridge identity: Clerk / open identity (P2-8) — **SHIPPED (hybrid)**
+- **Shipped:** when `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` + `CLERK_SECRET_KEY` are set, mutating routes accept a Clerk session JWT (`Authorization: Bearer`) verified via Clerk JWKS. `BRIDGE_API_KEY` remains a valid alternate gate. Console boots Clerk JS from `/api/health` publishable key. Portal `/social` stays Clerk-middleware protected and clarifies bridge vs LangGraph UI.
+- **Threat model note:** GETs + dry-runs stay open; mutating routes require Clerk **or** API key when either is configured. Still no per-user RBAC/rate limits — rotate keys, keep port private in prod.
 - **Owner:** Fahad Kiani
-- **Acceptance:** either (a) session auth live on :4317 (key→session exchange, mutating routes reject anonymous), or (b) a written threat-model sign-off explicitly accepting the shared-key posture for Phase-1.
+- **Acceptance:** met via (a) Clerk session on :4317 + key fallback.
 
 ### OPEN-2 — Portal /social: MissionConsole social tools (P2-7 stub shipped; full surface deferred)
 - **Shipped:** `portal/app/social/page.jsx` — stub page linking to the bridge console (`NEXT_PUBLIC_BRIDGE_URL`, default `http://localhost:4317`) with the Phase-1 dry-run disclaimer. Additive; not exercised by a portal build in this pass.
@@ -400,11 +400,11 @@ P2 disposition: **stubbed** — portal `/social` stub route (7), GTM prompts + `
 - **Owner:** Fahad Kiani
 - **Acceptance:** MissionConsole renders social tools wired to live bridge endpoints (lessons/calendar/approvals), behind portal auth, with a portal build passing.
 
-### OPEN-3 — GTM LLM agent run (P2-9 stub shipped; LLM path deferred)
-- **Shipped:** `lib/gtm-prompts.js` (`buildGtmSystemPrompt`, `buildGtmUserPrompt`, `buildSuggestion`) + `GET /api/calendar/suggest` returning `{llm:"not called", systemPrompt, userPrompt}` over the deterministic calendar. Smoke-asserted.
-- **Deferred:** an actual LLM call producing per-item captions; captions must land in Approvals (dry-run) — never auto-post.
+### OPEN-3 — GTM LLM agent run (P2-9) — **SHIPPED (optional live path)**
+- **Shipped:** stub `GET /api/calendar/suggest` unchanged (default). Optional live path `?runLlm=1` via provider-agnostic `lib/llm.js` (OpenRouter / OpenAI-compatible; `OPENROUTER_MODEL` / `LLM_MODEL` switchable). Console **GTM stub** / **GTM LLM** buttons. Smoke keeps stub green; live LLM smoke runs only when API key present.
+- **Still open (follow-up):** auto-park LLM captions into Approvals (dry-run) — not required for this wire-up.
 - **Owner:** Fahad Kiani
-- **Acceptance:** a GTM agent run writes drafts to the Approvals queue (dry-run default), each caption traceable to lesson content, no invented clinical claims (per system-prompt rules), smoke stays green with the agent disabled by default.
+- **Acceptance:** stub default green; live run works when `OPENROUTER_API_KEY` set; no auto-post.
 
 ### OPEN-4 — Hygraph `SocialPost` migration (P2-10, docs-only this pass)
 - **Shipped:** §7 docs-only schema sketch (fields + `SocialPost` relation). **No migration was run** (hard ban this pass).

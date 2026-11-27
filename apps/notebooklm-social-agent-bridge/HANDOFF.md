@@ -42,7 +42,10 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 | `LINKEDIN_ORG_VANITY` | `crispro` | Display/metadata only |
 | `LINKEDIN_ORG_NAME` | `CrisPRO.ai` | Display/metadata only |
 | `LINKEDIN_USER_ID` / `ARCADE_USER_ID` | unset | Surfaced in `/api/health` config only; **posting uses the LangGraph process `.env`** |
-| `BRIDGE_API_KEY` | unset (open) | When set: live `/api/upload` + approval actions require `x-bridge-key` header (or `?key=`); 401 without. GETs and no-side-effect dry-runs stay open |
+| `BRIDGE_API_KEY` | unset | Mutating POSTs: `x-bridge-key` / `?key=` (or Clerk Bearer). GETs + dry-runs stay open |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` | unset | When both set: Clerk session JWT accepted on mutating routes; console boots Clerk JS |
+| `OPENROUTER_API_KEY` / `LLM_API_KEY` | unset | Optional GTM LLM for `/api/calendar/suggest?runLlm=1` |
+| `OPENROUTER_MODEL` / `LLM_MODEL` / `LLM_PROVIDER` / `LLM_BASE_URL` | openrouter + free Ernie | Switch models/providers without code changes; stub path always default |
 | `HYGRAPH_URL` / `NEXT_PUBLIC_HYGRAPH_URL` | unset | Content API endpoint; when set, `/api/lessons?source=auto\|hygraph` reads published VIDEO `MediaItem`s live |
 | `HYGRAPH_TOKEN` / `NEXT_PUBLIC_HYGRAPH_TOKEN` | unset | Only needed for non-public reads; public PUBLISHED stage needs none |
 
@@ -59,7 +62,8 @@ It does **not** embed Arcade, LinkedIn tokens, or Hygraph. Auth and posting happ
 | `GET` | `/api/lessons/:id` | Lesson + optional `transcript` / `context` file contents |
 | `GET` | `/api/approvals` | HITL queue (`data/approvals.json`) |
 | `GET` | `/api/calendar?source=` | Deterministic 2-week ranked post calendar (GTM Strategist v0; no LLM) |
-| `GET` | `/api/calendar/suggest?source=` | GTM suggest stub (P2-9): calendar + system/user prompts for a future GTM LLM agent. `llm:"not called"` — no LLM call, deterministic |
+| `GET` | `/api/calendar/suggest?source=` | GTM stub (default `llm:"not called"`). Add `runLlm=1` for optional OpenRouter/openai-compatible captions |
+| `GET` | `/api/auth/config` | Public Clerk publishable bootstrap (`enabled`, `publishableKey`) |
 | `GET` | `/api/audit?limit=50` | Read-only tail of `data/audit.log` for the console audit viewer |
 | `POST` | `/api/draft` | `{ lessonId, platform? }` → `{ post, chars, rid }` |
 | `POST` | `/api/upload` | Drafts if needed, then `upload_post` (or `dryRun`, or `requireApproval` parking). Auth-gated except dry-run. Fail-closed media HEAD check; `platforms` allowlist passthrough; per-platform `results` array in response |

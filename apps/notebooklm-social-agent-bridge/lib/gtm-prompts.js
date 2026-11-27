@@ -1,11 +1,9 @@
 /**
- * GTM Strategist v1 stub — deterministic prompt builder (P2-9).
+ * GTM Strategist prompts — deterministic builder (always available).
  *
- * v0 (`buildCalendar` in server.js) ranks lessons deterministically with no LLM.
- * This module turns a ranked calendar into ready-to-run LLM prompts so a real
- * GTM agent (portal `app/lib/agents/gtm-strategist/` or social-agent
- * `src/agents/gtm-strategist/`) can be wired in later without redesign.
- * No LLM is called anywhere in the bridge.
+ * v0 (`buildCalendar` in server.js) ranks lessons with no LLM.
+ * Live runs go through `lib/llm.js` when `/api/calendar/suggest?runLlm=1`
+ * and OPENROUTER_API_KEY (or LLM_API_KEY) are set. Stub path stays default.
  */
 
 export function buildGtmSystemPrompt() {
