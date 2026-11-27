@@ -326,19 +326,40 @@ function markDueScheduled() {
 // GTM Strategist v0 (handoff §5): deterministic 2-week ranked calendar. No LLM.
 // ---------------------------------------------------------------------------
 
+/** Short grounded excerpt for GTM captions (Hygraph excerpt or local transcript/context). */
+function lessonExcerpt(lesson, maxChars = 420) {
+  const inline = (lesson.excerpt || lesson.description || "").toString().trim();
+  if (inline) return inline.replace(/\s+/g, " ").slice(0, maxChars);
+  for (const rel of [lesson.transcriptFile, lesson.contextFile]) {
+    if (!rel) continue;
+    const p = path.join(DATA_DIR, rel);
+    if (!fs.existsSync(p)) continue;
+    const raw = fs.readFileSync(p, "utf8").replace(/\s+/g, " ").trim();
+    if (raw) return raw.slice(0, maxChars);
+  }
+  if (lesson.transcript) {
+    return String(lesson.transcript).replace(/\s+/g, " ").trim().slice(0, maxChars);
+  }
+  return "";
+}
+
 function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
   const now = Date.now();
   const scored = lessons.map((l) => {
     const artifacts = Array.isArray(l.artifacts) ? l.artifacts.length : 0;
     const hasVideo = Boolean(l.videoUrl || l.videoFileUrl);
+    const excerpt = lessonExcerpt(l);
     const created = Date.parse(l.createdAt || l.publishedAt || "") || NaN;
     const ageDays = Number.isFinite(created)
       ? Math.max(0, (now - created) / 86400000)
       : 30;
     const freshness = Math.max(0, 3 - ageDays / 7); // 3pts now → 0 at 3wks
     const score =
-      (hasVideo ? 2 : 0) + Math.min(3, artifacts) * 0.5 + freshness;
-    return { lesson: l, score, hasVideo, artifacts };
+      (hasVideo ? 2 : 0) +
+      Math.min(3, artifacts) * 0.5 +
+      freshness +
+      (excerpt ? 1 : 0);
+    return { lesson: l, score, hasVideo, artifacts, excerpt };
   });
   scored.sort((a, b) => b.score - a.score);
 
@@ -354,9 +375,11 @@ function buildCalendar(lessons, { horizonDays = 14, perWeek = 3 } = {}) {
       title: s.lesson.title,
       platform: platforms[n % platforms.length],
       score: Number(s.score.toFixed(2)),
+      excerpt: s.excerpt || "",
       reasons: {
         video: s.hasVideo,
         artifacts: s.artifacts,
+        hasExcerpt: Boolean(s.excerpt),
         ageDays: Number.isFinite(s.lesson.createdAt)
           ? Math.round((now - Date.parse(s.lesson.createdAt)) / 86400000)
           : null,
@@ -459,6 +482,7 @@ const server = http.createServer(async (req, res) => {
           };
         })(),
         hygraph: { configured: isHygraphConfigured(), url: getHygraphConfig().url },
+        live: process.env.LIVE === "1",
         auditRows: auditRows(),
       });
     }
