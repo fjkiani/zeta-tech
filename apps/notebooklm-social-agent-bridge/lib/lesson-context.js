@@ -63,6 +63,102 @@ function readRelText(dataDir, rel, maxChars = DEFAULT_TRANSCRIPT_CHARS) {
 }
 
 /**
+ * Metadata-only NotebookLM / subject extract for the context pack.
+ * Uses title, tags, filenames, and external NotebookLM URL host — never video bytes.
+ *
+ * @param {object} lesson
+ * @param {object} media
+ * @returns {object}
+ */
+export function extractNotebookLmFacts(lesson, media = {}) {
+  const external = media.externalVideoUrl || lesson.externalVideoUrl || null;
+  const notebookLm =
+    Boolean(external && looksLikeNotebookLm(external)) ||
+    Boolean(lesson.videoUrl && looksLikeNotebookLm(lesson.videoUrl));
+
+  const subjectFacts = [];
+  const title = cleanText(lesson.title || "");
+  if (title) {
+    subjectFacts.push(`title_label: ${title}`);
+  }
+  for (const tag of lesson.tags || []) {
+    if (tag) subjectFacts.push(`tag: ${tag}`);
+  }
+  if (media.videoFileName || lesson.videoFileName) {
+    subjectFacts.push(
+      `video_file_name: ${media.videoFileName || lesson.videoFileName}`,
+    );
+  }
+
+  const artifactHints = [];
+  const files = Array.isArray(lesson.artifactFiles) ? lesson.artifactFiles : [];
+  for (const f of files) {
+    if (!f?.url) continue;
+    artifactHints.push({
+      role: f.role || "artifact",
+      fileName: f.fileName || null,
+      url: f.url,
+      kindGuess: f.fileName
+        ? /\.pdf/i.test(f.fileName)
+          ? "pdf"
+          : /\.(png|jpe?g|webp|gif)/i.test(f.fileName)
+            ? "image"
+            : "other"
+        : "unknown",
+    });
+    if (f.fileName) {
+      subjectFacts.push(`artifact_file_name[${f.role || "artifact"}]: ${f.fileName}`);
+    }
+  }
+  // Fallback when artifactFiles absent but filenames present on lesson.
+  if (!files.length) {
+    if (lesson.featuredImageFileName) {
+      subjectFacts.push(
+        `artifact_file_name[featuredImage]: ${lesson.featuredImageFileName}`,
+      );
+      artifactHints.push({
+        role: "featuredImage",
+        fileName: lesson.featuredImageFileName,
+        url: lesson.featuredImageUrl || media.artifactUrls?.[0] || null,
+        kindGuess: /\.pdf/i.test(lesson.featuredImageFileName) ? "pdf" : "other",
+      });
+    }
+    if (lesson.thumbnailFileName) {
+      subjectFacts.push(
+        `artifact_file_name[thumbnail]: ${lesson.thumbnailFileName}`,
+      );
+      artifactHints.push({
+        role: "thumbnail",
+        fileName: lesson.thumbnailFileName,
+        url: lesson.thumbnailUrl || null,
+        kindGuess: "image",
+      });
+    }
+  }
+
+  const gaps = [];
+  if (!cleanText(lesson.excerpt || lesson.descriptionText || "")) {
+    gaps.push("no_excerpt_or_description");
+  }
+  if (!lesson.transcriptFile && !lesson.contextFile && !lesson.transcript) {
+    gaps.push("no_local_transcript_or_context_file");
+  }
+  if (!notebookLm) gaps.push("no_notebooklm_external_url");
+
+  return {
+    present: notebookLm,
+    externalUrl: notebookLm
+      ? external || (looksLikeNotebookLm(lesson.videoUrl) ? lesson.videoUrl : null)
+      : null,
+    host: notebookLm ? hostOf(external || lesson.videoUrl) : null,
+    subjectFacts,
+    artifactHints,
+    gaps,
+    note: "Metadata-only NotebookLM/subject extract — video/PDF bodies not watched, OCR'd, or transcribed",
+  };
+}
+
+/**
  * Infer provenance labels from evidence only (no invented production story).
  * @param {object} lesson
  * @param {{ videoFileUrl?: string|null, externalVideoUrl?: string|null }} media
@@ -153,13 +249,35 @@ export function buildLessonContextPack(lesson, opts = {}) {
     artifactList.map((a) => (typeof a === "string" ? a : a?.url)).filter(Boolean),
   );
 
+  const namedPdfUrls = [];
+  const namedImageUrls = [];
+  for (const f of lesson.artifactFiles || []) {
+    if (!f?.url) continue;
+    if (f.fileName && /\.pdf/i.test(f.fileName)) namedPdfUrls.push(f.url);
+    else if (f.fileName && /\.(png|jpe?g|webp|gif)/i.test(f.fileName)) {
+      namedImageUrls.push(f.url);
+    }
+  }
+  if (lesson.featuredImageFileName && /\.pdf/i.test(lesson.featuredImageFileName)) {
+    if (lesson.featuredImageUrl) namedPdfUrls.push(lesson.featuredImageUrl);
+  }
+  if (lesson.thumbnailFileName && lesson.thumbnailUrl) {
+    namedImageUrls.push(lesson.thumbnailUrl);
+  }
+
   const imageUrls = uniqUrls([
+    ...namedImageUrls,
     lesson.thumbnailUrl || null,
-    lesson.featuredImageUrl || null,
+    // Only treat featuredImage as image when filename is not a PDF.
+    lesson.featuredImageUrl &&
+    !(lesson.featuredImageFileName && /\.pdf/i.test(lesson.featuredImageFileName))
+      ? lesson.featuredImageUrl
+      : null,
     ...artifactUrls.filter((u) => /\.(png|jpe?g|webp|gif)(\?|$)/i.test(u)),
   ]);
   const pdfUrls = uniqUrls([
     lesson.pdfUrl || null,
+    ...namedPdfUrls,
     ...artifactUrls.filter((u) => /\.pdf(\?|$)/i.test(u)),
   ]);
 
@@ -195,6 +313,7 @@ export function buildLessonContextPack(lesson, opts = {}) {
   };
 
   const provenance = inferProvenance(lesson, media);
+  const notebookLmExtract = extractNotebookLmFacts(lesson, media);
 
   const gaps = [];
   if (!excerpt && !transcriptExcerpt) gaps.push("no_excerpt_or_transcript");
@@ -211,6 +330,7 @@ export function buildLessonContextPack(lesson, opts = {}) {
     transcriptExcerpt,
     media,
     provenance,
+    notebookLmExtract,
     hygraph: {
       id: lesson.hygraphId || null,
       slug: lesson.id || null,
@@ -280,6 +400,29 @@ export function formatContextPackForPrompt(pack, { platform } = {}) {
         })
         .join("; ")}`,
     );
+  }
+
+  const nle = pack.notebookLmExtract || null;
+  if (nle) {
+    lines.push(
+      `notebooklm_extract.present=${Boolean(nle.present)} note=${JSON.stringify(nle.note || "")}`,
+    );
+    if (nle.externalUrl) {
+      lines.push(`notebooklm_extract.externalUrl=${nle.externalUrl}`);
+    }
+    if (nle.subjectFacts?.length) {
+      lines.push(`notebooklm_extract.subject_facts: ${nle.subjectFacts.join(" | ")}`);
+    }
+    if (nle.artifactHints?.length) {
+      lines.push(
+        `notebooklm_extract.artifact_hints: ${nle.artifactHints
+          .map((h) => `${h.role}:${h.fileName || "?"}(${h.kindGuess || "?"})`)
+          .join("; ")}`,
+      );
+    }
+    if (nle.gaps?.length) {
+      lines.push(`notebooklm_extract.gaps: ${nle.gaps.join(", ")}`);
+    }
   }
 
   if (pack.hygraph?.createdAt || pack.hygraph?.publishedAt) {

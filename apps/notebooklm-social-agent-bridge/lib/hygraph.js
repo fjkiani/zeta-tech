@@ -49,8 +49,8 @@ const LESSONS_QUERY = `
       videoUrl
       videoFile { url fileName mimeType size }
       pdfFile { url fileName }
-      thumbnail { url }
-      featuredImage { url }
+      thumbnail { url fileName }
+      featuredImage { url fileName }
       createdAt
       publishedAt
       type
@@ -58,6 +58,17 @@ const LESSONS_QUERY = `
     }
   }
 `;
+
+/** Classify Hygraph asset URLs by fileName when the CDN path has no extension. */
+function assetKind(fileName, url) {
+  const name = String(fileName || "");
+  const u = String(url || "");
+  if (/\.pdf(\.pdf)?$/i.test(name) || /\.pdf(\?|$)/i.test(u)) return "pdf";
+  if (/\.(png|jpe?g|webp|gif)(\?|$)/i.test(name) || /\.(png|jpe?g|webp|gif)(\?|$)/i.test(u)) {
+    return "image";
+  }
+  return "other";
+}
 
 /**
  * Fetch published VIDEO MediaItems and normalize to the bridge lesson shape.
@@ -88,6 +99,27 @@ export async function fetchHygraphLessons() {
     const videoFileUrl = m.videoFile?.url || null;
     const externalVideoUrl =
       m.videoUrl && m.videoUrl !== videoFileUrl ? m.videoUrl : null;
+
+    const thumbUrl = m.thumbnail?.url || null;
+    const featuredUrl = m.featuredImage?.url || null;
+    const thumbName = m.thumbnail?.fileName || null;
+    const featuredName = m.featuredImage?.fileName || null;
+    const pdfFileUrl = m.pdfFile?.url || null;
+
+    // featuredImage may actually be a PDF deck (glassbox-ai); classify by fileName.
+    const pdfUrls = [
+      ...(pdfFileUrl ? [pdfFileUrl] : []),
+      ...(featuredUrl && assetKind(featuredName, featuredUrl) === "pdf"
+        ? [featuredUrl]
+        : []),
+    ];
+    const imageUrls = [
+      ...(thumbUrl ? [thumbUrl] : []),
+      ...(featuredUrl && assetKind(featuredName, featuredUrl) === "image"
+        ? [featuredUrl]
+        : []),
+    ];
+
     return {
       id: m.slug || m.id,
       hygraphId: m.id,
@@ -101,18 +133,34 @@ export async function fetchHygraphLessons() {
       videoFileName: m.videoFile?.fileName || null,
       videoMimeType: m.videoFile?.mimeType || null,
       videoSize: m.videoFile?.size ?? null,
-      pdfUrl: m.pdfFile?.url || null,
-      thumbnailUrl: m.thumbnail?.url || null,
-      featuredImageUrl: m.featuredImage?.url || null,
+      pdfUrl: pdfUrls[0] || null,
+      thumbnailUrl: thumbUrl,
+      thumbnailFileName: thumbName,
+      featuredImageUrl: featuredUrl,
+      featuredImageFileName: featuredName,
       tags: Array.isArray(m.tags) ? m.tags : [],
       type: m.type || "VIDEO",
       category: m.category?.title || m.category?.slug || null,
       createdAt: m.createdAt || null,
       publishedAt: m.publishedAt || null,
       artifacts: [
-        ...(m.pdfFile?.url ? [m.pdfFile.url] : []),
-        ...(m.thumbnail?.url ? [m.thumbnail.url] : []),
-        ...(m.featuredImage?.url ? [m.featuredImage.url] : []),
+        ...pdfUrls,
+        ...imageUrls,
+        // Keep untyped featured/thumb URLs so nothing is dropped.
+        ...(featuredUrl && !pdfUrls.includes(featuredUrl) && !imageUrls.includes(featuredUrl)
+          ? [featuredUrl]
+          : []),
+      ],
+      artifactFiles: [
+        ...(pdfFileUrl
+          ? [{ role: "pdfFile", url: pdfFileUrl, fileName: m.pdfFile?.fileName || null }]
+          : []),
+        ...(thumbUrl
+          ? [{ role: "thumbnail", url: thumbUrl, fileName: thumbName }]
+          : []),
+        ...(featuredUrl
+          ? [{ role: "featuredImage", url: featuredUrl, fileName: featuredName }]
+          : []),
       ],
       source: "hygraph",
     };

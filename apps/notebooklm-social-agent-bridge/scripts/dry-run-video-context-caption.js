@@ -158,6 +158,37 @@ if (!caption.includes(videoUrl)) {
 }
 pass("grounded dry-run caption cites video URL");
 
+const nle = pack.notebookLmExtract;
+if (!nle || typeof nle !== "object") {
+  fail("context pack missing notebookLmExtract");
+}
+pass("notebookLmExtract present on context pack");
+if (!formatted.includes("notebooklm_extract.")) {
+  fail("formatContextPackForPrompt omitted notebooklm_extract lines");
+}
+pass("formatContextPackForPrompt includes notebooklm_extract");
+if (nle.present && nle.externalUrl && !userPrompt.includes(nle.externalUrl)) {
+  // External URL may appear via EXTERNAL_OR_NOTEBOOKLM line; either is fine.
+  if (!userPrompt.includes("EXTERNAL_OR_NOTEBOOKLM_VIDEO_URL")) {
+    fail("userPrompt missing NotebookLM external URL / provenance line");
+  }
+}
+if (nle.subjectFacts?.length) {
+  pass(`notebookLmExtract.subjectFacts=${nle.subjectFacts.length}`);
+} else {
+  pass("notebookLmExtract.subjectFacts empty (metadata gap — ok)");
+}
+if (
+  source === "hygraph" &&
+  pack.media?.pdfUrls?.length &&
+  pack.media.pdfUrls.some((u) => (pack.media.imageUrls || []).includes(u))
+) {
+  fail("PDF deck URL incorrectly listed in imageUrls");
+}
+if (source === "hygraph" && pack.media?.pdfUrls?.length) {
+  pass(`pdfUrls classified (${pack.media.pdfUrls.length}) — not treated as images`);
+}
+
 const out = {
   ok: true,
   lessonId,
@@ -167,6 +198,11 @@ const out = {
   videoFileName: pack.media?.videoFileName || null,
   gaps: pack.gaps,
   provenance: pack.provenance,
+  notebookLmExtract: nle,
+  media: {
+    imageUrls: pack.media?.imageUrls || [],
+    pdfUrls: pack.media?.pdfUrls || [],
+  },
   promptChars: { system: systemPrompt.length, user: userPrompt.length },
   dryRunCaption: caption,
   // Truncate prompt sample for console (full URL still present above).
