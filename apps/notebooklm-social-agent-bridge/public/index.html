@@ -398,8 +398,11 @@
             body: JSON.stringify(uploadPayload({ dryRun: true })),
           });
           log("Dry run OK", data);
+          // Same contract as live upload: surface typed results[] in the console.
+          renderResults(data.results);
         } catch (e) {
           log("Dry run failed", e.data || { message: e.message });
+          els.resultsBox.hidden = true;
         }
       });
 

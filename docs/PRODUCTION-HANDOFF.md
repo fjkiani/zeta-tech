@@ -384,7 +384,8 @@ yarn start:auth                             # /auth/tiktok
 
 ## 15. OPEN tickets (deferred P2 items — owner + acceptance, 2026-11-26 product pass)
 
-Status of this pass: P0-1, P0-2, P1-3, P1-4, P1-6 **shipped** on `cursor/notebooklm-social-bridge-0411`.
+Status of this pass: P0-1, P0-2, P1-3, P1-4, **P1-5 visual proof**, P1-6 **shipped** on `cursor/notebooklm-social-bridge-0411`.
+P1-5 durable screenshots (committed, not path claims): [`apps/notebooklm-social-agent-bridge/docs/proof/`](../apps/notebooklm-social-agent-bridge/docs/proof/) — `bridge-console-screenshot.png`, `bridge-console-calendar.png`, `bridge-console-approvals.png` (captured 2026-11-27, `LIVE=0`).
 P2 disposition: **stubbed** — portal `/social` stub route (7), GTM prompts + `/api/calendar/suggest` stub (9), SocialPost docs-only sketch already in §7 (10). **Deferred** — identity (8) below. No live social posts were made; no Hygraph migration was run.
 
 ### OPEN-1 — Bridge identity: Clerk / open identity (P2-8, DEFERRED)

@@ -196,7 +196,8 @@ To attach video today:
 | New draft voice / platform | `server.js` → `draftFromLesson` |
 | Extra upload fields (schedule, platforms[]) | `server.js` `/api/upload` + `lib/langgraph.js` `buildConfigurable` / input |
 | Live Hygraph lessons | Replace `loadLessons()` with portal `app/lib/hygraph.js` pattern (`NEXT_PUBLIC_HYGRAPH_URL` / token) |
-| Scheduling UI (delayed runs) | New routes + LangGraph `generate_post` schedule or SDK `runs.create(…, { afterSeconds })` — not in bridge today. Console panels for approvals / calendar / audit / per-platform results / key entry ARE shipped (`public/index.html`) |
+| Scheduling UI (delayed runs) | Shipped Phase-1: `POST/GET /api/schedule` + `#scheduleAt` / `#scheduledPanel` — parks only, never auto-posts; release via Approvals. LangGraph delayed runs still future. |
+| Visual proof (#5) | `docs/proof/bridge-console-*.png` — full console + calendar + approvals crops (committed) |
 | Multi-school filter | Tag lessons in JSON or query Hygraph `schools` enum (migration in `HYGRAPH-SCHEMA-MIGRATION.md`) |
 
 ---
