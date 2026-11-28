@@ -8,10 +8,11 @@
  *   notebookId?: string,
  *   sourcePath?: string,
  *   schoolKey?: string,
- *   types?: ('report'|'quiz'|'flashcards'|'mindMap'|'dataTable'|'slideDeck'|'audio'|'faq')[],
+ *   types?: ('report'|'quiz'|'flashcards'|'mindMap'|'dataTable'|'slideDeck'|'audio'|'faq'|'infographic')[],
  * }
  *
  * Requires Runtime NOTEBOOKLM_MASTER_TOKEN_JSON (fresh agent). Skip AUTH_JSON.
+ * Infographic = NotebookLM Studio PNG (not a client-side mind-map/FAQ collage).
  */
 import path from 'path';
 import fs from 'fs';
@@ -41,6 +42,7 @@ const DEFAULT_TYPES = [
   'slideDeck',
   'audio',
   'faq',
+  'infographic',
 ];
 
 const FILE_NAMES = {
@@ -52,6 +54,7 @@ const FILE_NAMES = {
   slideDeck: 'slides.pdf',
   audio: 'audio.mp3',
   faq: 'faq.json',
+  infographic: 'infographic.png',
 };
 
 export async function POST(request) {

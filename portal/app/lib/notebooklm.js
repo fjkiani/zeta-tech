@@ -39,6 +39,8 @@ const MIN_ARTIFACT_BYTES = {
   dataTable: 16,
   report: 64,
   faq: 32,
+  /** NotebookLM Studio infographic downloads as PNG — reject tiny stubs. */
+  infographic: 8 * 1024,
 };
 
 const TYPE_TO_CLI = {
@@ -49,6 +51,7 @@ const TYPE_TO_CLI = {
   mindMap: 'mind-map',
   dataTable: 'data-table',
   report: 'report',
+  infographic: 'infographic',
 };
 
 function run(...args) {
@@ -307,6 +310,14 @@ export function buildArtifactPrompt(type, context = {}) {
         theme,
       ].filter(Boolean).join(' ');
 
+    case 'infographic':
+      return [
+        `One-page visual infographic for "${title}" aimed at ${audience}.`,
+        'Lead with the core workflow and key data types; include concrete examples and common mistakes.',
+        'Dense but scannable — statistics, labeled sections, no marketing fluff.',
+        theme,
+      ].filter(Boolean).join(' ');
+
     case 'faq':
       return [
         `For the lesson "${title}" (${audience}), answer with ONLY valid JSON:`,
@@ -349,6 +360,9 @@ export async function addSource(notebookId, sourcePathOrUrl) {
  * @param {string} [options.slideFormat] detailed|presenter
  * @param {string} [options.slideLength] default|short
  * @param {string} [options.mindMapKind] interactive|note-backed
+ * @param {string} [options.infographicOrientation] landscape|portrait|square
+ * @param {string} [options.infographicDetail] concise|standard|detailed
+ * @param {string} [options.infographicStyle] auto|sketch-note|professional|…
  */
 export async function generateArtifact(notebookId, type, options = {}) {
   const cmd = TYPE_TO_CLI[type];
@@ -387,11 +401,17 @@ export async function generateArtifact(notebookId, type, options = {}) {
     args.push('--length', options.slideLength || 'default');
   } else if (type === 'report') {
     args.push('--format', options.reportFormat || 'blog-post');
+  } else if (type === 'infographic') {
+    args.push('--orientation', options.infographicOrientation || 'landscape');
+    args.push('--detail', options.infographicDetail || 'detailed');
+    args.push('--style', options.infographicStyle || 'professional');
   }
 
   // Longer timeout for audio (CLI default 1200s) — keep wait; no free-tier gates.
   if (type === 'audio') {
     args.push('--timeout', String(options.timeout || 1200));
+  } else if (type === 'infographic') {
+    args.push('--timeout', String(options.timeout || 600));
   } else if (options.timeout) {
     args.push('--timeout', String(options.timeout));
   }
@@ -415,6 +435,9 @@ export async function downloadArtifact(notebookId, type, outputPath) {
     args.push('--format', 'json');
   } else if (type === 'slideDeck') {
     // PDF + force latest
+    args.push('--latest', '--force');
+  } else if (type === 'infographic') {
+    // PNG one-pager from Studio — force overwrite when re-publishing
     args.push('--latest', '--force');
   } else if (type === 'report') {
     // markdown report download
