@@ -174,5 +174,102 @@
     "schoolKey": null,
     "artifacts": {},
     "updatedAt": "2026-03-12T16:41:33.894Z"
+  },
+  "python-datatypes-90150c": {
+    "notebookId": "90150c19-4744-4439-a4f2-37503402afaa",
+    "sourceId": "557be28a-4311-4b88-aca0-ce73f693bb92",
+    "schoolKey": "bushwick",
+    "artifacts": {
+      "quiz": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/quiz.json",
+        "url": "/artifacts/python-datatypes-90150c/quiz.json",
+        "bytes": 13225,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "flashcards": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/flashcards.json",
+        "url": "/artifacts/python-datatypes-90150c/flashcards.json",
+        "bytes": 12955,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "mindMap": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/mindMap.json",
+        "url": "/artifacts/python-datatypes-90150c/mindMap.json",
+        "bytes": 3215,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "dataTable": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/data.csv",
+        "url": "/artifacts/python-datatypes-90150c/data.csv",
+        "bytes": 4346,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        },
+        "note": "Studio generate data-table RPC returns INVALID_ARGUMENT on web+android (notebooklm-py 0.8.6); CSV produced via live notebooklm ask grounded in sources with required prompt column."
+      },
+      "slideDeck": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/slides.pdf",
+        "url": "/artifacts/python-datatypes-90150c/slides.pdf",
+        "bytes": 14790652,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "audio": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/audio.mp3",
+        "url": "/artifacts/python-datatypes-90150c/audio.mp3",
+        "bytes": 16145575,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "report": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/report.md",
+        "url": "/artifacts/python-datatypes-90150c/report.md",
+        "bytes": 10140,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      },
+      "faq": {
+        "status": "completed",
+        "localPath": "/agent/repos/zeta-tech/portal/public/artifacts/python-datatypes-90150c/faq.json",
+        "url": "/artifacts/python-datatypes-90150c/faq.json",
+        "bytes": 7224,
+        "generatedAt": "2026-11-26T07:33:45.000Z",
+        "provenance": {
+          "type": "composite",
+          "description": "Bushwick HS python-datatypes.md lesson context"
+        }
+      }
+    },
+    "updatedAt": "2026-11-26T07:33:45.000Z"
   }
 }
