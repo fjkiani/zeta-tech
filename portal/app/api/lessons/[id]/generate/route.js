@@ -1,13 +1,17 @@
 import path from 'path';
+import fs from 'fs';
 import { getLessonMapping, setLessonMapping, updateArtifact } from '../../../../lib/sidecar';
 
-// NotebookLM generation can take 2-5+ minutes
+// NotebookLM generation can take 2-5+ minutes (audio up to ~20m on Pro)
 export const maxDuration = 600;
 import {
   createNotebook,
   addSource,
   generateArtifact,
   downloadArtifact,
+  ensureAuth,
+  getUsageSnapshot,
+  NOTEBOOKLM_ACCOUNT_EMAIL,
 } from '../../../../lib/notebooklm';
 import {
   getSourcePathForLesson,
@@ -23,6 +27,7 @@ const TYPE_MAP = {
   audio: 'audio',
   mindMap: 'mindMap',
   dataTable: 'dataTable',
+  report: 'report',
 };
 
 export async function POST(request, { params }) {
@@ -43,6 +48,7 @@ export async function POST(request, { params }) {
 
   const schoolKey = body?.schoolKey ?? request.nextUrl?.searchParams?.get('school') ?? null;
   const videoUrl = body?.videoUrl; // Check for YouTube URL
+  const customPrompt = body?.prompt || body?.instructions || null;
 
   try {
     let mapping = getLessonMapping(id);
@@ -60,10 +66,26 @@ export async function POST(request, { params }) {
     // 3. Else fallback to default.
 
     // CACHING: Check if artifact already exists in mapping (and file exists)
-    // Prevents "calling it over and over"
+    // Prevents "calling it over and over" — but never treat tiny stubs as success.
     if (mapping?.artifacts?.[artifactType]?.status === 'completed' && mapping?.artifacts?.[artifactType]?.url) {
-      console.log(`[Generate] Cache Hit for ${artifactType}: ${mapping.artifacts[artifactType].url}`);
-      return Response.json({ status: 'completed', artifactUrl: mapping.artifacts[artifactType].url });
+      const cached = mapping.artifacts[artifactType];
+      const localPath = cached.localPath;
+      const isHygraph = localPath === 'HYGRAPH_ASSET' || /^https?:\/\//i.test(cached.url || '');
+      let stub = false;
+      if (!isHygraph && localPath && fs.existsSync(localPath)) {
+        const bytes = fs.statSync(localPath).size;
+        // Mirror downloadArtifact audio floor (~1KB) for local cache
+        if (artifactType === 'audio' && bytes < 1024) stub = true;
+        if (bytes < 16) stub = true;
+      } else if (!isHygraph && localPath && localPath !== 'HYGRAPH_ASSET' && !fs.existsSync(localPath)) {
+        // Mapped but missing on disk — regenerate
+        stub = true;
+      }
+      if (!stub) {
+        console.log(`[Generate] Cache Hit for ${artifactType}: ${cached.url}`);
+        return Response.json({ status: 'completed', artifactUrl: cached.url });
+      }
+      console.warn(`[Generate] Cache stub/missing for ${artifactType} — regenerating`);
     }
 
     // BYPASS: Check Hygraph for existing assets (e.g. manually uploaded slides)
@@ -97,6 +119,18 @@ export async function POST(request, { params }) {
         console.error("Bypass Check Failed:", e);
       }
     }
+
+    // Live NotebookLM path — require Gemini Pro auth (no free-tier soft gates)
+    await ensureAuth({ refresh: true });
+    const usage = await getUsageSnapshot();
+    console.log(
+      `[Generate] NotebookLM account=${NOTEBOOKLM_ACCOUNT_EMAIL} usage=`,
+      usage?.error ? usage : {
+        tierish: usage?.tier ?? usage?.account?.tier ?? usage?.plan,
+        windows: usage?.windows ?? usage?.summaries,
+        actions: Array.isArray(usage?.actions) ? usage.actions.slice(0, 8) : undefined,
+      },
+    );
 
     const { fetchLessonBySlug, fetchLessonById } = await import('../../../../lib/hygraph');
 
@@ -172,7 +206,27 @@ ${lesson.lessonPlan || ''}
       }
     }
 
-    await generateArtifact(notebookId, artifactType);
+    // Resolve a human title when available for richer prompts
+    let lessonTitle = null;
+    try {
+      let lessonMeta = await fetchLessonById(id);
+      if (!lessonMeta) lessonMeta = await fetchLessonBySlug(id);
+      lessonTitle = lessonMeta?.title || null;
+    } catch {
+      /* title is optional for prompts */
+    }
+
+    const genResult = await generateArtifact(notebookId, artifactType, {
+      prompt: customPrompt,
+      context: { lessonId: id, schoolKey, lessonTitle },
+      audioFormat: body?.audioFormat,
+      audioLength: body?.audioLength,
+      difficulty: body?.difficulty,
+      quantity: body?.quantity,
+      slideFormat: body?.slideFormat,
+      slideLength: body?.slideLength,
+      mindMapKind: body?.mindMapKind,
+    });
 
     const lessonDir = path.join(ARTIFACT_DIR, id);
     let filename;
@@ -184,14 +238,30 @@ ${lesson.lessonPlan || ''}
     else if (artifactType === 'dataTable') filename = 'data.csv';
 
     const outputPath = path.join(lessonDir, filename);
-    await downloadArtifact(notebookId, artifactType, outputPath);
+    const downloaded = await downloadArtifact(notebookId, artifactType, outputPath);
 
     const artifactUrl = `/artifacts/${id}/${filename}`;
-    updateArtifact(id, artifactType, { status: 'completed', localPath: outputPath, url: artifactUrl });
+    updateArtifact(id, artifactType, {
+      status: 'completed',
+      localPath: outputPath,
+      url: artifactUrl,
+      bytes: downloaded.bytes,
+      prompt: genResult.prompt,
+      accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL,
+    });
 
-    return Response.json({ status: 'completed', artifactUrl });
+    return Response.json({
+      status: 'completed',
+      artifactUrl,
+      bytes: downloaded.bytes,
+      accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL,
+    });
   } catch (err) {
     console.error('Generate error:', err);
-    return Response.json({ error: err.message || 'Generation failed' }, { status: 500 });
+    const message = err.message || 'Generation failed';
+    const status = /auth required|Auth not found|storage_state|NOTEBOOKLM_AUTH/i.test(message)
+      ? 401
+      : 500;
+    return Response.json({ error: message, accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL }, { status });
   }
 }

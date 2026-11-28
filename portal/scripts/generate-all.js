@@ -1,5 +1,13 @@
 import { getLessonMapping, setLessonMapping, updateArtifact } from '../app/lib/sidecar.js';
-import { createNotebook, addSource, generateArtifact, downloadArtifact } from '../app/lib/notebooklm.js';
+import {
+  createNotebook,
+  addSource,
+  generateArtifact,
+  downloadArtifact,
+  ensureAuth,
+  getUsageSnapshot,
+  NOTEBOOKLM_ACCOUNT_EMAIL,
+} from '../app/lib/notebooklm.js';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -32,6 +40,9 @@ async function main() {
     }
 
     console.log(`🚀 Starting Mass Generation for Lesson: ${lessonId}`);
+    console.log(`🔐 NotebookLM account: ${NOTEBOOKLM_ACCOUNT_EMAIL}`);
+    await ensureAuth({ refresh: true });
+    console.log('📊 usage', await getUsageSnapshot());
 
     // Ensure mapping
     let mapping = getLessonMapping(lessonId);
@@ -53,7 +64,9 @@ async function main() {
     for (const type of ASSETS) {
         console.log(`\n⚙️  Generating ${type}...`);
         try {
-            const result = await generateArtifact(notebookId, type);
+            const result = await generateArtifact(notebookId, type, {
+                context: { lessonId },
+            });
             console.log(`✅ Generated ${type}. Downloading...`);
 
             const lessonDir = path.join(ARTIFACT_DIR, lessonId);
@@ -66,17 +79,20 @@ async function main() {
             else if (type === 'dataTable') filename = 'data.csv';
 
             const outputPath = path.join(lessonDir, filename);
-            await downloadArtifact(notebookId, type, outputPath);
+            const downloaded = await downloadArtifact(notebookId, type, outputPath);
 
             const artifactUrl = `/artifacts/${lessonId}/${filename}`;
             updateArtifact(lessonId, type, {
                 status: 'completed',
                 localPath: outputPath,
                 url: artifactUrl,
+                bytes: downloaded.bytes,
+                prompt: result.prompt,
+                accountEmail: NOTEBOOKLM_ACCOUNT_EMAIL,
                 generatedAt: new Date().toISOString(),
                 provenance: provenance
             });
-            console.log(`✨ Saved ${type} to ${artifactUrl}`);
+            console.log(`✨ Saved ${type} to ${artifactUrl} (${downloaded.bytes} bytes)`);
 
         } catch (err) {
             console.error(`❌ Failed to generate ${type}:`, err.message);
