@@ -4,7 +4,21 @@ import fs from 'fs';
 import os from 'os';
 import { getSchoolConfig } from './schools.js';
 
-const PROJECT_ROOT = path.resolve(process.cwd(), '..');
+/** zeta-tech repo root — works when cwd is portal/ OR repo root. */
+function resolveProjectRoot() {
+  const candidates = [
+    path.resolve(process.cwd(), '..'), // typical: cwd=portal
+    process.cwd(), // cwd=repo root (scripts invoked from root)
+    path.resolve(process.cwd(), '../..'),
+  ];
+  for (const root of candidates) {
+    const sh = path.join(root, 'scripts', 'notebooklm-py', 'notebooklm.sh');
+    if (fs.existsSync(sh)) return root;
+  }
+  return path.resolve(process.cwd(), '..');
+}
+
+const PROJECT_ROOT = resolveProjectRoot();
 const NOTEBOOKLM_SH = path.join(PROJECT_ROOT, 'scripts', 'notebooklm-py', 'notebooklm.sh');
 const BOOTSTRAP_MASTER_SH = path.join(
   PROJECT_ROOT,
